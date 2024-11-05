@@ -17,13 +17,13 @@ namespace inventory
             }
 
             // shrug
-
-
+            return Result.Failure("Not implemented");
         }
 
         public Result<Item> RemoveItem(Item item)
         {
             // shrug
+            return Result.Failure("Not implemented");
             
         }
     }

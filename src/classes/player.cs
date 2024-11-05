@@ -9,19 +9,35 @@ namespace player
     public class player
     {
         // Attributes
-        prublic int hp { get; set; }
+        public int hp { get; set; }
         public int score { get; set; }
         public inventory inventoryData { get; set; }
 
-        public Result takeDamage(int damage)
+        public Result<int> takeDamage(int damage)
         {
+            // fix logic // sample logic
             if (hp > damage) 
             {
                 hp -= damage;
-                return Result.Success;
+                return Result.Success(hp);
             }
 
-            return Result.Failure("idk some issue?");
+            return Result.Failure("Not implemented");
+        }
+
+
+        // change score
+        public Result<int> changeScore(int increment)
+        {
+            // sample logic fix later
+            if (score > 0)
+            {
+                score += increment;
+                return Result.Success(score);
+            }
+
+            return Result.Failure("Not implemented");
+
         }
 
 

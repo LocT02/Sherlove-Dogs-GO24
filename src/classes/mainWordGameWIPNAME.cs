@@ -20,6 +20,7 @@ namespace mainWordGameWIPNAME
         // Checks guess against current word
         public Result<string> checkGuess(string guess)
         {
+            // Also probably not a string return type
             guess = guess.ToUpper();
 
             foreach (char letter in guess)
@@ -32,20 +33,21 @@ namespace mainWordGameWIPNAME
 
             if (guess == currentWord) 
             {
-                return null; //some form of success
+                return Result.Success("U Won or something"); //some form of success
             }
 
             // Add feedback
             string feedback = generateFeedback(guess);
 
-            return feedback;
+            return Result.Success(feedback);
         }
 
+        // Probably not returning a string
         private Result<string> generateFeedback(string guess)
         {
             // not a success
             // return something idk
-            return null;
+            return Result.Failure("Not implemented");
         }
 
 
@@ -63,7 +65,7 @@ namespace mainWordGameWIPNAME
                 }
             }
 
-            return null;
+            return Result.Failure("Not implemented");
         }
     }
     

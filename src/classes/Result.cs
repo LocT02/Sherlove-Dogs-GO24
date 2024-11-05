@@ -23,7 +23,7 @@ namespace Result;
         }
 
         // Success method
-        public static Result<T> Success(T value, string message = "Operation Successful", )
+        public static Result<T> Success(T value, string message = "Operation Successful")
         {
             return new Result<T>(true, value, message, null);
         }
@@ -37,6 +37,7 @@ namespace Result;
         // Logger maybe?
         public void Logger()
         {
+            // shrug dunno
             if (isSuccess)
             {
                 //log successes?
