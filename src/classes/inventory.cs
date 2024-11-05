@@ -2,12 +2,13 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using Result;
+using Item;
 
-namespace inventory 
+namespace InventoryManager
 {
-    public class inventory
+    public class Inventory
     {
-        public List<Item> items;
+        public List<Item> Items;
 
         public Result<Item> AddItem(Item item)
         {

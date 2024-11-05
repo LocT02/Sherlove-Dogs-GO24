@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Result;
 
-namespace ItemDataWIP
+namespace ItemData
 {
     public class Item
     {
@@ -12,10 +12,10 @@ namespace ItemDataWIP
         public int Quantity { get; set; }
 
         // Constructor
-        public Item(string name, int Quantity)
+        public Item(string name, int quantity)
         {
             Name = name;
-            Quantity = Quantity;
+            Quantity = quantity;
         }
 
         // method to apply item? probably in the individual item subclasses

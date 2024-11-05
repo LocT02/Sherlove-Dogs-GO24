@@ -2,23 +2,23 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using Result;
-using inventory;
+using Inventory;
 
-namespace player
+namespace PlayerUser
 {
-    public class player
+    public class Player
     {
         // Attributes
-        public int hp { get; set; }
-        public int score { get; set; }
-        public inventory inventoryData { get; set; }
+        public int HP { get; set; }
+        public int Score { get; set; }
+        public Inventory _Inventory { get; set; }
 
-        public Result<int> takeDamage(int damage)
+        public Result<int> TakeDamage(int damage)
         {
             // fix logic // sample logic
-            if (hp > damage) 
+            if (HP > damage) 
             {
-                hp -= damage;
+                HP -= damage;
                 return Result.Success(hp);
             }
 
@@ -27,13 +27,13 @@ namespace player
 
 
         // change score
-        public Result<int> changeScore(int increment)
+        public Result<int> ChangeScore(int increment)
         {
             // sample logic fix later
-            if (score > 0)
+            if (Score > 0)
             {
-                score += increment;
-                return Result.Success(score);
+                Score += increment;
+                return Result.Success(Score);
             }
 
             return Result.Failure("Not implemented");

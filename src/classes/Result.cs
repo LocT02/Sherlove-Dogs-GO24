@@ -5,21 +5,21 @@ namespace Result;
     public class Result<T>
     {
         // Attributes
-        public bool isSuccess { get; private set; }
+        public bool IsSuccess { get; private set; }
 
-        public T value { get; private set; }
+        public T Value { get; private set; }
 
-        public string message { get; private set; }
+        public string Message { get; private set; }
 
-        public Exception error { get; private set; }
+        public Exception Error { get; private set; }
 
         // constructor
-        private Result(bool IsSuccess, T Value, string Message, Exception Error)
+        private Result(bool isSuccess, T value, string message, Exception error)
         {
-            isSuccess = IsSuccess;
-            value = Value;
-            message = Message;
-            error = Error;
+            IsSuccess = isSuccess;
+            Value = value;
+            Message = message;
+            Error = error;
         }
 
         // Success method
@@ -38,7 +38,7 @@ namespace Result;
         public void Logger()
         {
             // shrug dunno
-            if (isSuccess)
+            if (IsSuccess)
             {
                 //log successes?
             } else
@@ -50,7 +50,7 @@ namespace Result;
         // Get Value
         public T getValue(T defaultValue = default)
         {
-            return isSuccess ? value : defaultValue;
+            return IsSuccess ? Value : defaultValue;
         }
 
     }

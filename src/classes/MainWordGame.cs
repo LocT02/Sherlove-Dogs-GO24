@@ -3,35 +3,35 @@ using System;
 using System.Collections.Generic;
 using Result;
 
-namespace mainWordGameWIPNAME
+namespace MainWordGameWIPNAME
 {
-    public class MainWordGameWIPNAME : Node
+    public class MainWordGame : Node
     {
         // Attributes
-        private string currentWord;
-        public List<char> guessedLetters;
+        private string CurrentWord;
+        public List<char> GuessedLetters;
 
         // Gets a word to start game
-        public Result<string> getWord()
+        public Result<string> GetWord()
         {
             return null;
         }
         
         // Checks guess against current word
-        public Result<string> checkGuess(string guess)
+        public Result<string> CheckGuess(string guess)
         {
             // Also probably not a string return type
             guess = guess.ToUpper();
 
             foreach (char letter in guess)
             {
-                if (!guessedLetters.Contains(letter))
+                if (!GuessedLetters.Contains(letter))
                 {
-                    guessedLetters.Add(letter);
+                    GuessedLetters.Add(letter);
                 }
             }
 
-            if (guess == currentWord) 
+            if (guess == CurrentWord) 
             {
                 return Result.Success("U Won or something"); //some form of success
             }
@@ -43,7 +43,7 @@ namespace mainWordGameWIPNAME
         }
 
         // Probably not returning a string
-        private Result<string> generateFeedback(string guess)
+        private Result<string> GenerateFeedback(string guess)
         {
             // not a success
             // return something idk
@@ -52,7 +52,7 @@ namespace mainWordGameWIPNAME
 
 
         // Reveals a letter from the current word from item use or something
-        public Result<char> revealLetter()
+        public Result<char> RevealLetter()
         {
             
             List<char> unrevealedLetters = new List<char>();
