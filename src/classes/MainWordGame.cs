@@ -37,7 +37,7 @@ namespace MainWordGameWIPNAME
             }
 
             // Add feedback
-            Result<string> feedback = generateFeedback(guess);
+            Result<string> feedback = GenerateFeedback(guess);
 
             return Result.Success(feedback);
         }
