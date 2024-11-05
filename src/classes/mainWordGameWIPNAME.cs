@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using Result;
 
 namespace mainWordGameWIPNAME
 {
@@ -11,13 +12,13 @@ namespace mainWordGameWIPNAME
         public List<char> guessedLetters;
 
         // Gets a word to start game
-        public string getWord()
+        public Result<string> getWord()
         {
             return null;
         }
         
         // Checks guess against current word
-        public string checkGuess(string guess)
+        public Result<string> checkGuess(string guess)
         {
             guess = guess.ToUpper();
 
@@ -40,7 +41,7 @@ namespace mainWordGameWIPNAME
             return feedback;
         }
 
-        private string generateFeedback(string guess)
+        private Result<string> generateFeedback(string guess)
         {
             // not a success
             // return something idk
@@ -49,7 +50,7 @@ namespace mainWordGameWIPNAME
 
 
         // Reveals a letter from the current word from item use or something
-        public char revealLetter()
+        public Result<char> revealLetter()
         {
             
             List<char> unrevealedLetters = new List<char>();
