@@ -46,12 +46,5 @@ namespace Result;
                 // log failure?
             }
         }
-
-        // Get Value
-        public T getValue(T defaultValue = default)
-        {
-            return IsSuccess ? Value : defaultValue;
-        }
-
     }
 }
