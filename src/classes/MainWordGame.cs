@@ -33,13 +33,13 @@ namespace MainWordGameWIPNAME
 
             if (guess == CurrentWord) 
             {
-                return Result.Success("U Won or something"); //some form of success
+                return Result<string>.Success("U Won or something"); //some form of success
             }
 
             // Add feedback
             Result<string> feedback = GenerateFeedback(guess);
 
-            return Result.Success(feedback);
+            return feedback;
         }
 
         // Probably not returning a string
@@ -47,7 +47,7 @@ namespace MainWordGameWIPNAME
         {
             // not a success
             // return something idk
-            return Result.Failure("Not implemented");
+            return Result<string>.Failure("Not implemented");
         }
 
 
@@ -65,7 +65,7 @@ namespace MainWordGameWIPNAME
                 }
             }
 
-            return Result.Failure("Not implemented");
+            return Result<char>.Failure("Not implemented");
         }
     }
     

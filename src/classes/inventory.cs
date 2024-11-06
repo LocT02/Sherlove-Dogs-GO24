@@ -18,13 +18,13 @@ namespace InventoryManager
             }
 
             // shrug
-            return Result.Failure("Not implemented");
+            return Result<Item>.Failure("Not implemented");
         }
 
         public Result<Item> RemoveItem(Item item)
         {
             // shrug
-            return Result.Failure("Not implemented");
+            return Result<Item>.Failure("Not implemented");
             
         }
     }
