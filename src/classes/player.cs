@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using Result;
-using Inventory;
+using InventoryManager;
 
 namespace PlayerUser
 {
@@ -19,10 +19,10 @@ namespace PlayerUser
             if (HP > damage) 
             {
                 HP -= damage;
-                return Result.Success(hp);
+                return Result<int>.Success(HP);
             }
 
-            return Result.Failure("Not implemented");
+            return Result<int>.Failure("Not implemented");
         }
 
 
@@ -33,10 +33,10 @@ namespace PlayerUser
             if (Score > 0)
             {
                 Score += increment;
-                return Result.Success(Score);
+                return Result<int>.Success(Score);
             }
 
-            return Result.Failure("Not implemented");
+            return Result<int>.Failure("Not implemented");
 
         }
 

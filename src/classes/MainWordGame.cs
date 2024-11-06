@@ -5,7 +5,7 @@ using Result;
 
 namespace MainWordGameWIPNAME
 {
-    public class MainWordGame : Node
+    public class MainWordGame
     {
         // Attributes
         private string CurrentWord;
@@ -33,13 +33,13 @@ namespace MainWordGameWIPNAME
 
             if (guess == CurrentWord) 
             {
-                return Result.Success("U Won or something"); //some form of success
+                return Result<string>.Success("U Won or something"); //some form of success
             }
 
             // Add feedback
             Result<string> feedback = GenerateFeedback(guess);
 
-            return Result.Success(feedback);
+            return feedback;
         }
 
         // Probably not returning a string
@@ -47,7 +47,7 @@ namespace MainWordGameWIPNAME
         {
             // not a success
             // return something idk
-            return Result.Failure("Not implemented");
+            return Result<string>.Failure("Not implemented");
         }
 
 
@@ -57,15 +57,15 @@ namespace MainWordGameWIPNAME
             
             List<char> unrevealedLetters = new List<char>();
 
-            foreach (char letter in currentWord)
+            foreach (char letter in CurrentWord)
             {
-                if (!guessedLetters.Contains(letter))
+                if (!GuessedLetters.Contains(letter))
                 {
-                    unrevealedLetter.Add(letter)
+                    unrevealedLetters.Add(letter);
                 }
             }
 
-            return Result.Failure("Not implemented");
+            return Result<char>.Failure("Not implemented");
         }
     }
     

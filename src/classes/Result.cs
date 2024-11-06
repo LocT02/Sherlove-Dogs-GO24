@@ -1,6 +1,6 @@
 using System;
 
-namespace Result;
+namespace Result
 {
     public class Result<T>
     {
