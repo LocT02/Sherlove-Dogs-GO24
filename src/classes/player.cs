@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using Result;
-using Inventory;
+using InventoryManager;
 
 namespace PlayerUser
 {
@@ -19,7 +19,7 @@ namespace PlayerUser
             if (HP > damage) 
             {
                 HP -= damage;
-                return Result.Success(hp);
+                return Result.Success(HP);
             }
 
             return Result.Failure("Not implemented");

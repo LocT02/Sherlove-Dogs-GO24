@@ -5,7 +5,7 @@ using Result;
 
 namespace MainWordGameWIPNAME
 {
-    public class MainWordGame : Node
+    public class MainWordGame
     {
         // Attributes
         private string CurrentWord;
@@ -57,11 +57,11 @@ namespace MainWordGameWIPNAME
             
             List<char> unrevealedLetters = new List<char>();
 
-            foreach (char letter in currentWord)
+            foreach (char letter in CurrentWord)
             {
-                if (!guessedLetters.Contains(letter))
+                if (!GuessedLetters.Contains(letter))
                 {
-                    unrevealedLetter.Add(letter)
+                    unrevealedLetters.Add(letter);
                 }
             }
 

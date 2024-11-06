@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using Result;
-using Item;
+using ItemData;
 
 namespace InventoryManager
 {
@@ -12,9 +12,9 @@ namespace InventoryManager
 
         public Result<Item> AddItem(Item item)
         {
-            if (item = null)
+            if (item == null)
             {
-                return Result<Item>.Failure('Item is Null.');
+                return Result<Item>.Failure("Item is Null.");
             }
 
             // shrug
