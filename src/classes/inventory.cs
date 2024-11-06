@@ -1,31 +1,22 @@
-using Godot;
-using System;
-using System.Collections.Generic;
 using Result;
-using ItemData;
+using ItemTypes;
+using IInventory;
+using System.Collections.Generic;
+using IItems;
 
-namespace InventoryManager
-{
-    public class Inventory
-    {
-        public List<Item> Items;
+namespace InventoryManager {
+    public class Inventory : _IInventory {
+        public Dictionary<IItemTypes, int> Items { get; } = new Dictionary<IItemTypes, int>();
 
-        public Result<Item> AddItem(Item item)
-        {
-            if (item == null)
-            {
-                return Result<Item>.Failure("Item is Null.");
-            }
+        public Result<IItemTypes> AddItem(IItemTypes item) {
 
             // shrug
-            return Result<Item>.Failure("Not implemented");
+            return Result<IItemTypes>.Failure("Item Not implemented", item);
         }
 
-        public Result<Item> RemoveItem(Item item)
-        {
+        public Result<IItemTypes> RemoveItem(IItemTypes item) {
             // shrug
-            return Result<Item>.Failure("Not implemented");
-            
+            return Result<IItemTypes>.Failure("Item Not implemented", item);
         }
     }
 }

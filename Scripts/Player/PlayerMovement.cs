@@ -1,5 +1,5 @@
-using Godot;
 using System;
+using Godot;
 
 public partial class player : CharacterBody2D
 {
