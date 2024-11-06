@@ -61,7 +61,7 @@ namespace MainWordGameWIPNAME
             {
                 if (!guessedLetters.Contains(letter))
                 {
-                    unrevealedLetter.Add(letter)
+                    unrevealedLetter.Add(letter);
                 }
             }
 

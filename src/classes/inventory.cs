@@ -14,7 +14,7 @@ namespace InventoryManager
         {
             if (item = null)
             {
-                return Result<Item>.Failure('Item is Null.');
+                return Result<Item>.Failure("Item is Null.");
             }
 
             // shrug
