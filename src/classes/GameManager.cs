@@ -2,15 +2,21 @@ using Result;
 using InventoryManager;
 using MainWordGameWIPNAME;
 using IGameManager;
+using Godot;
 
 namespace GameManager {
-    public class GameInstance : IGameInstance {
+    public partial class GameManager : Node, IGameInstance {
         // Attributes
         public int HP { get; set; }
         public int Score { get; set; }
         public Inventory Inventory { get; set; }
-
-        public Result<string> StartGame() {
+        public override void _Ready()
+        {
+            //read save data into references
+            //initialize all data structures before entering game
+            GD.Print("Successfully started GameManager.");
+        }
+        public static Result<string> StartGame() {
             //Instantiate inventory, mainwordgame (possibly move this into game manager?),
             //whatever else we need for assets or variables
             //call GetWord()
