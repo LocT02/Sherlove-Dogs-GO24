@@ -47,7 +47,7 @@ namespace GameManager
 				try {
 					GetTree().CurrentScene.AddChild(scene.Instantiate());
 					return Result<Error>.Success(Error.Ok,"Successfully added child scene.");
-				} catch (Exception e) {
+				} catch (Exception) {
 					return Result<Error>.Failure("Failed to add child scene", Error.Failed);
 				}
 			}
