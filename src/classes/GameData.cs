@@ -76,7 +76,7 @@ namespace GameData{
 			WriteSaveData(filePath, Json.Stringify(content));
 
 		}
-		private string LoadDataFromFile(string filePath){
+		private static string LoadDataFromFile(string filePath){
 			string data = null;
 			if(!File.Exists(filePath)) return null;
 			try{
@@ -88,7 +88,7 @@ namespace GameData{
 			return data;
 		}
 		//String containing json content -> Dictionary (without item types)
-		private Godot.Collections.Dictionary JsonToDictionary(string filePath){
+		private static Godot.Collections.Dictionary JsonToDictionary(string filePath){
 			string content = LoadDataFromFile(filePath);
 			Godot.Json jsonLoader = new Json();
 			Error loadError = jsonLoader.Parse(content);
@@ -96,7 +96,7 @@ namespace GameData{
 			return (Godot.Collections.Dictionary)jsonLoader.Data;
 		}
 		//Convert Inventory.Items -> Array of Strings for json serialization
-		private Array<String> InventoryListToArray(Inventory inventory){
+		private static Array<String> InventoryListToArray(Inventory inventory){
 			Array<String> temp = new Array<string>();
 			foreach(IItemTypes items in inventory.Items){
 				temp.Add(items.Name);
