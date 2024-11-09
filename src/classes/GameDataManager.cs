@@ -3,8 +3,6 @@ using Godot.Collections;
 using IItems;
 using InventoryManager;
 using ItemTypes;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using Result;
 
@@ -12,53 +10,73 @@ namespace GameData {
 	public partial class GameDataManager : Node
 	{
 		const int DEFAULT_HP = 100;
-		private int HP, Score;
-		public Inventory Inventory = new Inventory();
-		public GameDataManager(string SaveFilePath) {
+		private string SaveFilePath = ProjectSettings.GlobalizePath("user://");
+		private int Hp, Score;
+		public Inventory Inventory = new();
+
+		public GameDataManager() {
 			if (!Godot.FileAccess.FileExists(Path.Join(SaveFilePath, "GameData.json"))){
 				GD.Print("Save file does not exist, creating new save");
 				CreateNewSave(SaveFilePath);
 			} else {
-				LoadSaveData(SaveFilePath);
+				var attempt = LoadSaveData(SaveFilePath);
+				GD.Print(attempt.Message);
 			}
 		}
+
 		//Create base dictionary with default values
 		public void CreateNewSave(string filePath) {
-			Godot.Collections.Dictionary content = new Godot.Collections.Dictionary
-            {
-                { "HP", DEFAULT_HP },
-                { "Score", 0 },
-                { "Inventory", InventoryListToArray(new Inventory()) }
-            };
+			Dictionary content = new()
+			{
+				{ "Hp", DEFAULT_HP },
+				{ "Score", 0 },
+				{ "Inventory", InventoryListToArray(new Inventory()) }
+			};
 
 			string json = Json.Stringify(content);
 
 			WriteSaveData(json, filePath);
+
+			// check if file was successfully created, return file location
 		}
 
-		private void LoadSaveData(string filePath) {
-			Godot.Collections.Dictionary content = JsonToDictionary(filePath);
-			HP = (int)content["HP"];
+		private Result<bool> LoadSaveData(string filePath) {
+			Dictionary content = JsonToDictionary(filePath);
+
+			if (content == null) {
+				return Result<bool>.Failure("LoadFile Returned Empty");
+			}
+
+			Hp = (int)content["Hp"];
 			Score = (int)content["Score"];
 			Array<string> tempInventory = (Array<string>)content["Inventory"];
+
 			//Inventory -> System.Dictionary<IItemTypes,int> -> IItemTypes -> ItemA, ItemB, ItemC -> name
-			foreach (string item in tempInventory){
-				switch(item){
+			foreach (string itemName in tempInventory){
+				IItemTypes item = null;
+
+				switch(itemName){
 					case "ItemA":
-						Inventory.Items.Add(new ItemA(item));
+						item = new ItemA();
 						break;
 					case "ItemB":
-						Inventory.Items.Add(new ItemB(item));
+						item = new ItemB();
 						break;
 					case "ItemC":
-						Inventory.Items.Add(new ItemC(item));
+						item = new ItemC();
 						break;
 					default: 
 						GD.Print("Unknown Item Loaded");
 						break;
 				}
+
+				if (item != null) {
+					Inventory.AddItem(item);
+				}
 			}
+			return Result<bool>.Success(true, "Successfully Loaded Save File!");
 		}
+
 		//Helper method to do actual writing
 		private static void WriteSaveData(string json, string filePath) {
 			if(!Directory.Exists(filePath)){
@@ -72,18 +90,21 @@ namespace GameData {
 				throw;
 			}
 		}
+
 		//Rewrite save file with current Data (at time of function call)
 		public void SaveGame(string filePath) {
-			Godot.Collections.Dictionary content = new()
-            {
-                { "HP", HP },
-                { "Score", Score },
-                { "Inventory", InventoryListToArray(Inventory) }
-            };
+			// Data to be Saved
+			Dictionary content = new()
+			{
+				{ "Hp", Hp },
+				{ "Score", Score },
+				{ "Inventory", InventoryListToArray(Inventory) }
+			};
 
 			string json = Json.Stringify(content);
 			WriteSaveData(json, filePath);
 		}
+
 		private static string LoadDataFromFile(string filePath){
 			string data = null;
 			if(!File.Exists(filePath)) return null;
@@ -95,40 +116,46 @@ namespace GameData {
 			}
 			return data;
 		}
+
 		//String containing json content -> Dictionary (without item types)
-		private static Godot.Collections.Dictionary JsonToDictionary(string filePath){
+		private static Dictionary JsonToDictionary(string filePath){
 			string content = LoadDataFromFile(Path.Join(filePath, "GameData.json"));
-			Godot.Json jsonLoader = new Json();
+			Json jsonLoader = new Json();
 			Error loadError = jsonLoader.Parse(content);
 			if(loadError != Error.Ok) {GD.Print("put error code here"); return null;}
-			return (Godot.Collections.Dictionary)jsonLoader.Data;
+			return (Dictionary)jsonLoader.Data;
 		}
+
 		//Convert Inventory.Items -> Array of Strings for json serialization
-		private static Array<String> InventoryListToArray(Inventory inventory){
-			Array<String> temp = new Array<string>();
+		private static Array<string> InventoryListToArray(Inventory inventory){
+			Array<string> temp = new Array<string>();
 			foreach(IItemTypes items in inventory.Items){
 				temp.Add(items.Name);
 			}
 			return temp;
 		}
-		public void SetHP(int hp){
-			HP=hp;
+
+		public void SetHp(int hp){
+			Hp=hp;
 		}
-		public int GetHP(){
-			return HP;
+
+		public int GetHp(){
+			return Hp;
 		}
+
 		public void SetScore(int score){
 			Score = score;
 		}
+		
 		public int GetScore(){
 			return Score;
 		}
 
-		public Result<int> ChangeHP(int increment) {
-			HP += increment;
-			return (HP <= 0) 
+		public Result<int> ChangeHp(int increment) {
+			Hp += increment;
+			return (Hp <= 0) 
 			? GameManager.GameManager.Instance.EndGame()
-			: Result<int>.Success(HP);
+			: Result<int>.Success(Hp);
 		}
 		
 		public Result<int> ChangeScore(int increment) {

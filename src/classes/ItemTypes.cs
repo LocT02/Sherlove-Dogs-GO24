@@ -2,14 +2,10 @@ using IItems;
 using Result;
 
 namespace ItemTypes {
-    public class ItemA : IItemTypes {
-        // Attributes
-        public string Name { get; } = "ItemA"; //Freebie or something
 
-        public ItemA(string name){
-            this.Name=name;
-        }
-        public ItemA(){}
+    public class ItemA : IItemTypes {
+
+        public string Name { get; }= "FreeAttempt"; // Sample Name
 
         public Result<string> ApplyItem() {
             return Result<string>.Failure("Apply Not Implemented", Name);
@@ -17,27 +13,20 @@ namespace ItemTypes {
     }
 
     public class ItemB : IItemTypes {
-        public string Name { get; } = "ItemB"; //Double points on the next attempt or something
+
+        public string Name { get; } = "RandomLetters"; // Sample Name
         
-        public ItemB(string name){
-            this.Name=name;
-        }
-        public ItemB(){}
         public Result<string> ApplyItem() {
             return Result<string>.Failure("Apply Not Implemented", Name);
         }
-
     }
+
     public class ItemC : IItemTypes {
-        public string Name { get; } = "ItemC"; //Double points on the next attempt or something
-        
-        public ItemC(string name){
-            this.Name=name;
-        }
-        public ItemC(){}
+
+        public string Name { get; } = "RevealLetter"; // Sample Name
+
         public Result<string> ApplyItem() {
             return Result<string>.Failure("Apply Not Implemented", Name);
         }
-
     }
 }

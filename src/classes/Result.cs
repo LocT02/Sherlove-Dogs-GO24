@@ -3,7 +3,7 @@ using IResult;
 
 namespace Result
 {
-    //Generic one
+    // Need to implement nongeneric overload
     public class Result<T> : IResult<T> {
 
         // Attributes
