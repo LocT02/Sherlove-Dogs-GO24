@@ -28,20 +28,15 @@ namespace GameManager {
             
         }
 
-        public Result<Error> SceneChanger(string scenePath, bool deleteScene) {
+        public Result<Error> SceneChanger(string scenePath) {
             var scene = ResourceLoader.Load<PackedScene>(scenePath);
+            string minigamePath = "res:://Scenes/Minigames";
 
-            if (deleteScene) {
-                // Instantly delete the current scene and switch
-                Error attemptSceneChange = GetTree().ChangeSceneToPacked(scene);
-                return attemptSceneChange == Error.Ok
-                ? Result<Error>.Success(attemptSceneChange,"Successfully Changed Scene")
-                : Result<Error>.Failure($"Scene Change to {scenePath} failed.", attemptSceneChange);
-            } else if (scenePath == "res://Scenes/MainScene/main_scene.tscn" && GetTree().CurrentScene.SceneFilePath == "") {
+            if (scenePath == "res://Scenes/MainScene/main_scene.tscn" && GetTree().CurrentScene.SceneFilePath.Contains(minigamePath)) {
                 // Current scene is mini-game, remove it to return to main game
                 GetTree().CurrentScene.QueueFree();
                 return Result<Error>.Success(Error.Ok,"Successfully Changed Scene");
-            } else {
+            } else if (scenePath.Contains("res:://Scenes/Minigames")) {
                 // Add the new scene as a child to the current scene
                 try {
                     GetTree().CurrentScene.AddChild(scene.Instantiate());
@@ -50,6 +45,12 @@ namespace GameManager {
                     return Result<Error>.Failure("Failed to add child scene", Error.Failed);
                 }
             }
+
+            Error attemptSceneChange = GetTree().ChangeSceneToPacked(scene);
+
+            return attemptSceneChange == Error.Ok
+            ? Result<Error>.Success(attemptSceneChange,"Successfully Changed Scene")
+            : Result<Error>.Failure($"Scene Change to {scenePath} failed.", attemptSceneChange);
         }
 
         public Result<int> EndGame() {

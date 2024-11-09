@@ -15,7 +15,7 @@ public partial class MainMenu : Control
 	{
 		// Put this initializing gamemanager somewhere above like _ready or something
 		GameManager.GameManager gameManager = new GameManager.GameManager();
-		gameManager.SceneChanger("res://Scenes/MainScene/main_scene.tscn", false);
+		gameManager.SceneChanger("res://Scenes/MainScene/main_scene.tscn");
 	}
 	public void OnSettingsPressed()
 	{

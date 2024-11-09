@@ -8,7 +8,7 @@ using Result;
 namespace IGameManager {
     public interface IGameInstance {
 
-        public Result<Error> SceneChanger(string scenePath, bool deleteScene);
+        public Result<Error> SceneChanger(string scenePath);
         public Result<int> EndGame();
 
 
