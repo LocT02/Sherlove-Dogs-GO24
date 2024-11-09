@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 
 namespace PlayerData{
-	public partial class PlayerData
+	public class PlayerData
 	{
 		const int DEFAULT_HP = 100;
 		private int HP, Score;
@@ -33,14 +33,7 @@ namespace PlayerData{
 
 			WriteSaveData(json, filePath);
 		}
-		/*
-		Godot.Collections.Dictionary
-		HP: HP
-		Score: Score
-		Inventory: Godot.Collections.Dictionary
-			"ItemA" : 0
-			"ItemB" : 0
-		*/
+
 		private void LoadSaveData(string filePath){
 			Godot.Collections.Dictionary content = JsonToDictionary(filePath);
 			this.HP = (int)content["HP"];
