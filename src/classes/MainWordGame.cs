@@ -11,6 +11,10 @@ namespace MainWordGameWIPNAME
         public string Category { get; set; } = "";
         public List<char> GuessedLetters { get; set; } = new List<char>();
 
+        public MainWordGame() {
+            
+        }
+
         // Gets a word to start game
         public Result<Tuple<string, string>> GetWord() {
             // Grab a category and word
