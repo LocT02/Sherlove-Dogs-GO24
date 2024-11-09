@@ -2,11 +2,13 @@ using Result;
 using IInventory;
 using System.Collections.Generic;
 using IItems;
+using System;
+using Godot.Collections;
 
 namespace InventoryManager {
     public class Inventory : _IInventory {
-        public Dictionary<IItemTypes, int> Items { get; } = new Dictionary<IItemTypes, int>();
-
+        public List<IItemTypes> Items = new List<IItemTypes>();
+        public int ItemCount = 0;
         public Result<IItemTypes> AddItem(IItemTypes item) {
 
             // shrug
