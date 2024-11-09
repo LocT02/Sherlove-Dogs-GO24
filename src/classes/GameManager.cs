@@ -13,7 +13,7 @@ namespace GameManager {
         {
             //read save data into references
             //initialize all data structures before entering game
-            GameData.GameData gameData = new GameData.GameData();
+            GameData.GameData gameData = new GameData.GameData(ProjectSettings.GlobalizePath("user://"));
             MainWordGame mainWordGame = new MainWordGame();
             GD.Print("Successfully started GameManager.");
             GameManager.StartGame();
