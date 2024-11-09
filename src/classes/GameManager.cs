@@ -1,16 +1,28 @@
 using Result;
-using InventoryManager;
 using MainWordGameWIPNAME;
 using IGameManager;
+using Godot;
+using System;
+using GameData;
 
-namespace GameManager {
-    public class GameInstance : IGameInstance {
-        // Attributes
-        public int HP { get; set; }
-        public int Score { get; set; }
-        public Inventory Inventory { get; set; }
+namespace GameManager
+{
+    public partial class GameManager : Node, IGameInstance {
 
-        public Result<string> StartGame() {
+        public static GameManager Instance { get; private set; }
+
+        public override void _Ready()
+        {
+            //read save data into references
+            //initialize all data structures before entering game
+            Instance = this;
+            GameDataManager gameData = new GameDataManager(ProjectSettings.GlobalizePath("user://"));
+            MainWordGame mainWordGame = new MainWordGame();
+            GD.Print("Successfully started GameManager.");
+            StartGame();
+        }
+
+        public static Result<string> StartGame() {
             //Instantiate inventory, mainwordgame (possibly move this into game manager?),
             //whatever else we need for assets or variables
             //call GetWord()
@@ -18,35 +30,35 @@ namespace GameManager {
             return Result<string>.Success("Successfully started game with word: currentWord");
             
         }
-        
-        //function to change scenes
 
-        //Hp check function
-
-        //end game function
-
-        public Result<int> TakeDamage(int damage) {
-            // fix logic // sample logic
-            if (HP > damage) {
-                HP -= damage;
-                return Result<int>.Success(HP);
+        public Result<Error> SceneChanger(string scenePath) {
+            var scene = ResourceLoader.Load<PackedScene>(scenePath);
+            string minigamePath = "res://Scenes/Minigames";
+            if (scenePath == "res://Scenes/MainScene/main_scene.tscn" && GetTree().CurrentScene.SceneFilePath.Contains(minigamePath)) {
+                // Current scene is mini-game, remove it to return to main game
+                GetTree().CurrentScene.QueueFree();
+                return Result<Error>.Success(Error.Ok,"Successfully Changed Scene");
+            } else if (scenePath.Contains("res://Scenes/Minigames")) {
+                // Add the new scene as a child to the current scene
+                try {
+                    GetTree().CurrentScene.AddChild(scene.Instantiate());
+                    return Result<Error>.Success(Error.Ok,"Successfully added child scene.");
+                } catch (Exception e) {
+                    return Result<Error>.Failure("Failed to add child scene", Error.Failed);
+                }
             }
 
-            return Result<int>.Failure("Take Damage Not implemented");
+            Error attemptSceneChange = GetTree().ChangeSceneToPacked(scene);
+
+            return attemptSceneChange == Error.Ok
+            ? Result<Error>.Success(attemptSceneChange,"Successfully Changed Scene")
+            : Result<Error>.Failure($"Scene Change to {scenePath} failed.", attemptSceneChange);
         }
 
-
-        // change score
-        public Result<int> ChangeScore(int increment) {
-            // sample logic fix later
-            if (Score > 0) {
-                Score += increment;
-                return Result<int>.Success(Score);
-            }
-
-            return Result<int>.Failure("Change Score Not implemented");
-
+        public Result<int> EndGame() {
+            // Do endgame stuff
+            
+            return Result<int>.Success(1, "Ended Game");
         }
-
     }
 }
