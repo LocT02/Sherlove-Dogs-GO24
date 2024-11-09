@@ -30,13 +30,12 @@ namespace GameManager {
 
         public Result<Error> SceneChanger(string scenePath) {
             var scene = ResourceLoader.Load<PackedScene>(scenePath);
-            string minigamePath = "res:://Scenes/Minigames";
-
+            string minigamePath = "res://Scenes/Minigames";
             if (scenePath == "res://Scenes/MainScene/main_scene.tscn" && GetTree().CurrentScene.SceneFilePath.Contains(minigamePath)) {
                 // Current scene is mini-game, remove it to return to main game
                 GetTree().CurrentScene.QueueFree();
                 return Result<Error>.Success(Error.Ok,"Successfully Changed Scene");
-            } else if (scenePath.Contains("res:://Scenes/Minigames")) {
+            } else if (scenePath.Contains("res://Scenes/Minigames")) {
                 // Add the new scene as a child to the current scene
                 try {
                     GetTree().CurrentScene.AddChild(scene.Instantiate());
