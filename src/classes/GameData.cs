@@ -13,7 +13,7 @@ namespace GameData{
 		const int DEFAULT_HP = 100;
 		private int HP, Score;
 		public Inventory Inventory;
-		public GameData(string SaveFilePath = "res://Globals/Data/GameSave.json"){
+		public GameData(string SaveFilePath){
 			if (!Godot.FileAccess.FileExists(SaveFilePath)){
 				GD.Print("Save file does not exist, creating new save");
 				CreateNewSave(SaveFilePath);
@@ -59,8 +59,12 @@ namespace GameData{
 		}
 		//Helper method to do actual writing
 		private static void WriteSaveData(string json, string filePath){
+			if(!Directory.Exists(filePath)){
+				Directory.CreateDirectory(filePath);
+			}
+			string path = Path.Join(filePath, "GameData.json");
 			try{
-				File.WriteAllText(filePath, json);
+				File.WriteAllText(path, json);
 			}
 			catch{
 				throw;
