@@ -3,6 +3,7 @@ using InventoryManager;
 using MainWordGameWIPNAME;
 using IGameManager;
 using Godot;
+using System;
 
 namespace GameManager {
     public partial class GameManager : Node, IGameInstance {
@@ -25,7 +26,29 @@ namespace GameManager {
             
         }
         
-        //function to change scenes
+        public Result<Error> SceneChanger(string scenePath, bool deleteScene) {
+            var scene = ResourceLoader.Load<PackedScene>(scenePath);
+            
+            if (deleteScene) {
+                // Instantly delete the current scene and switch
+                Error attemptSceneChange = GetTree().ChangeSceneToPacked(scene);
+                return attemptSceneChange == Error.Ok
+                ? Result<Error>.Success(attemptSceneChange,"Successfully Changed Scene")
+                : Result<Error>.Failure($"Scene Change to {scenePath} failed.", attemptSceneChange);
+            } else if (scenePath == "" && GetTree().CurrentScene.SceneFilePath == "") {
+                // Current scene is mini-game, remove it to return to main game
+                GetTree().CurrentScene.QueueFree();
+                return Result<Error>.Success(Error.Ok,"Successfully Changed Scene");
+            } else {
+                // Add the new scene as a child to the current scene
+                try {
+                    GetTree().CurrentScene.AddChild(scene.Instantiate());
+                    return Result<Error>.Success(Error.Ok,"Successfully added child scene.");
+                } catch (Exception e) {
+                    return Result<Error>.Failure("Failed to add child scene", Error.Failed);
+                }
+            }
+        }
 
         //Hp check function
 

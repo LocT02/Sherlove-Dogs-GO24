@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using GameManager;
 
 public partial class MainMenu : Control
 {
@@ -14,7 +15,9 @@ public partial class MainMenu : Control
 	// }
 	public void OnPlayPressed()
 	{
-		GetTree().ChangeSceneToFile("res://Scenes/MainScene/main_scene.tscn");
+		// Put this initializing gamemanager somewhere above like _ready or something
+		GameManager.GameManager gameManager = new GameManager.GameManager();
+		gameManager.SceneChanger("res://Scenes/MainScene/main_scene.tscn", true);
 	}
 	public void OnSettingsPressed()
 	{
