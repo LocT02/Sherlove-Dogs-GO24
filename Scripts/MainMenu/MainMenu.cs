@@ -1,6 +1,4 @@
 using Godot;
-using System;
-using GameManager;
 
 public partial class MainMenu : Control
 {
