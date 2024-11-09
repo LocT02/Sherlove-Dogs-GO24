@@ -11,13 +11,16 @@ namespace GameManager
 
         public static GameManager Instance { get; private set; }
 
+        public GameDataManager gameData { get; private set; }
+        public MainWordGame mainWordGame { get; private set; }
+
         public override void _Ready()
         {
             //read save data into references
             //initialize all data structures before entering game
             Instance = this;
-            GameDataManager gameData = new GameDataManager(ProjectSettings.GlobalizePath("user://"));
-            MainWordGame mainWordGame = new MainWordGame();
+            gameData = new GameDataManager(ProjectSettings.GlobalizePath("user://"));
+            mainWordGame = new MainWordGame();
             GD.Print("Successfully started GameManager.");
             StartGame();
         }
@@ -32,13 +35,14 @@ namespace GameManager
         }
 
         public Result<Error> SceneChanger(string scenePath) {
+
             var scene = ResourceLoader.Load<PackedScene>(scenePath);
-            string minigamePath = "res://Scenes/Minigames";
-            if (scenePath == "res://Scenes/MainScene/main_scene.tscn" && GetTree().CurrentScene.SceneFilePath.Contains(minigamePath)) {
+
+            if (scenePath == "res://Scenes/MainScene/main_scene.tscn" && GetTree().CurrentScene.SceneFilePath.Contains("Minigames")) {
                 // Current scene is mini-game, remove it to return to main game
                 GetTree().CurrentScene.QueueFree();
                 return Result<Error>.Success(Error.Ok,"Successfully Changed Scene");
-            } else if (scenePath.Contains("res://Scenes/Minigames")) {
+            } else if (scenePath.Contains("Minigames")) {
                 // Add the new scene as a child to the current scene
                 try {
                     GetTree().CurrentScene.AddChild(scene.Instantiate());

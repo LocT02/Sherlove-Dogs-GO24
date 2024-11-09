@@ -6,9 +6,10 @@ using ItemTypes;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Result;
 
 namespace GameData {
-	public class GameDataManager
+	public partial class GameDataManager : Node
 	{
 		const int DEFAULT_HP = 100;
 		private int HP, Score;
@@ -23,10 +24,12 @@ namespace GameData {
 		}
 		//Create base dictionary with default values
 		public void CreateNewSave(string filePath) {
-			Godot.Collections.Dictionary content = new Godot.Collections.Dictionary();
-			content.Add("HP", DEFAULT_HP);
-			content.Add("Score", 0);
-			content.Add("Inventory", InventoryListToArray(new Inventory()));
+			Godot.Collections.Dictionary content = new Godot.Collections.Dictionary
+            {
+                { "HP", DEFAULT_HP },
+                { "Score", 0 },
+                { "Inventory", InventoryListToArray(new Inventory()) }
+            };
 
 			string json = Json.Stringify(content);
 
@@ -37,7 +40,7 @@ namespace GameData {
 			Godot.Collections.Dictionary content = JsonToDictionary(filePath);
 			HP = (int)content["HP"];
 			Score = (int)content["Score"];
-			Array<String> tempInventory = (Array<String>)content["Inventory"];
+			Array<string> tempInventory = (Array<string>)content["Inventory"];
 			//Inventory -> System.Dictionary<IItemTypes,int> -> IItemTypes -> ItemA, ItemB, ItemC -> name
 			foreach (string item in tempInventory){
 				switch(item){
@@ -71,10 +74,12 @@ namespace GameData {
 		}
 		//Rewrite save file with current Data (at time of function call)
 		public void SaveGame(string filePath) {
-			Godot.Collections.Dictionary content = new Godot.Collections.Dictionary();
-			content.Add("HP", this.HP);
-			content.Add("Score", this.Score);
-			content.Add("Inventory", InventoryListToArray(this.Inventory));
+			Godot.Collections.Dictionary content = new()
+            {
+                { "HP", HP },
+                { "Score", Score },
+                { "Inventory", InventoryListToArray(Inventory) }
+            };
 
 			string json = Json.Stringify(content);
 			WriteSaveData(json, filePath);
@@ -117,6 +122,18 @@ namespace GameData {
 		}
 		public int GetScore(){
 			return Score;
+		}
+
+		public Result<int> ChangeHP(int increment) {
+			HP += increment;
+			return (HP <= 0) 
+			? GameManager.GameManager.Instance.EndGame()
+			: Result<int>.Success(HP);
+		}
+		
+		public Result<int> ChangeScore(int increment) {
+			Score += increment;
+			return Result<int>.Success(Score);
 		}
 		
 	}
