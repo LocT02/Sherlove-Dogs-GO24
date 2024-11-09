@@ -12,14 +12,13 @@ namespace GameData{
 	{
 		const int DEFAULT_HP = 100;
 		private int HP, Score;
-		public Inventory Inventory;
+		public Inventory Inventory = new Inventory();
 		public GameData(string SaveFilePath){
-			if (!Godot.FileAccess.FileExists(SaveFilePath)){
+			if (!Godot.FileAccess.FileExists(Path.Join(SaveFilePath, "GameData.json"))){
 				GD.Print("Save file does not exist, creating new save");
 				CreateNewSave(SaveFilePath);
 			} else {
 				LoadSaveData(SaveFilePath);
-				//parse amnt of items here and update Inventory.itemCount
 			}
 		}
 		//Create base dictionary with default values
@@ -71,14 +70,14 @@ namespace GameData{
 			}
 		}
 		//Rewrite save file with current Data (at time of function call)
-		private void SaveGame(string filePath){
+		public void SaveGame(string filePath){
 			Godot.Collections.Dictionary content = new Godot.Collections.Dictionary();
 			content.Add("HP", this.HP);
 			content.Add("Score", this.Score);
 			content.Add("Inventory", InventoryListToArray(this.Inventory));
 
-			WriteSaveData(filePath, Json.Stringify(content));
-
+			string json = Json.Stringify(content);
+			WriteSaveData(json, filePath);
 		}
 		private static string LoadDataFromFile(string filePath){
 			string data = null;
@@ -93,7 +92,7 @@ namespace GameData{
 		}
 		//String containing json content -> Dictionary (without item types)
 		private static Godot.Collections.Dictionary JsonToDictionary(string filePath){
-			string content = LoadDataFromFile(filePath);
+			string content = LoadDataFromFile(Path.Join(filePath, "GameData.json"));
 			Godot.Json jsonLoader = new Json();
 			Error loadError = jsonLoader.Parse(content);
 			if(loadError != Error.Ok) {GD.Print("put error code here"); return null;}
