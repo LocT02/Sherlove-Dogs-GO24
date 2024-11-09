@@ -7,13 +7,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace PlayerData{
-	public class PlayerData
+namespace GameData{
+	public class GameData
 	{
 		const int DEFAULT_HP = 100;
 		private int HP, Score;
 		public Inventory Inventory;
-		public PlayerData(string SaveFilePath = "res://Globals/Data/playerSave.json"){
+		public GameData(string SaveFilePath = "res://Globals/Data/playerSave.json"){
 			if (!Godot.FileAccess.FileExists(SaveFilePath)){
 				GD.Print("Save file does not exist, creating new save");
 				CreateNewSave(SaveFilePath);
