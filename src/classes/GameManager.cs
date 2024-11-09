@@ -5,18 +5,21 @@ using Godot;
 using System;
 using GameData;
 
-namespace GameManager {
+namespace GameManager
+{
     public partial class GameManager : Node, IGameInstance {
 
+        public static GameManager Instance { get; private set; }
 
         public override void _Ready()
         {
             //read save data into references
             //initialize all data structures before entering game
-            GameData.GameData gameData = new GameData.GameData(ProjectSettings.GlobalizePath("user://"));
+            Instance = this;
+            GameDataManager gameData = new GameDataManager(ProjectSettings.GlobalizePath("user://"));
             MainWordGame mainWordGame = new MainWordGame();
             GD.Print("Successfully started GameManager.");
-            GameManager.StartGame();
+            StartGame();
         }
 
         public static Result<string> StartGame() {
