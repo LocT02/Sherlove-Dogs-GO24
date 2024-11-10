@@ -10,9 +10,9 @@ namespace GameManager
 	public partial class GameManager : Node, IGameInstance {
 
 		public static GameManager Instance { get; private set; }
-
 		public GameDataManager gameData { get; private set; }
 		public MainWordGame mainWordGame { get; private set; }
+        public string GameState { get; } = "newgame";
 
 		public override void _Ready()
 		{
@@ -26,12 +26,10 @@ namespace GameManager
 		}
 
 		public static Result<string> StartGame() {
-			//Instantiate inventory, mainwordgame (possibly move this into game manager?),
 			//whatever else we need for assets or variables
 			//call GetWord()
 			//switch scenes??
 			return Result<string>.Success("Successfully started game with word: currentWord");
-			
 		}
 
 		public Result<Error> SceneChanger(string scenePath) {

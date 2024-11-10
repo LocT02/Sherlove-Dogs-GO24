@@ -18,9 +18,6 @@ namespace GameData {
 			if (!Godot.FileAccess.FileExists(Path.Join(SaveFilePath, "GameData.json"))){
 				GD.Print("Save file does not exist, creating new save");
 				CreateNewSave(SaveFilePath);
-			} else {
-				var attempt = LoadSaveData(SaveFilePath);
-				GD.Print(attempt.Message);
 			}
 		}
 
