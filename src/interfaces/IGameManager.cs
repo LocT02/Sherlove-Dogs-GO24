@@ -6,6 +6,7 @@ namespace IGameManager {
         string GameState { get; set; }
         Result SceneChanger(string scenePath);
         Result EndGame();
-        Result GuessAttempt(string guess);
+        Result StartGame();
+        Result<char[]> GuessAttempt(string guess);
     }
 }

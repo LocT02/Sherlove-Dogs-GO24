@@ -4,6 +4,7 @@ using IGameManager;
 using Godot;
 using System;
 using GameData;
+using System.Threading;
 
 namespace GameManager
 {
@@ -22,13 +23,13 @@ namespace GameManager
 			gameData = new GameDataManager();
 			mainWordGame = new MainWordGame();
 			GD.Print("Successfully started GameManager.");
-			StartGame();
 		}
 
-		public static Result StartGame() {
-			//whatever else we need for assets or variables
-			//call GetWord()
-			//switch scenes??
+		public Result StartGame() {
+			mainWordGame.ResetMainWordGame();
+			var newGame = mainWordGame.GetNewWord();
+			mainWordGame.Category = newGame.Value["GeneratedCategory"];
+			mainWordGame.CurrentWord = newGame.Value["GeneratedWord"];
 			return Result.Success();
 		}
 
@@ -57,37 +58,38 @@ namespace GameManager
 			: Result.Failure($"Scene Change to {scenePath} failed.");
 		}
 
-        public Result GuessAttempt(string guess) {
+        public Result<char[]> GuessAttempt(string guess) {
 
             if (guess == null) {
-                return Result.Failure("Guess is null");
+                return Result.Failure<char[]>("Guess is null");
             }
 
             var result = mainWordGame.CheckGuess(guess);
 
-            if (result.IsSuccess) {
-                // Guessed the word correctly
-                // Calculate score
-                // Add Score
-                // Reset MainWordGame
-                // Grab New Word
-
-                return Result.Success();
+			// null means no feedback = correct guess
+            if (result.Value == null) {
+				gameData.ChangeScore(1000);
+				// Returns to main Game Scene, do effects there, then call startGame again from main Game Scene?
+                return Result.Success<char[]>(null);
             }
 
-            // wrong guess
-            // calculate damage
-            // change hp
-            if (gameData.ChangeHp(mainWordGame.CalculateDamage().Value).Value <= 0) {
-				EndGame();
+            if (gameData.ChangeHp(-10).Value <= 0) {
+				return Result.Failure<char[]>("Player Died Time to Get Disowned.");
 			}
 
-            return Result.Success();
+			// Returns feedback
+            return Result.Success(result.Value);
         }
 
         public Result EndGame() {
-			// Do endgame stuff
+			// called from Main Game Scene
+			// Save high score
 			
+			return Result.Success();
+		}
+
+		public Result MidGameSave() {
+			// When the user wants to save Mid Game
 			return Result.Success();
 		}
 	}

@@ -6,6 +6,6 @@ namespace IItemsTypes
     public interface IItem {
 
         string Name { get; }
-        Result ApplyItem();
+        Result<char[]> ApplyItem();
     }
 }

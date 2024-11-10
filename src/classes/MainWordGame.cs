@@ -3,6 +3,8 @@ using IMainWordGame;
 using ResultManager;
 using GameData;
 using System;
+using System.Collections;
+using Godot;
 
 namespace MainWordGameWIPNAME
 {
@@ -11,6 +13,7 @@ namespace MainWordGameWIPNAME
         private string _CurrentWord;
         private string _Category;
         public List<char> GuessedLetters { get; set; } = new List<char>();
+        private List<char> _CorrectLetters;
 
         public MainWordGame() {
             
@@ -22,7 +25,8 @@ namespace MainWordGameWIPNAME
                 if ( value == null) {
                     throw new InvalidOperationException("Error: value cannot be null");
                 }
-                _CurrentWord = value;
+                _CurrentWord = value.ToUpper();
+                ConvertWordToList();
             }
         }
 
@@ -32,17 +36,31 @@ namespace MainWordGameWIPNAME
                 if ( value == null) {
                     throw new InvalidOperationException("Error: value cannot be null");
                 }
-                _Category = value;
+                _Category = value.ToUpper();
             }
         }
 
+        public List<char> CorrectLetters {
+            get { return _CorrectLetters; }
+            private set {
+                _CorrectLetters = value;
+            }
+        }
+
+        public Result ResetMainWordGame() {
+            CurrentWord = "";
+            Category = "";
+            GuessedLetters.Clear();
+            return Result.Success();
+        }
+
         // Gets a word to start game
-        public Result GetNewWord() {
+        public Result<Dictionary<string, string>> GetNewWord() {
 
             var data = GameDataManager.JsonToDictionary("res://Globals/Data/categories.json");
 
             if (data.IsFailure || data.Value.Count == 0) {
-                return Result.Failure("Unable to load Word Data file.");
+                return Result.Failure<Dictionary<string, string>>("Unable to load Word Data file.");
             }
 
             Random rand = new();
@@ -59,11 +77,14 @@ namespace MainWordGameWIPNAME
 
             string selectedWord = (string)words[rand.Next(words.Count)];
 
-            return Result.Success(new {Category = selectedCategory, CurrentWord = selectedWord});
+            return Result.Success(new Dictionary<string, string>{
+                {"GeneratedCategory", selectedCategory},
+                {"GeneratedWord", selectedWord}
+                });
         }
         
         // Checks guess against current word
-        public Result CheckGuess(string guess) {
+        public Result<char[]> CheckGuess(string guess) {
             // Also probably not a string return type
             guess = guess.ToUpper();
 
@@ -74,42 +95,73 @@ namespace MainWordGameWIPNAME
             }
 
             if (guess == CurrentWord) {
-                return Result.Success();
+                // Returns null no feedback needed
+                return Result.Success<char[]>(null);
             }
 
-            // Add feedback
             var feedback = GenerateFeedback(guess);
 
-            return feedback;
+            return Result.Success(feedback.Value);
+        }
+
+        private Result ConvertWordToList() {
+            CorrectLetters = new List<char>(new char[CurrentWord.Length]);
+            for (int i = 0; i < CurrentWord.Length; i++) {
+                CorrectLetters[i] = '_';
+            }
+            return Result.Success();
         }
 
         // Probably not returning a string
-        private Result GenerateFeedback(string guess) {
-            // not a success
-            // return something idk
-            return Result.Failure("Not implemented");
-        }
+        private Result<char[]> GenerateFeedback(string guess) {
+            char[] feedback = new char[CurrentWord.Length];
 
-        public Result<int> CalculatePoints() {
-            return Result.Success(1);
-        }
+            for (int i = 0; i < guess.Length; i++) {
+                char guessedLetter = guess[i];
 
-        public Result<int> CalculateDamage() {
-            return Result.Success(1);
-        }
-
-        // Reveals a letter from the current word from item use or something
-        public Result<char> RevealLetter() {
-            
-            List<char> unrevealedLetters = new List<char>();
-
-            foreach (char letter in CurrentWord) {
-                if (!GuessedLetters.Contains(letter)) {
-                    unrevealedLetters.Add(letter);
+                if (guessedLetter == CurrentWord[i]) {
+                    // Guessed Letter is in correct position
+                    CorrectLetters[i] = guessedLetter;
+                    feedback[i] = guessedLetter;
+                } else if (CurrentWord.Contains(guessedLetter) && CorrectLetters[i] == '_') {
+                    // Guessed Letter is in the word but not in correct position
+                    feedback[i] = '-';
+                } else {
+                    // Wrong Letter
+                    feedback[i] = '_';
                 }
             }
 
-            return Result.Failure<char>("Not implemented");
+            // Adds already correct letters to feedback from previous guesses
+            for (int i = 0; i < CorrectLetters.Count; i++) {
+                if (CorrectLetters[i] != '_') {
+                    feedback[i] = CorrectLetters[i];
+                }
+            }
+
+            return Result.Success(feedback);
+        }
+
+        public Result<int> CalculatePoints() {
+            return Result.Success(0);
+        }
+
+        public Result<int> CalculateDamage() {
+            return Result.Success(0);
+        }
+
+        // Reveals letters 
+        public Result<char[]> RevealLetters(List<int> indicesToReveal) {
+            
+            for (int i = 0; i < indicesToReveal.Count; i++) {
+                int index = indicesToReveal[i];
+                if (index >= 0 && index < CurrentWord.Length) {
+                    CorrectLetters[index] = CurrentWord[index];
+                }
+            }
+
+            char[] feedback = GenerateFeedback(new string(CorrectLetters.ToArray())).Value;
+            return Result.Success(feedback);
         }
     }
 }
