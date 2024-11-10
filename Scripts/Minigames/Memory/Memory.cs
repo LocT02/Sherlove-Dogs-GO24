@@ -34,7 +34,7 @@ public partial class Memory : Control
 	public enum GameStates {Entry, Memorize, Input, Transition, Win, Lose};
 	private GameStates gameState = GameStates.Entry;
 	const int DISPLAY_DURATION = 5;
-	const int TRANSITION_DURATION = 5;
+	const int TRANSITION_DURATION = 3;
 	const int START_LEVEL = 4;
 	const int NUM_OF_LEVELS = 12;
     private List<ArrowKey> arrowSequence;
@@ -121,8 +121,9 @@ public partial class Memory : Control
 			{
 				if(CheckPlayerInput()){
 					topText.Text = "Good job! You got it right!";
-					gameState = GameStates.Transition;
-					transitionTimer.Start(TRANSITION_DURATION);
+					//gameState = GameStates.Transition;
+					//transitionTimer.Start(TRANSITION_DURATION);
+					NextLevel();
 				}
 				else{
 					topText.Text = "You Lost!";
@@ -151,7 +152,6 @@ public partial class Memory : Control
 	//Starts the current level
 	private void StartLevel(){
 		//Add elements up til currentLevel
-		GD.Print("Starting level: " + currentLevel);
 		playerInput.Clear();
 		ShowSequence();
 		gameState = GameStates.Memorize;
@@ -182,18 +182,18 @@ public partial class Memory : Control
 		currentLevel += 1;
 		
 		if(currentLevel > NUM_OF_LEVELS){
-			GD.Print("All levels finished");
+			topText.Text = "All Levels finished!";
 			gameState = GameStates.Win;
 			GameWin();
 		}
 		else{
-			StartLevel();
+			gameState = GameStates.Transition;
+			transitionTimer.Start(TRANSITION_DURATION);
 		}
 	}
 	//Waits for Display Timer to end. Changes game state to "input"
 	private void OnDisplayTimerTimeout(){
 		arrowContainer.Visible=false;
-		GD.Print("Put in the sequence");
 		topText.Text = "Input the previous sequence!";
 		gameState = GameStates.Input;
 	}
@@ -219,7 +219,7 @@ public partial class Memory : Control
 		}
 	}
 	private void OnTransitionTimerTimeout(){
-		NextLevel();
+		StartLevel();
 	}
 
 	private void GameOver(){
