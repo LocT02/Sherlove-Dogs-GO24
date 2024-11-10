@@ -1,11 +1,16 @@
 using System;
 
-namespace IResult
+namespace IResultManager
 {
-    public interface IResult<T> { // interface for result 
+    public interface IResult
+    {
         bool IsSuccess { get; }
+        string Error { get; }
+        bool IsFailure { get; }
+    }
+
+    public interface IResult<T> : IResult
+    {
         T Value { get; }
-        Exception Error { get; }
-        void Logger();
     }
 }

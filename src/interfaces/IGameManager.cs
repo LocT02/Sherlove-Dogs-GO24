@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using Godot;
 using InventoryManager;
 using MainWordGameWIPNAME;
-using Result;
+using ResultManager;
 
 namespace IGameManager {
     public interface IGameInstance {
-
-        public Result<Error> SceneChanger(string scenePath);
-        public Result<int> EndGame();
-
-
         
+        string GameState { get; set; }
+        Result SceneChanger(string scenePath);
+        Result EndGame();
         
     }
 }

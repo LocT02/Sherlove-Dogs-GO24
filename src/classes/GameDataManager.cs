@@ -1,10 +1,12 @@
 using Godot;
 using Godot.Collections;
-using IItems;
+using IItemsTypes;
 using InventoryManager;
 using ItemTypes;
 using System.IO;
-using Result;
+using ResultManager;
+using System.Reflection.Metadata.Ecma335;
+using System;
 
 namespace GameData {
 	public partial class GameDataManager : Node
@@ -22,26 +24,28 @@ namespace GameData {
 		}
 
 		//Create base dictionary with default values
-		public void CreateNewSave(string filePath) {
+		public Result CreateNewSave(string filePath) {
 			Dictionary content = new()
 			{
 				{ "Hp", DEFAULT_HP },
 				{ "Score", 0 },
-				{ "Inventory", InventoryListToArray(new Inventory()) }
+				{ "Inventory", InventoryListToArray(new Inventory()).Value }
 			};
 
 			string json = Json.Stringify(content);
-
-			WriteSaveData(json, filePath);
-
-			// check if file was successfully created, return file location
+			try {
+				WriteSaveData(json, filePath);
+				return Result.Success();
+			} catch (Exception e) {
+				return Result.Failure(e.Message);
+			}
 		}
 
-		private Result<bool> LoadSaveData(string filePath) {
-			Dictionary content = JsonToDictionary(filePath);
+		private Result LoadSaveData(string filePath) {
+			Dictionary content = JsonToDictionary(filePath).Value;
 
 			if (content == null) {
-				return Result<bool>.Failure("LoadFile Returned Empty");
+				return Result.Failure("LoadFile Returned Empty");
 			}
 
 			Hp = (int)content["Hp"];
@@ -50,7 +54,7 @@ namespace GameData {
 
 			//Inventory -> System.Dictionary<IItemTypes,int> -> IItemTypes -> ItemA, ItemB, ItemC -> name
 			foreach (string itemName in tempInventory){
-				IItemTypes item = null;
+				IItem item = null;
 
 				switch(itemName){
 					case "ItemA":
@@ -71,20 +75,21 @@ namespace GameData {
 					Inventory.AddItem(item);
 				}
 			}
-			return Result<bool>.Success(true, "Successfully Loaded Save File!");
+			return Result.Success();
 		}
 
 		//Helper method to do actual writing
-		private static void WriteSaveData(string json, string filePath) {
+		private static Result WriteSaveData(string json, string filePath) {
 			if(!Directory.Exists(filePath)){
 				Directory.CreateDirectory(filePath);
 			}
 			string path = Path.Join(filePath, "GameData.json");
 			try{
 				File.WriteAllText(path, json);
+				return Result.Success();
 			}
-			catch{
-				throw;
+			catch (Exception e) {
+				return Result.Failure(e.Message);
 			}
 		}
 
@@ -95,41 +100,42 @@ namespace GameData {
 			{
 				{ "Hp", Hp },
 				{ "Score", Score },
-				{ "Inventory", InventoryListToArray(Inventory) }
+				{ "Inventory", InventoryListToArray(Inventory).Value }
 			};
 
 			string json = Json.Stringify(content);
 			WriteSaveData(json, filePath);
 		}
 
-		private static string LoadDataFromFile(string filePath){
-			string data = null;
-			if(!File.Exists(filePath)) return null;
+		private static Result<string> LoadDataFromFile(string filePath){
+			string data;
 			try{
 				data = File.ReadAllText(filePath);
 			}
-			catch{
-
+			catch (Exception e) {
+				return Result.Failure<string>(e.Message);
 			}
-			return data;
+			return Result.Success(data);
 		}
 
 		//String containing json content -> Dictionary (without item types)
-		private static Dictionary JsonToDictionary(string filePath){
-			string content = LoadDataFromFile(Path.Join(filePath, "GameData.json"));
-			Json jsonLoader = new Json();
+		private static Result<Dictionary> JsonToDictionary(string filePath){
+			string content = LoadDataFromFile(Path.Join(filePath, "GameData.json")).Value;
+			Json jsonLoader = new();
 			Error loadError = jsonLoader.Parse(content);
-			if(loadError != Error.Ok) {GD.Print("put error code here"); return null;}
-			return (Dictionary)jsonLoader.Data;
+
+			return (loadError != Error.Ok)
+			? Result.Failure<Dictionary>(loadError.ToString()) 
+			: Result.Success((Dictionary)jsonLoader.Data);
 		}
 
 		//Convert Inventory.Items -> Array of Strings for json serialization
-		private static Array<string> InventoryListToArray(Inventory inventory){
+		private static Result<Array<string>> InventoryListToArray(Inventory inventory){
 			Array<string> temp = new Array<string>();
-			foreach(IItemTypes items in inventory.Items){
+			foreach(IItem items in inventory.Items){
 				temp.Add(items.Name);
 			}
-			return temp;
+			return Result.Success(temp);
 		}
 
 		public void SetHp(int hp){
@@ -148,16 +154,17 @@ namespace GameData {
 			return Score;
 		}
 
-		public Result<int> ChangeHp(int increment) {
+		public Result ChangeHp(int increment) {
 			Hp += increment;
-			return (Hp <= 0) 
-			? GameManager.GameManager.Instance.EndGame()
-			: Result<int>.Success(Hp);
+			if (Hp <= 0) {
+				GameManager.GameManager.Instance.EndGame();
+			}
+			return Result.Success();
 		}
 		
 		public Result<int> ChangeScore(int increment) {
 			Score += increment;
-			return Result<int>.Success(Score);
+			return Result.Success(Score);
 		}
 		
 	}

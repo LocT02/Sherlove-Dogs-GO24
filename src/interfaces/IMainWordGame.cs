@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Result;
+using ResultManager;
 
 namespace IMainWordGame {
 
@@ -8,9 +8,9 @@ namespace IMainWordGame {
 
         List<char> GuessedLetters { get; set; }
 
-        Result<Tuple<string,string>> GetWord();
+        Result GetWord();
 
-        Result<string> CheckGuess(string guess);
+        Result CheckGuess(string guess);
 
         Result<char> RevealLetter();
     }

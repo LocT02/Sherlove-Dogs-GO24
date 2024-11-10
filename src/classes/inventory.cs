@@ -1,25 +1,26 @@
-using Result;
+using ResultManager;
 using IInventory;
 using System.Collections.Generic;
-using IItems;
+using IItemsTypes;
 using System;
 using Godot.Collections;
 
 namespace InventoryManager {
     public class Inventory : _IInventory {
-        public List<IItemTypes> Items { get; private set; } = new();
+        public List<IItem> Items { get; private set; } = new();
         public int ItemCount = 0;
-        public Result<IItemTypes> AddItem(IItemTypes item) {
+
+        public Result<IItem> AddItem(IItem item) {
             if (item != null) {
                 Items.Add(item);
-                return Result<IItemTypes>.Success(item, $"Successfully Added Item: {item}");
+                return Result.Success(item);
             }
-            return Result<IItemTypes>.Failure("Failed To Add Item", item);
+            return Result.Failure<IItem>("Failed to add Item");
         }
 
-        public Result<IItemTypes> RemoveItem(IItemTypes item) {
+        public Result<IItem> RemoveItem(IItem item) {
             // shrug
-            return Result<IItemTypes>.Failure("Item Not implemented", item);
+            return Result.Failure<IItem>($"Failed to Remove Item: {item}");
         }
     }
 }

@@ -1,53 +1,55 @@
 using System;
-using IResult;
+using IResultManager;
 
-namespace Result
+namespace ResultManager
 {
-    // Need to implement nongeneric overload
-    public class Result<T> : IResult<T> {
+    public class Result : IResult
+    {
+        //Result pattern class, will aid in returning errors successes, and objects
 
-        // Attributes
-        public bool IsSuccess { get; private set; }
+        public bool IsSuccess { get; }
+        public string Error { get; private set; }
+        public bool IsFailure => !IsSuccess;
 
-        public T Value { get; private set; }
-
-        public string Message { get; private set; }
-
-        public Exception Error { get; private set; }
-
-        // constructor
-        private Result(bool isSuccess, T value, string message, Exception error) {
-            IsSuccess = isSuccess;
-            Value = value;
-            Message = message;
+        protected Result(bool success, string error)
+        {
+            if (success && error != string.Empty)
+                throw new InvalidOperationException();
+            if (!success && error == string.Empty)
+                throw new InvalidOperationException();
+            IsSuccess = success;
             Error = error;
         }
 
-        // Success method
-        public static Result<T> Success(T value, string message = "Operation Successful") {
-            return new Result<T>(true, value, message, null);
-        }
-
-        // Failed method
-        public static Result<T> Failure(string message, T value = default, Exception error = null) {
-            return new Result<T>(false, value, message, error);
-        }
-
-        public override string ToString()
+        public static Result Failure(string message)
         {
-            return $"Value: {Value} || Error: {Error}";
+            return new Result(false, message);
         }
 
-        // Logger maybe?
-        public void Logger() {
-            // shrug dunno
-            if (IsSuccess)
-            {
-                //log successes?
-            } else
-            {
-                // log failure?
-            }
+        public static Result<T> Failure<T>(string message)
+        {
+            return new Result<T>(default, false, message);
+        }
+
+        public static Result Success()
+        {
+            return new Result(true, string.Empty);
+        }
+
+        public static Result<T> Success<T>(T value)
+        {
+            return new Result<T>(value, true, string.Empty);
+        }
+
+    }
+
+    public class Result<T> : Result, IResult<T>
+    {
+        public T Value { get; set; }
+
+        protected internal Result(T value, bool success, string error) : base(success, error)
+        {
+            Value = value;
         }
     }
 }

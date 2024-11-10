@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using IMainWordGame;
-using Result;
+using ResultManager;
 
 namespace MainWordGameWIPNAME
 {
@@ -16,23 +16,21 @@ namespace MainWordGameWIPNAME
         }
 
         // Gets a word to start game
-        public Result<Tuple<string, string>> GetWord() {
+        public Result GetWord() {
             // Grab a category and word
             if (CurrentWord == "") { // idk some check 
                 // set words
                 CurrentWord = "";
                 Category = "";
 
-                //return
-                Tuple<string, string> stringPair = new Tuple<string, string>(Category, CurrentWord);
-                return Result<Tuple<string,string>>.Success(stringPair);
+                return Result.Success();
             }
 
-            return Result<Tuple<string,string>>.Failure("Unable to grab category and word");
+            return Result.Failure("Unable to grab category and word");
         }
         
         // Checks guess against current word
-        public Result<string> CheckGuess(string guess) {
+        public Result CheckGuess(string guess) {
             // Also probably not a string return type
             guess = guess.ToUpper();
 
@@ -43,20 +41,20 @@ namespace MainWordGameWIPNAME
             }
 
             if (guess == CurrentWord) {
-                return Result<string>.Success("U Won or something"); //some form of success
+                return Result.Success(); //some form of success
             }
 
             // Add feedback
-            Result<string> feedback = GenerateFeedback(guess);
+            var feedback = GenerateFeedback(guess);
 
             return feedback;
         }
 
         // Probably not returning a string
-        private Result<string> GenerateFeedback(string guess) {
+        private Result GenerateFeedback(string guess) {
             // not a success
             // return something idk
-            return Result<string>.Failure("Not implemented");
+            return Result.Failure("Not implemented");
         }
 
         // Reveals a letter from the current word from item use or something
@@ -70,7 +68,7 @@ namespace MainWordGameWIPNAME
                 }
             }
 
-            return Result<char>.Failure("Not implemented");
+            return Result.Failure<char>("Not implemented");
         }
     }
 }
