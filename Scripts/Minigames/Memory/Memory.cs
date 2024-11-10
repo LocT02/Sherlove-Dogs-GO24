@@ -69,7 +69,6 @@ public partial class Memory : Control
 
 		//Generate arrow sequence (all 12)
 		arrowSequence = GenerateNewSequence(NUM_OF_LEVELS);
-		printList(arrowSequence);
 		//Empty list to store player input
 		playerInput = new List<ArrowKey>();
 		//Initialize display timer 
