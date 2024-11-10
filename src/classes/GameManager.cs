@@ -78,7 +78,7 @@ namespace GameManager
             // wrong guess
             // calculate damage
             // change hp
-            if (gameData.Hp <= 0) {
+            if (gameData.ChangeHp(mainWordGame.CalculateDamage().Value).Value <= 0) {
 				EndGame();
 			}
 

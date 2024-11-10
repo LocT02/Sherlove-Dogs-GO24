@@ -90,7 +90,7 @@ namespace MainWordGameWIPNAME
             return Result.Failure("Not implemented");
         }
 
-        public Result<int> CalculateScore() {
+        public Result<int> CalculatePoints() {
             return Result.Success(1);
         }
 

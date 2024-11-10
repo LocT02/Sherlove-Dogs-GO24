@@ -10,7 +10,7 @@ namespace IMainWordGame {
         List<char> GuessedLetters { get; set; }
         Result GetNewWord();
         Result CheckGuess(string guess);
-        Result<int> CalculateScore();
+        Result<int> CalculatePoints();
         Result<int> CalculateDamage();
         Result<char> RevealLetter();
     }

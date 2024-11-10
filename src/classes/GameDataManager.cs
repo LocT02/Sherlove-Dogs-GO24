@@ -6,15 +6,16 @@ using ItemTypes;
 using System.IO;
 using ResultManager;
 using System;
+using IGameDataManager;
 
 namespace GameData {
-	public partial class GameDataManager : Node
+	public partial class GameDataManager : Node, _IGameDataManager
 	{
 		const int DEFAULT_HP = 100;
 		private string SaveFileDirPath = ProjectSettings.GlobalizePath("user://");
 		private string SaveFilePath = Path.Join(ProjectSettings.GlobalizePath("user://"), "GameData.json");
 		private int _Hp, _Score;
-		public Inventory Inventory = new();
+		public Inventory Inventory { get; }= new();
 
 		public GameDataManager() {
 			if (!Godot.FileAccess.FileExists(SaveFilePath)) {
@@ -41,7 +42,7 @@ namespace GameData {
 			}
 		}
 
-		private Result LoadSaveData() {
+		public Result LoadSaveData() {
 			Dictionary content = JsonToDictionary(SaveFilePath).Value;
 
 			if (content == null) {
@@ -95,7 +96,7 @@ namespace GameData {
 		}
 
 		//Rewrite save file with current Data (at time of function call)
-		public void SaveGame() {
+		public Result SaveGame() {
 			// Data to be Saved
 			Dictionary content = new()
 			{
@@ -106,6 +107,7 @@ namespace GameData {
 
 			string json = Json.Stringify(content);
 			WriteSaveData(json);
+			return Result.Success();
 		}
 
 		private static Result<string> LoadDataFromFile(string filePath){
@@ -149,15 +151,14 @@ namespace GameData {
 			set { _Score = value; }
 		}
 
-		public Result ChangeHp(int increment) {
+		public Result<int> ChangeHp(int increment) {
 			Hp += increment;
-			return Result.Success();
+			return Result.Success(Hp);
 		}
 		
 		public Result ChangeScore(int increment) {
-			Score += increment;
-			return Result.Success();
+			Score = Math.Max(0, Score + increment);
+            return Result.Success();
 		}
-		
 	}
 }
