@@ -35,8 +35,13 @@ public partial class Memory : Control
 	private GameStates gameState = GameStates.Entry;
 	const int DISPLAY_DURATION = 5;
 	const int TRANSITION_DURATION = 3;
-	const int START_LEVEL = 4;
-	const int NUM_OF_LEVELS = 12;
+	const int START_LEVEL = 3;
+	const int MAX_LEVEL = 9; //MAX_LEVEL >= START_LEVEL + STEP_LEVEL(NUM_OF_ROUNDS-1)
+	const int STEP_LEVEL = 2;
+	const int NUM_OF_ROUNDS = 4;
+	private int currRound = 0;
+	private int roundsWon = 0;
+	private string playerInputString = "";
     private List<ArrowKey> arrowSequence;
     private List<ArrowKey> playerInput;
     private int currentLevel = START_LEVEL;
@@ -44,7 +49,7 @@ public partial class Memory : Control
 	private Timer transitionTimer;
 	private HBoxContainer arrowContainer;
 	private ProgressBar progressBar;
-	private Label progressBarText;
+	private RichTextLabel progressBarText;
 	private Label topText;
     private Godot.Collections.Dictionary<ArrowKey,Texture2D> arrowMap;
 
@@ -63,12 +68,13 @@ public partial class Memory : Control
 		topText = GetNode<Label>("PanelContainer/VBoxContainer/Label");
 		arrowContainer = GetNode<HBoxContainer>("PanelContainer/VBoxContainer/HBoxContainer");
 		progressBar = GetNode<ProgressBar>("PanelContainer/VBoxContainer/ProgressBar");
-		progressBarText = GetNode<Label>("PanelContainer/VBoxContainer/ProgressBar/Label");
+		progressBarText = GetNode<RichTextLabel>("PanelContainer/VBoxContainer/ProgressBar/Label");
+		progressBarText.BbcodeEnabled = true;
 		progressBar.Value = 100;
 
 
 		//Generate arrow sequence (all 12)
-		arrowSequence = GenerateNewSequence(NUM_OF_LEVELS);
+		arrowSequence = GenerateNewSequence(MAX_LEVEL);
 		//Empty list to store player input
 		playerInput = new List<ArrowKey>();
 		//Initialize display timer 
@@ -81,25 +87,9 @@ public partial class Memory : Control
 		transitionTimer.OneShot = true;
 		transitionTimer.WaitTime = TRANSITION_DURATION;
 		transitionTimer.Timeout += OnTransitionTimerTimeout;
-
+		
+		//Create a button to start ig idk 
 		StartLevel();
-
-
-		//If you want to test instantly, call StartLevel() here and get ready to play on your screen
-
-		//If the game loads too slow, tell Anthony and he will code it correctly :(
-		//The game is currently rewriting the boxes. I can rewrite it to keep the children and simply make the sequence invisible.
-
-		/*Add code to wait for input before calling StartNewLevel
-		This game flows using TIMERS
-
-		StartNewLevel displays arrows and starts displayTimer
-		Once displayTimer ends, player input is being read
-		Once player input matches currentlevel length (presses as many buttons as theyre supposed to), the player gets feedback and starts the transition timer. Player input is still blocked.
-		Once transition timer ends, NextLevel() is called and starts a new level via StartLevel()
-		StartLevel() clears playerInput and starts the displayTimer again after showing the new sequence. Player input is still blocked until this timer ends
-		Repeat
-		*/
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -109,48 +99,52 @@ public partial class Memory : Control
 		//(int)(displayTimer.TimeLeft/displayTimer.WaitTime*100) : (int)(1-(transitionTimer.TimeLeft/transitionTimer.WaitTime)*100);
 		if(gameState == GameStates.Memorize){
 			progressBar.Value = (int)(displayTimer.TimeLeft/displayTimer.WaitTime*100);
-			progressBarText.Text = displayTimer.TimeLeft.ToString("0.0") + 's';
+			progressBarText.Text = $"[center]{displayTimer.TimeLeft.ToString("0.0") + 's'}[/center]";
 		}
 		if(gameState == GameStates.Transition){
 			progressBar.Value = (int)((1-transitionTimer.TimeLeft/transitionTimer.WaitTime)*100);
-			progressBarText.Text = transitionTimer.TimeLeft.ToString("0.0") + 's';
+			progressBarText.Text = $"[center]{transitionTimer.TimeLeft.ToString("0.0") + 's'}[/center]";
 		}
 		if(gameState == GameStates.Input){
+			progressBarText.Text = $"[center]{playerInputString}[/center]";
 			if(playerInput.Count >= currentLevel)
 			{
+				progressBarText.Clear();
 				if(CheckPlayerInput()){
 					topText.Text = "Good job! You got it right!";
-					//gameState = GameStates.Transition;
-					//transitionTimer.Start(TRANSITION_DURATION);
-					NextLevel();
+					NextLevel(true);
 				}
 				else{
-					topText.Text = "You Lost!";
-					gameState = GameStates.Lose;
-					GameOver();
+					topText.Text = "Uh oh, try again!";
+					NextLevel(false);
 				}
 			}
 			if (Input.IsActionJustPressed("ui_left"))
 			{
 				playerInput.Add(ArrowKey.Left);
+				playerInputString += "←";
 			}
 			else if (Input.IsActionJustPressed("ui_right"))
 			{
 				playerInput.Add(ArrowKey.Right);
+				playerInputString += "→";
 			}
 			else if (Input.IsActionJustPressed("ui_up"))
 			{
 				playerInput.Add(ArrowKey.Up);
+				playerInputString += "↑";
 			}
 			else if (Input.IsActionJustPressed("ui_down"))
 			{
 				playerInput.Add(ArrowKey.Down);
+				playerInputString += "↓";
 			}
 		}
 	}
 	//Starts the current level
 	private void StartLevel(){
 		//Add elements up til currentLevel
+		currRound++;
 		playerInput.Clear();
 		ShowSequence();
 		gameState = GameStates.Memorize;
@@ -174,16 +168,22 @@ public partial class Memory : Control
 				return false;
 			}
 		}
+		roundsWon++;
 		return true;
 	}
 	//Continue to next level upon win
-	private void NextLevel(){
-		currentLevel += 1;
-		
-		if(currentLevel > NUM_OF_LEVELS){
-			topText.Text = "All Levels finished!";
-			gameState = GameStates.Win;
-			GameWin();
+	private void NextLevel(bool localWin){
+		if(localWin) currentLevel += STEP_LEVEL;
+		if(currRound >= 4){
+			if((float)roundsWon/NUM_OF_ROUNDS >= 0.75){
+				topText.Text = "You win!";
+				gameState = GameStates.Win;
+				GameWin();
+			}else {
+				topText.Text = "You Lost!";
+				gameState = GameStates.Lose;
+				GameOver();
+			}
 		}
 		else{
 			gameState = GameStates.Transition;
@@ -195,6 +195,7 @@ public partial class Memory : Control
 		arrowContainer.Visible=false;
 		topText.Text = "Input the previous sequence!";
 		gameState = GameStates.Input;
+		progressBarText.Text = "";
 	}
 	//Show the sequence
 	private void ShowSequence(){
@@ -220,16 +221,15 @@ public partial class Memory : Control
 	private void OnTransitionTimerTimeout(){
 		StartLevel();
 	}
-
+	private void printList(List<ArrowKey> list){
+		foreach(ArrowKey key in list){
+			GD.Print(key);
+		}
+	}
 	private void GameOver(){
 		//TODO
 	}
 	private void GameWin(){
 		//TODO
-	}
-	private void printList(List<ArrowKey> list){
-		foreach(ArrowKey key in list){
-			GD.Print(key);
-		}
 	}
 }
