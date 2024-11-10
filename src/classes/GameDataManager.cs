@@ -5,26 +5,26 @@ using InventoryManager;
 using ItemTypes;
 using System.IO;
 using ResultManager;
-using System.Reflection.Metadata.Ecma335;
 using System;
 
 namespace GameData {
 	public partial class GameDataManager : Node
 	{
 		const int DEFAULT_HP = 100;
-		private string SaveFilePath = ProjectSettings.GlobalizePath("user://");
-		private int Hp, Score;
+		private string SaveFileDirPath = ProjectSettings.GlobalizePath("user://");
+		private string SaveFilePath = Path.Join(ProjectSettings.GlobalizePath("user://"), "GameData.json");
+		private int _Hp, _Score;
 		public Inventory Inventory = new();
 
 		public GameDataManager() {
-			if (!Godot.FileAccess.FileExists(Path.Join(SaveFilePath, "GameData.json"))){
+			if (!Godot.FileAccess.FileExists(SaveFilePath)) {
 				GD.Print("Save file does not exist, creating new save");
-				CreateNewSave(SaveFilePath);
+				CreateNewSave();
 			}
 		}
 
 		//Create base dictionary with default values
-		public Result CreateNewSave(string filePath) {
+		public Result CreateNewSave() {
 			Dictionary content = new()
 			{
 				{ "Hp", DEFAULT_HP },
@@ -34,15 +34,15 @@ namespace GameData {
 
 			string json = Json.Stringify(content);
 			try {
-				WriteSaveData(json, filePath);
+				WriteSaveData(json);
 				return Result.Success();
 			} catch (Exception e) {
 				return Result.Failure(e.Message);
 			}
 		}
 
-		private Result LoadSaveData(string filePath) {
-			Dictionary content = JsonToDictionary(filePath).Value;
+		private Result LoadSaveData() {
+			Dictionary content = JsonToDictionary(SaveFilePath).Value;
 
 			if (content == null) {
 				return Result.Failure("LoadFile Returned Empty");
@@ -79,13 +79,14 @@ namespace GameData {
 		}
 
 		//Helper method to do actual writing
-		private static Result WriteSaveData(string json, string filePath) {
-			if(!Directory.Exists(filePath)){
-				Directory.CreateDirectory(filePath);
+		private Result WriteSaveData(string json) {
+
+			if(!Directory.Exists(SaveFileDirPath)){
+				Directory.CreateDirectory(SaveFileDirPath);
 			}
-			string path = Path.Join(filePath, "GameData.json");
+
 			try{
-				File.WriteAllText(path, json);
+				File.WriteAllText(SaveFilePath, json);
 				return Result.Success();
 			}
 			catch (Exception e) {
@@ -94,7 +95,7 @@ namespace GameData {
 		}
 
 		//Rewrite save file with current Data (at time of function call)
-		public void SaveGame(string filePath) {
+		public void SaveGame() {
 			// Data to be Saved
 			Dictionary content = new()
 			{
@@ -104,7 +105,7 @@ namespace GameData {
 			};
 
 			string json = Json.Stringify(content);
-			WriteSaveData(json, filePath);
+			WriteSaveData(json);
 		}
 
 		private static Result<string> LoadDataFromFile(string filePath){
@@ -119,8 +120,8 @@ namespace GameData {
 		}
 
 		//String containing json content -> Dictionary (without item types)
-		private static Result<Dictionary> JsonToDictionary(string filePath){
-			string content = LoadDataFromFile(Path.Join(filePath, "GameData.json")).Value;
+		public static Result<Dictionary> JsonToDictionary(string filePath) {
+			string content = LoadDataFromFile(filePath).Value;
 			Json jsonLoader = new();
 			Error loadError = jsonLoader.Parse(content);
 
@@ -138,33 +139,24 @@ namespace GameData {
 			return Result.Success(temp);
 		}
 
-		public void SetHp(int hp){
-			Hp=hp;
+		public int Hp {
+			get { return _Hp; }
+			set { _Hp = value; }
 		}
 
-		public int GetHp(){
-			return Hp;
-		}
-
-		public void SetScore(int score){
-			Score = score;
-		}
-		
-		public int GetScore(){
-			return Score;
+		public int Score {
+			get { return _Score; }
+			set { _Score = value; }
 		}
 
 		public Result ChangeHp(int increment) {
 			Hp += increment;
-			if (Hp <= 0) {
-				GameManager.GameManager.Instance.EndGame();
-			}
 			return Result.Success();
 		}
 		
-		public Result<int> ChangeScore(int increment) {
+		public Result ChangeScore(int increment) {
 			Score += increment;
-			return Result.Success(Score);
+			return Result.Success();
 		}
 		
 	}

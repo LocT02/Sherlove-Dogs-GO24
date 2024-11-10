@@ -2,8 +2,6 @@ using ResultManager;
 using IInventory;
 using System.Collections.Generic;
 using IItemsTypes;
-using System;
-using Godot.Collections;
 
 namespace InventoryManager {
     public class Inventory : _IInventory {

@@ -57,7 +57,35 @@ namespace GameManager
 			: Result.Failure($"Scene Change to {scenePath} failed.");
 		}
 
-		public Result EndGame() {
+        public Result GuessAttempt(string guess) {
+
+            if (guess == null) {
+                return Result.Failure("Guess is null");
+            }
+
+            var result = mainWordGame.CheckGuess(guess);
+
+            if (result.IsSuccess) {
+                // Guessed the word correctly
+                // Calculate score
+                // Add Score
+                // Reset MainWordGame
+                // Grab New Word
+
+                return Result.Success();
+            }
+
+            // wrong guess
+            // calculate damage
+            // change hp
+            if (gameData.Hp <= 0) {
+				EndGame();
+			}
+
+            return Result.Success();
+        }
+
+        public Result EndGame() {
 			// Do endgame stuff
 			
 			return Result.Success();
