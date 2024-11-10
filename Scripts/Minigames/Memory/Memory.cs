@@ -29,7 +29,8 @@ Upon game over
 public partial class Memory : Control
 {
 	public enum ArrowKey {Left, Right, Up, Down};
-	const int TIMER_DURATION = 5;
+	const int DISPLAY_DURATION = 5;
+	const int TRANSITION_DURATION = 5;
 	const int START_LEVEL = 4;
 	const int NUM_OF_LEVELS = 12;
     private List<ArrowKey> arrowSequence;
@@ -60,12 +61,28 @@ public partial class Memory : Control
 		playerInput = new List<ArrowKey>();
 		//Initialize display timer 
 		displayTimer = new Timer();
-		displayTimer.WaitTime = TIMER_DURATION;
+		displayTimer.WaitTime = DISPLAY_DURATION;
 		displayTimer.Timeout += OnDisplayTimerTimeout;
 		//Initialize transition timer
 		transitionTimer = new Timer();
-		transitionTimer.WaitTime = TIMER_DURATION;
+		transitionTimer.WaitTime = TRANSITION_DURATION;
 		transitionTimer.Timeout += OnTransitionTimerTimeout;
+
+		//If you want to test instantly, call StartNewLevel() here and get ready to play on your screen
+
+		//If the game loads too slow, tell Anthony and he will code it correctly :(
+		//The game is currently rewriting the boxes. I can rewrite it to keep the children and simply make the sequence invisible.
+
+		/*Add code to wait for input before calling StartNewLevel
+		This game flows using TIMERS
+
+		StartNewLevel displays arrows and starts displayTimer
+		Once displayTimer ends, player input is being read
+		Once player input matches currentlevel length (presses as many buttons as theyre supposed to), the player gets feedback and starts the transition timer. Player input is still blocked.
+		Once transition timer ends, NextLevel() is called and starts a new level via StartLevel()
+		StartLevel() clears playerInput and starts the displayTimer again after showing the new sequence. Player input is still blocked until this timer ends
+		Repeat
+		*/
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -91,7 +108,7 @@ public partial class Memory : Control
 			playerInput.Add(ArrowKey.Down);
 		}
 	}
-	private void StartNewLevel(){
+	private void StartLevel(){
 		//Add elements up til currentLevel
 		GD.Print("Starting level: " + currentLevel);
 		playerInput.Clear();
@@ -126,7 +143,7 @@ public partial class Memory : Control
 			GameWin();
 		}
 		else{
-			StartNewLevel();
+			StartLevel();
 		}
 	}
 	private void OnDisplayTimerTimeout(){
