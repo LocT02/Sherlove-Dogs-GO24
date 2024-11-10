@@ -59,6 +59,12 @@ namespace GameManager
 		}
 
         public Result<char[]> GuessAttempt(string guess) {
+			// Returns a list of characters:
+			// Apple is the word
+			// Guess is Apart
+			// Will return : ['A','P','_','_','_']
+			// '_' = wrong letter || '-' = wrong position
+			// mainWordGame contains GuessedLetters for letters to display what they guessed.
 
             if (guess == null) {
                 return Result.Failure<char[]>("Guess is null");
