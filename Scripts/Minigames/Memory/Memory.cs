@@ -3,6 +3,7 @@ using Godot.Collections;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 /*
 Game flow:
@@ -29,6 +30,9 @@ Upon game over
 public partial class Memory : Control
 {
 	public enum ArrowKey {Left, Right, Up, Down};
+
+	public enum GameStates {Entry, Memorize, Input, Transition, Win, Lose};
+	private GameStates gameState = GameStates.Entry;
 	const int DISPLAY_DURATION = 5;
 	const int TRANSITION_DURATION = 5;
 	const int START_LEVEL = 4;
@@ -39,6 +43,9 @@ public partial class Memory : Control
     private Timer displayTimer;
 	private Timer transitionTimer;
 	private HBoxContainer arrowContainer;
+	private ProgressBar progressBar;
+	private Label progressBarText;
+	private Label topText;
     private Godot.Collections.Dictionary<ArrowKey,Texture2D> arrowMap;
 
 	public override void _Ready()
@@ -52,23 +59,34 @@ public partial class Memory : Control
 			{ArrowKey.Down, (Texture2D)GD.Load("res://Assets/Icons/down_arrow.svg")}
 		};
 
-		//Get reference to HBoxContainer for arrow display
+		//Get references
+		topText = GetNode<Label>("PanelContainer/VBoxContainer/Label");
 		arrowContainer = GetNode<HBoxContainer>("PanelContainer/VBoxContainer/HBoxContainer");
+		progressBar = GetNode<ProgressBar>("PanelContainer/VBoxContainer/ProgressBar");
+		progressBarText = GetNode<Label>("PanelContainer/VBoxContainer/ProgressBar/Label");
+		progressBar.Value = 100;
+
 
 		//Generate arrow sequence (all 12)
 		arrowSequence = GenerateNewSequence(NUM_OF_LEVELS);
+		printList(arrowSequence);
 		//Empty list to store player input
 		playerInput = new List<ArrowKey>();
 		//Initialize display timer 
-		displayTimer = new Timer();
+		displayTimer = GetNode<Timer>("DisplayTimer");
+		displayTimer.OneShot = true;
 		displayTimer.WaitTime = DISPLAY_DURATION;
 		displayTimer.Timeout += OnDisplayTimerTimeout;
 		//Initialize transition timer
-		transitionTimer = new Timer();
+		transitionTimer = GetNode<Timer>("TransitionTimer");
+		transitionTimer.OneShot = true;
 		transitionTimer.WaitTime = TRANSITION_DURATION;
 		transitionTimer.Timeout += OnTransitionTimerTimeout;
 
-		//If you want to test instantly, call StartNewLevel() here and get ready to play on your screen
+		StartLevel();
+
+
+		//If you want to test instantly, call StartLevel() here and get ready to play on your screen
 
 		//If the game loads too slow, tell Anthony and he will code it correctly :(
 		//The game is currently rewriting the boxes. I can rewrite it to keep the children and simply make the sequence invisible.
@@ -88,33 +106,59 @@ public partial class Memory : Control
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		if(!displayTimer.IsStopped() || playerInput.Count >= currentLevel){
-			return;
+		
+		//(int)(displayTimer.TimeLeft/displayTimer.WaitTime*100) : (int)(1-(transitionTimer.TimeLeft/transitionTimer.WaitTime)*100);
+		if(gameState == GameStates.Memorize){
+			progressBar.Value = (int)(displayTimer.TimeLeft/displayTimer.WaitTime*100);
+			progressBarText.Text = displayTimer.TimeLeft.ToString("0.0") + 's';
 		}
-		if (Input.IsActionJustPressed("ui_left"))
-		{
-			playerInput.Add(ArrowKey.Left);
+		if(gameState == GameStates.Transition){
+			progressBar.Value = (int)((1-transitionTimer.TimeLeft/transitionTimer.WaitTime)*100);
+			progressBarText.Text = transitionTimer.TimeLeft.ToString("0.0") + 's';
 		}
-		else if (Input.IsActionJustPressed("ui_right"))
-		{
-			playerInput.Add(ArrowKey.Right);
-		}
-		else if (Input.IsActionJustPressed("ui_up"))
-		{
-			playerInput.Add(ArrowKey.Up);
-		}
-		else if (Input.IsActionJustPressed("ui_down"))
-		{
-			playerInput.Add(ArrowKey.Down);
+		if(gameState == GameStates.Input){
+			if(playerInput.Count >= currentLevel)
+			{
+				if(CheckPlayerInput()){
+					topText.Text = "Good job! You got it right!";
+					gameState = GameStates.Transition;
+					transitionTimer.Start(TRANSITION_DURATION);
+				}
+				else{
+					topText.Text = "You Lost!";
+					gameState = GameStates.Lose;
+					GameOver();
+				}
+			}
+			if (Input.IsActionJustPressed("ui_left"))
+			{
+				playerInput.Add(ArrowKey.Left);
+			}
+			else if (Input.IsActionJustPressed("ui_right"))
+			{
+				playerInput.Add(ArrowKey.Right);
+			}
+			else if (Input.IsActionJustPressed("ui_up"))
+			{
+				playerInput.Add(ArrowKey.Up);
+			}
+			else if (Input.IsActionJustPressed("ui_down"))
+			{
+				playerInput.Add(ArrowKey.Down);
+			}
 		}
 	}
+	//Starts the current level
 	private void StartLevel(){
 		//Add elements up til currentLevel
 		GD.Print("Starting level: " + currentLevel);
 		playerInput.Clear();
 		ShowSequence();
-		displayTimer.Start();
+		gameState = GameStates.Memorize;
+		topText.Text = "Memorize the sequence!";
+		displayTimer.Start(DISPLAY_DURATION);
 	}
+	//Generates a new sequence and returns it
 	private static List<ArrowKey> GenerateNewSequence(int length){
 		var random = new Random();
 		var newSequence = new List<ArrowKey>();
@@ -124,32 +168,36 @@ public partial class Memory : Control
 		}
 		return newSequence;
 	}
-	private void CheckPlayerInput(){
+	//Check players input against sequence
+	private bool CheckPlayerInput(){
 		for (int i = 0; i < playerInput.Count; i++){
 			if(playerInput[i] != arrowSequence[i]){
-				GameOver();
-				return;
+				return false;
 			}
 		}
-		GD.Print("Level Completed");
-		transitionTimer.Start();
+		return true;
 	}
-
+	//Continue to next level upon win
 	private void NextLevel(){
 		currentLevel += 1;
 		
 		if(currentLevel > NUM_OF_LEVELS){
 			GD.Print("All levels finished");
+			gameState = GameStates.Win;
 			GameWin();
 		}
 		else{
 			StartLevel();
 		}
 	}
+	//Waits for Display Timer to end. Changes game state to "input"
 	private void OnDisplayTimerTimeout(){
 		arrowContainer.Visible=false;
 		GD.Print("Put in the sequence");
+		topText.Text = "Input the previous sequence!";
+		gameState = GameStates.Input;
 	}
+	//Show the sequence
 	private void ShowSequence(){
 		ClearChildren(arrowContainer);
 		for (var i = 0; i < currentLevel; i++){
@@ -157,10 +205,10 @@ public partial class Memory : Control
 		}
 		arrowContainer.Visible = true;
 	}
+	//Add arrows by index from arrowSequence
 	private void AddBox(int idx){
 		var arrow = new TextureRect();
 		arrow.Texture = arrowMap[arrowSequence[idx]];
-		arrow.SetSize(new Vector2(64,64));
 		arrow.StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered;
 		arrowContainer.AddChild(arrow);
 	}
@@ -179,5 +227,10 @@ public partial class Memory : Control
 	}
 	private void GameWin(){
 		//TODO
+	}
+	private void printList(List<ArrowKey> list){
+		foreach(ArrowKey key in list){
+			GD.Print(key);
+		}
 	}
 }
