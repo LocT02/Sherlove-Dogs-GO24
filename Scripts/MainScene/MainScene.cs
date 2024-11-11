@@ -75,6 +75,8 @@ public partial class MainScene : Node2D
 		}
 
 		if (guessResult.Value == null) {
+			GD.Print($"Current HP: {gameInstance.gameData.Hp}");
+			GD.Print($"Current Score: {gameInstance.gameData.Score}");
 			// Correct Guess
 			// Play effects here?
 

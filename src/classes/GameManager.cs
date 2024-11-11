@@ -83,8 +83,6 @@ namespace GameManager
 			if (gameData.ChangeHp(-10).Value <= 0) {
 				return Result.Failure<char[]>("Hp0");
 			}
-			GD.Print($"Current HP: {gameData.Hp}");
-			GD.Print($"Current Score: {gameData.Score}");
 			// Returns feedback
 			return result;
 		}
