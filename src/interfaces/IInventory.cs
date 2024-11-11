@@ -1,15 +1,14 @@
-using Result;
-using ItemTypes;
+using ResultManager;
 using System.Collections.Generic;
-using IItems;
+using IItemsTypes;
 using Godot.Collections;
 
 namespace IInventory
 {
     public interface _IInventory {
 
-        List<IItemTypes> Items { get; }
-        Result<IItemTypes> AddItem(IItemTypes item);
-        Result<IItemTypes> RemoveItem(IItemTypes item);
+        List<IItem> Items { get; }
+        Result<IItem> AddItem(IItem item);
+        Result<IItem> RemoveItem(IItem item);
     }
 }

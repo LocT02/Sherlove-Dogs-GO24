@@ -1,11 +1,11 @@
-using Result;
+using ResultManager;
 
-namespace IItems
+namespace IItemsTypes
 {
     // Need better names for namespace, class, and interface :P
-    public interface IItemTypes {
+    public interface IItem {
 
         string Name { get; }
-        Result<string> ApplyItem();
+        Result ApplyItem();
     }
 }

@@ -1,32 +1,32 @@
-using IItems;
-using Result;
+using IItemsTypes;
+using ResultManager;
 
 namespace ItemTypes {
 
-    public class ItemA : IItemTypes {
+    public class ItemA : IItem {
 
         public string Name { get; }= "FreeAttempt"; // Sample Name
 
-        public Result<string> ApplyItem() {
-            return Result<string>.Failure("Apply Not Implemented", Name);
+        public Result ApplyItem() {
+            return Result.Failure($"Item: {Name} Application Not Implemented");
         }
     }
 
-    public class ItemB : IItemTypes {
+    public class ItemB : IItem {
 
         public string Name { get; } = "RandomLetters"; // Sample Name
         
-        public Result<string> ApplyItem() {
-            return Result<string>.Failure("Apply Not Implemented", Name);
+        public Result ApplyItem() {
+            return Result.Failure($"Item: {Name} Application Not Implemented");
         }
     }
 
-    public class ItemC : IItemTypes {
+    public class ItemC : IItem {
 
         public string Name { get; } = "RevealLetter"; // Sample Name
 
-        public Result<string> ApplyItem() {
-            return Result<string>.Failure("Apply Not Implemented", Name);
+        public Result ApplyItem() {
+            return Result.Failure($"Item: {Name} Application Not Implemented");
         }
     }
 }
