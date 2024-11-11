@@ -146,6 +146,7 @@ public partial class Memory : Control
 		//Add elements up til currentLevel
 		currRound++;
 		playerInput.Clear();
+		playerInputString ="";
 		ShowSequence();
 		gameState = GameStates.Memorize;
 		topText.Text = "Memorize the sequence!";
