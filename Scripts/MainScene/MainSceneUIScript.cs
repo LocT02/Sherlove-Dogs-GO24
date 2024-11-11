@@ -49,8 +49,6 @@ public partial class MainSceneUIScript : CanvasLayer
 			return Result.Failure<string>("Guess Input is Null or empty");
 		}
 
-		GD.Print(GuessInputField.MaxLength);
-		GD.Print(GuessInputField.Text.Length);
 		if (GuessInputField.MaxLength != GuessInputField.Text.Length ) {
 			return Result.Failure<string>("Guess Input is Not Filled");
 		}
