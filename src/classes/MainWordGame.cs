@@ -3,8 +3,6 @@ using IMainWordGame;
 using ResultManager;
 using GameData;
 using System;
-using System.Collections;
-using Godot;
 
 namespace MainWordGameWIPNAME
 {
@@ -152,6 +150,10 @@ namespace MainWordGameWIPNAME
 
         // Reveals letters 
         public Result<char[]> RevealLetters(List<int> indicesToReveal) {
+
+            if (indicesToReveal.Count == 0 || indicesToReveal == null) {
+                return Result.Failure<char[]>("No Indices To Reveal");
+            }
             
             for (int i = 0; i < indicesToReveal.Count; i++) {
                 int index = indicesToReveal[i];
