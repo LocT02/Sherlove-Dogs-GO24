@@ -32,6 +32,7 @@ namespace GameManager
 			}
 			mainWordGame.Category = newGame.Value["GeneratedCategory"];
 			mainWordGame.CurrentWord = newGame.Value["GeneratedWord"];
+			GD.Print($"Successfully started game with the word {newGame.Value["GeneratedWord"]}");
 			return Result.Success();
 		}
 
@@ -68,10 +69,6 @@ namespace GameManager
 			// '_' = wrong letter || '-' = wrong position
 			// mainWordGame contains GuessedLetters for letters to display what they guessed.
 
-			if (guess == null) {
-				return Result.Failure<char[]>("Guess is null");
-			}
-
 			var result = mainWordGame.CheckGuess(guess);
 
 			// null means no feedback = correct guess
@@ -82,11 +79,11 @@ namespace GameManager
 			}
 
 			if (gameData.ChangeHp(-10).Value <= 0) {
-				return Result.Failure<char[]>("Player Died Time to Get Disowned.");
+				return Result.Failure<char[]>("Hp0");
 			}
 
 			// Returns feedback
-			return Result.Success(result.Value);
+			return result;
 		}
 
 		public Result EndGame() {

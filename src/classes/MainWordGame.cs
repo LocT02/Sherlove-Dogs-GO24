@@ -99,7 +99,7 @@ namespace MainWordGameWIPNAME
 
             var feedback = GenerateFeedback(guess);
 
-            return Result.Success(feedback.Value);
+            return feedback;
         }
 
         private Result ConvertWordToList() {
