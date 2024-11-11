@@ -16,14 +16,14 @@ public partial class MainSceneUIScript : CanvasLayer
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		MainScene = GetTree().Root.GetNode<MainScene>("MainScene");
-		CategoryLabel = GetNode<Label>("CategoryLabel");
-		FeedbackLabel = GetNode<Label>("FeedbackLabel");
-		GuessInputField = GetNode<LineEdit>("GuessInputField");
-		SubmitGuessButton = GetNode<Button>("SubmitGuessButton");
-		ItemSlot1 = GetNode<Button>("ItemSlot1");
-		ItemSlot2 = GetNode<Button>("ItemSlot2");
-		ItemSlot3 = GetNode<Button>("ItemSlot3");
+		MainScene = GetTree().Root.GetNode<Node2D>("MainSceneNode") as MainScene;
+		CategoryLabel = GetNode<Label>("WordUI/WordGameContainer/CategoryLabel");
+		FeedbackLabel = GetNode<Label>("WordUI/WordGameContainer/FeedbackLabel");
+		GuessInputField = GetNode<LineEdit>("WordUI/WordGameContainer/GuessInputField");
+		SubmitGuessButton = GetNode<Button>("WordUI/WordGameContainer/SubmitGuessButton");
+		ItemSlot1 = GetNode<Button>("WordUI/ItemButtonContainer/ItemSlot1");
+		ItemSlot2 = GetNode<Button>("WordUI/ItemButtonContainer/ItemSlot2");
+		ItemSlot3 = GetNode<Button>("WordUI/ItemButtonContainer/ItemSlot3");
 
 		GD.Print("Successfully Loaded Main Scene UI?");
 	}
@@ -49,7 +49,9 @@ public partial class MainSceneUIScript : CanvasLayer
 			return Result.Failure<string>("Guess Input is Null or empty");
 		}
 
-		if (GuessInputField.Text.Length != GuessInputField.MaxLength) {
+		GD.Print(GuessInputField.MaxLength);
+		GD.Print(GuessInputField.Text.Length);
+		if (GuessInputField.MaxLength != GuessInputField.Text.Length ) {
 			return Result.Failure<string>("Guess Input is Not Filled");
 		}
 
@@ -84,6 +86,8 @@ public partial class MainSceneUIScript : CanvasLayer
 
 		if (guess.IsFailure) {
 			GD.Print(guess.Error);
+			SubmitGuessButton.Disabled = false;
+			ClearInputField();
 			return;
 		}
 
@@ -95,7 +99,8 @@ public partial class MainSceneUIScript : CanvasLayer
 			throw new InvalidProgramException(result.Error);
 		}
 
-		// else everything goochi reenable button 
+		// else everything goochi clear input reenable button
+		ClearInputField();
 		SubmitGuessButton.Disabled = false;
 	}
 

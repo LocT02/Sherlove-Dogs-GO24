@@ -18,12 +18,16 @@ public partial class MainScene : Node2D
 			// Grabs UI Elements
 			UIScript = GetNode<MainSceneUIScript>("MainSceneUI");
 
+			gameInstance.gameData.Hp = 100;
+			gameInstance.gameData.Score = 0;
+
 			var newWordResult = SetNewWord();
 
 			if (newWordResult.IsFailure) {
 				throw new InvalidProgramException(newWordResult.Error);
 			}
 			
+			GD.Print("Loaded Main Scene");
 			// End Transition effect
 		}
 	}
@@ -48,7 +52,8 @@ public partial class MainScene : Node2D
 		// set hp and score later
 		// Add guessed letters later
 		var category = UIScript.UpdateCategoryLabel($"Category: {gameInstance.mainWordGame.Category}");
-		var feedback = UIScript.UpdateFeedbackLabel($"Feedback: {gameInstance.mainWordGame.CorrectLetters}");
+		string feedbackString = string.Join("  ", gameInstance.mainWordGame.CorrectLetters);
+		var feedback = UIScript.UpdateFeedbackLabel($"Feedback:  {feedbackString}");
 		var inputFieldContraints = UIScript.SetInputConstraints(gameInstance.mainWordGame.CurrentWord.Length);
 
 		return (category.IsFailure || feedback.IsFailure || inputFieldContraints.IsFailure) 
@@ -62,7 +67,6 @@ public partial class MainScene : Node2D
 		if (guessResult.IsFailure) {
 			// Hp is 0
 			// Play effects here?
-
 
 			gameInstance.EndGame();
 			return Result.Success("Game Ending");
@@ -84,9 +88,8 @@ public partial class MainScene : Node2D
 		}
 
 		// set new feedback, clear inputfield.
-
-		var feedback = UIScript.UpdateFeedbackLabel($"Feedback: {guessResult.Value}");
-		UIScript.ClearInputField();
+		string feedbackString = string.Join("  ", guessResult.Value);
+		var feedback = UIScript.UpdateFeedbackLabel($"Feedback:  {feedbackString}");
 
 		if (feedback.IsFailure) {
 			return feedback;

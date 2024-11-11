@@ -26,9 +26,11 @@ namespace GameManager
 
 		public Result StartGame() {
 			mainWordGame.ResetMainWordGame();
+
 			var newGame = mainWordGame.GetNewWord();
-			if (newGame.Value.Count != 2 || newGame.IsFailure) {
-				return Result.Failure("Failed to Start Game");
+
+			if (newGame.IsFailure || newGame.Value.Count != 2) {
+				return Result.Failure(newGame.Error);
 			}
 			mainWordGame.Category = newGame.Value["GeneratedCategory"];
 			mainWordGame.CurrentWord = newGame.Value["GeneratedWord"];
@@ -81,7 +83,7 @@ namespace GameManager
 			if (gameData.ChangeHp(-10).Value <= 0) {
 				return Result.Failure<char[]>("Hp0");
 			}
-
+			GD.Print($"Current HP: {gameData.Hp}");
 			// Returns feedback
 			return result;
 		}

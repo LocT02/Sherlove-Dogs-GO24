@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://bfker6m1dx5m5"]
+[gd_scene load_steps=7 format=3 uid="uid://bfker6m1dx5m5"]
 
 [ext_resource type="Texture2D" uid="uid://b5tk3r6lkyip4" path="res://icon.svg" id="1_1vqta"]
+[ext_resource type="Script" path="res://Scripts/MainScene/MainScene.cs" id="1_2enir"]
 [ext_resource type="Script" path="res://Scripts/MainScene/MainSceneUIScript.cs" id="1_hlaxv"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerMovement.cs" id="2_crnmh"]
 
@@ -10,8 +11,9 @@ size = Vector2(127, 128)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a1v6n"]
 size = Vector2(127, 129)
 
-[node name="Node2D" type="Node2D"]
+[node name="MainSceneNode" type="Node2D"]
 position = Vector2(30, 1018)
+script = ExtResource("1_2enir")
 
 [node name="MainSceneUI" type="CanvasLayer" parent="."]
 script = ExtResource("1_hlaxv")
