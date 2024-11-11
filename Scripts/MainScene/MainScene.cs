@@ -5,10 +5,13 @@ using System;
 public partial class MainScene : Node2D
 {
 	// Called when the node enters the scene tree for the first time.
+	private GameManager.GameManager gameInstance;
 	public override void _Ready()
 	{
-		if (GameManager.GameManager.Instance.GameState == "continue") {
-			
+		// Need some sort of transition effect here
+		gameInstance = GameManager.GameManager.Instance;
+		if (gameInstance.GameState == "continue") {
+			gameInstance.gameData.LoadSaveData();
 		}
 	}
 
