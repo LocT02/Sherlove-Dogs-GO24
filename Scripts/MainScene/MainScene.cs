@@ -20,6 +20,8 @@ public partial class MainScene : Node2D
 
 			gameInstance.gameData.Hp = 100;
 			gameInstance.gameData.Score = 0;
+			GD.Print($"Current HP: {gameInstance.gameData.Hp}");
+			GD.Print($"Current Score: {gameInstance.gameData.Score}");
 
 			var newWordResult = SetNewWord();
 
