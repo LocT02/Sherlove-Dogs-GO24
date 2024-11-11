@@ -27,6 +27,9 @@ namespace GameManager
 		public Result StartGame() {
 			mainWordGame.ResetMainWordGame();
 			var newGame = mainWordGame.GetNewWord();
+			if (newGame.Value.Count != 2 || newGame.IsFailure) {
+				return Result.Failure("Failed to Start Game");
+			}
 			mainWordGame.Category = newGame.Value["GeneratedCategory"];
 			mainWordGame.CurrentWord = newGame.Value["GeneratedWord"];
 			return Result.Success();

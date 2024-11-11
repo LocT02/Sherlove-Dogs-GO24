@@ -1,18 +1,43 @@
-using GameData;
 using Godot;
+using ResultManager;
 using System;
+using System.Dynamic;
 
 public partial class MainScene : Node2D
 {
 	// Called when the node enters the scene tree for the first time.
 	private GameManager.GameManager gameInstance;
+	private MainSceneUIScript UIScript;
 	public override void _Ready()
 	{
 		// Need some sort of transition effect here
 		gameInstance = GameManager.GameManager.Instance;
 		if (gameInstance.GameState == "continue") {
-			gameInstance.gameData.LoadSaveData();
+			// Import Save Data
+			// gameInstance.gameData.LoadSaveData();
 		}
+
+		// Grabs UI Elements
+		UIScript = GetNode<MainSceneUIScript>("MainSceneUI");
+
+		var gameStartResult = gameInstance.StartGame();
+		if (gameStartResult.IsFailure) {
+			GD.Print(gameStartResult.Error);
+			throw new InvalidProgramException($"Unable To Start Game: {gameStartResult.Error}");
+		}
+
+		var uiResult = SetGameUI();
+		if (uiResult.IsFailure) {
+			GD.Print(uiResult.Error);
+			throw new InvalidProgramException($"Unable To Start Game: {uiResult.Error}");
+		}
+		
+		// End Transition effect
+	}
+
+	private Result SetGameUI() {
+		
+		return Result.Success();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
