@@ -12,7 +12,7 @@ namespace GameManager
 		public static GameManager Instance { get; private set; }
 		public GameDataManager gameData { get; private set; }
 		public MainWordGame mainWordGame { get; private set; }
-        public string GameState { get; set; } = "newgame";
+		public string GameState { get; set; } = "newgame";
 
 		public override void _Ready()
 		{
@@ -57,7 +57,7 @@ namespace GameManager
 			: Result.Failure($"Scene Change to {scenePath} failed.");
 		}
 
-        public Result<char[]> GuessAttempt(string guess) {
+		public Result<char[]> GuessAttempt(string guess) {
 			// Returns a list of characters:
 			// Apple is the word
 			// Guess is Apart
@@ -65,28 +65,28 @@ namespace GameManager
 			// '_' = wrong letter || '-' = wrong position
 			// mainWordGame contains GuessedLetters for letters to display what they guessed.
 
-            if (guess == null) {
-                return Result.Failure<char[]>("Guess is null");
-            }
+			if (guess == null) {
+				return Result.Failure<char[]>("Guess is null");
+			}
 
-            var result = mainWordGame.CheckGuess(guess);
+			var result = mainWordGame.CheckGuess(guess);
 
 			// null means no feedback = correct guess
-            if (result.Value == null) {
+			if (result.Value == null) {
 				gameData.ChangeScore(1000);
 				// Returns to main Game Scene, do effects there, then call startGame again from main Game Scene?
-                return Result.Success<char[]>(null);
-            }
+				return Result.Success<char[]>(null);
+			}
 
-            if (gameData.ChangeHp(-10).Value <= 0) {
+			if (gameData.ChangeHp(-10).Value <= 0) {
 				return Result.Failure<char[]>("Player Died Time to Get Disowned.");
 			}
 
 			// Returns feedback
-            return Result.Success(result.Value);
-        }
+			return Result.Success(result.Value);
+		}
 
-        public Result EndGame() {
+		public Result EndGame() {
 			// called from Main Game Scene
 			// Save high score
 			

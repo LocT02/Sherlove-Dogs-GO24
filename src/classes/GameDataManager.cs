@@ -158,7 +158,7 @@ namespace GameData {
 		
 		public Result ChangeScore(int increment) {
 			Score = Math.Max(0, Score + increment);
-            return Result.Success();
+			return Result.Success();
 		}
 	}
 }
