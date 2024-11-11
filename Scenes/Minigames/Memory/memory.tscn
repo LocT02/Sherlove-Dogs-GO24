@@ -1,3 +1,49 @@
-[gd_scene format=3 uid="uid://oj3dd82haejm"]
+[gd_scene load_steps=2 format=3 uid="uid://oj3dd82haejm"]
 
-[node name="Memory" type="Node2D"]
+[ext_resource type="Script" path="res://Scripts/Minigames/Memory/Memory.cs" id="1_dr54m"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dr54m")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 159.0
+
+[node name="VBoxContainer" type="BoxContainer" parent="PanelContainer"]
+layout_mode = 2
+alignment = 1
+vertical = true
+
+[node name="ColorRect" type="ColorRect" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Memorize the sequence!"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+show_percentage = false
+
+[node name="Label" type="RichTextLabel" parent="PanelContainer/VBoxContainer/ProgressBar"]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 23.0
+bbcode_enabled = true
+
+[node name="DisplayTimer" type="Timer" parent="."]
+
+[node name="TransitionTimer" type="Timer" parent="."]
