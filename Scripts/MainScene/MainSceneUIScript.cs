@@ -1,6 +1,5 @@
 using Godot;
 using ResultManager;
-using System;
 
 public partial class MainSceneUIScript : CanvasLayer
 {
@@ -23,6 +22,7 @@ public partial class MainSceneUIScript : CanvasLayer
 		ItemSlot2 = GetNode<Button>("ItemSlot2");
 		ItemSlot3 = GetNode<Button>("ItemSlot3");
 
+		GD.Print("Successfully Loaded Main Scene UI?");
 	}
 
 	public Result UpdateCategoryLabel(string category) {
@@ -54,6 +54,34 @@ public partial class MainSceneUIScript : CanvasLayer
 		}
 		GuessInputField.Text = "";
 		return Result.Success();
+	}
+
+	public void OnSubmitGuessButtonPress() {
+		GD.Print("Submit pressed");
+		// disable button
+		// Grab guess input
+		// check guess input
+		// grab result
+		// set result to ui stuff
+		// enable button
+
+	}
+
+	public void OnItemSlot1ButtonPress() {
+		// grab button data which item it is
+		// use item
+		// adjust score
+		// set feedback to ui
+		// move items to the left most unused button?
+
+	}
+
+	public void OnItemSlot2ButtonPress() {
+
+	}
+
+	public void OnItemSlot3ButtonPress() {
+
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

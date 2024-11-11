@@ -36,8 +36,11 @@ public partial class MainScene : Node2D
 	}
 
 	private Result SetGameUI() {
-		
-		return Result.Success();
+		// set hp and score later
+		var category = UIScript.UpdateCategoryLabel($"Category: {gameInstance.mainWordGame.Category}");
+		var feedback = UIScript.UpdateFeedbackLabel($"Feedback: {gameInstance.mainWordGame.CorrectLetters}");
+
+		return (category.IsFailure || feedback.IsFailure) ? Result.Failure("Unable To Set UI") : Result.Success();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
