@@ -8,7 +8,6 @@ using ItemTypes;
 namespace InventoryManager {
     public class Inventory : _IInventory {
         public List<IItem> Items { get; private set; } = new();
-        public int ItemCount = 0;
 
         public Result<IItem> AddItem(IItem item) {
             if (item != null) {
