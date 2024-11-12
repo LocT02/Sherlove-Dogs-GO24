@@ -11,39 +11,110 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_dr54m")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="GameContainer" type="PanelContainer" parent="."]
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 159.0
 
-[node name="VBoxContainer" type="BoxContainer" parent="PanelContainer"]
+[node name="VBoxContainer" type="BoxContainer" parent="GameContainer"]
 layout_mode = 2
 alignment = 1
 vertical = true
 
-[node name="ColorRect" type="ColorRect" parent="PanelContainer/VBoxContainer"]
+[node name="TopText" type="Label" parent="GameContainer/VBoxContainer"]
 layout_mode = 2
-
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
-layout_mode = 2
+size_flags_vertical = 0
 text = "Memorize the sequence!"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+[node name="ArrowContainer" type="HBoxContainer" parent="GameContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 124)
 layout_mode = 2
 size_flags_vertical = 3
 alignment = 1
 
-[node name="ProgressBar" type="ProgressBar" parent="PanelContainer/VBoxContainer"]
+[node name="ProgressBar" type="ProgressBar" parent="GameContainer/VBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 show_percentage = false
 
-[node name="Label" type="RichTextLabel" parent="PanelContainer/VBoxContainer/ProgressBar"]
+[node name="BarText" type="RichTextLabel" parent="GameContainer/VBoxContainer/ProgressBar"]
 layout_mode = 0
-offset_right = 1920.0
-offset_bottom = 23.0
+offset_left = -1.0
+offset_top = 6.0
+offset_right = 1919.0
+offset_bottom = 29.0
 bbcode_enabled = true
 
 [node name="DisplayTimer" type="Timer" parent="."]
+
+[node name="PanelContainer2" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.44
+anchor_top = 0.169
+anchor_right = 0.554
+anchor_bottom = 0.253
+offset_left = 0.199951
+offset_top = 0.47998
+offset_right = -0.680054
+offset_bottom = -0.240021
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer2"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="PanelContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(100, 90)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="RoundsWon" type="Label" parent="PanelContainer2/HBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.06
+anchor_bottom = 0.989
+offset_bottom = -0.0100021
+theme_override_font_sizes/font_size = 60
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="PanelContainer2/HBoxContainer/Panel"]
+layout_mode = 0
+offset_left = -121.0
+offset_top = 67.0
+offset_right = -4.0
+offset_bottom = 90.0
+text = "Rounds Won"
+horizontal_alignment = 2
+
+[node name="WhiteBar" type="ColorRect" parent="PanelContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Panel2" type="Panel" parent="PanelContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(100, 90)
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="CurrRound" type="Label" parent="PanelContainer2/HBoxContainer/Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.06
+anchor_bottom = 0.989
+offset_left = -4.0
+offset_right = -4.00001
+offset_bottom = -0.0100021
+theme_override_font_sizes/font_size = 60
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="PanelContainer2/HBoxContainer/Panel2"]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 68.0
+offset_right = 238.0
+offset_bottom = 91.0
+text = "Current Round"
 
 [node name="TransitionTimer" type="Timer" parent="."]
