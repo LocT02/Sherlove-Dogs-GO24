@@ -7,35 +7,33 @@ using System.IO;
 using ResultManager;
 using System;
 using IGameDataManager;
+using MainWordGameWIPNAME;
+using System.Linq;
 
 namespace GameData {
 	public partial class GameDataManager : Node, _IGameDataManager
 	{
-		const int DEFAULT_HP = 100;
 		private string SaveFileDirPath = ProjectSettings.GlobalizePath("user://");
 		private string SaveFilePath = Path.Join(ProjectSettings.GlobalizePath("user://"), "GameData.json");
 		private int _Hp, _Score;
 		public Inventory Inventory { get; }= new();
+		private MainWordGame mainInstance;
 
 		public GameDataManager() {
 			if (!Godot.FileAccess.FileExists(SaveFilePath)) {
 				GD.Print("Save file does not exist, creating new save");
 				CreateNewSave();
 			}
+			mainInstance = GameManager.GameManager.Instance.mainWordGame;
+
+
+			GD.Print("GameDataManager Ready");
 		}
 
-		//Create base dictionary with default values
 		public Result CreateNewSave() {
-			Dictionary content = new()
-			{
-				{ "Hp", DEFAULT_HP },
-				{ "Score", 0 },
-				{ "Inventory", InventoryListToArray(new Inventory()).Value }
-			};
-
-			string json = Json.Stringify(content);
+			// Creates new save file no values needed
 			try {
-				WriteSaveData(json);
+				WriteSaveData();
 				return Result.Success();
 			} catch (Exception e) {
 				return Result.Failure(e.Message);
@@ -52,6 +50,10 @@ namespace GameData {
 			Hp = (int)content["Hp"];
 			Score = (int)content["Score"];
 			Array<string> tempInventory = (Array<string>)content["Inventory"];
+			mainInstance.CurrentWord = (string)content["CurrentWord"];
+			mainInstance.Category = (string)content["Category"];
+			mainInstance.GuessedLetters = ((Array<char>)content["GuessedLetters"]).ToList();
+			mainInstance.CorrectLetters = ((Array<char>)content["CorrectLetters"]).ToList();
 
 			//Inventory -> System.Dictionary<IItemTypes,int> -> IItemTypes -> ItemA, ItemB, ItemC -> name
 			foreach (string itemName in tempInventory){
@@ -80,7 +82,7 @@ namespace GameData {
 		}
 
 		//Helper method to do actual writing
-		private Result WriteSaveData(string json) {
+		private Result WriteSaveData(string json = "") {
 
 			if(!Directory.Exists(SaveFileDirPath)){
 				Directory.CreateDirectory(SaveFileDirPath);
@@ -102,7 +104,11 @@ namespace GameData {
 			{
 				{ "Hp", Hp },
 				{ "Score", Score },
-				{ "Inventory", InventoryListToArray(Inventory).Value }
+				{ "Inventory", InventoryListToArray(Inventory).Value },
+				{ "CurrentWord", mainInstance.CurrentWord},
+				{ "Category", mainInstance.Category},
+				{ "GuessedLetters", new Array<char>(mainInstance.GuessedLetters)},
+				{ "CorrectLetters", new Array<char>(mainInstance.CorrectLetters)}
 			};
 
 			string json = Json.Stringify(content);

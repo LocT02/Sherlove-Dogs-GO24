@@ -9,29 +9,45 @@ public partial class MainScene : Node2D
 	private MainSceneUIScript UIScript;
 	public override void _Ready()
 	{
-		// Need some sort of transition effect here
-		gameInstance = GameManager.GameManager.Instance;
-		if (gameInstance.GameState == "continue") {
-			// Import Save Data
-			// gameInstance.gameData.LoadSaveData();
-		} else {
-			// Grabs UI Elements
-			UIScript = GetNode<MainSceneUIScript>("MainSceneUI");
+		// Transition effect here
 
-			gameInstance.gameData.Hp = 100;
-			gameInstance.gameData.Score = 0;
-			GD.Print($"Current HP: {gameInstance.gameData.Hp}");
-			GD.Print($"Current Score: {gameInstance.gameData.Score}");
+		InitializeGame();
+		LoadOrInitializeNewGame();
 
-			var newWordResult = SetNewWord();
+		GD.Print($"Current HP: {gameInstance.gameData.Hp}");
+		GD.Print($"Current Score: {gameInstance.gameData.Score}");
 
-			if (newWordResult.IsFailure) {
-				throw new InvalidProgramException(newWordResult.Error);
-			}
-			
-			GD.Print("Loaded Main Scene");
-			// End Transition effect
+		var uiResult = SetGameUI();
+		if (uiResult.IsFailure) {
+			throw new InvalidProgramException(uiResult.Error);
 		}
+
+		// End Transition Effect
+		GD.Print("MainScene Ready");
+	}
+
+	private void InitializeGame() {
+		gameInstance = GameManager.GameManager.Instance;
+		UIScript = GetNode<MainSceneUIScript>("MainSceneUI");
+	}
+
+	private void LoadOrInitializeNewGame() {
+		if (gameInstance.GameState == "continue") {
+			gameInstance.gameData.LoadSaveData();
+		} else {
+			InitializeNewGameData();
+		}
+	}
+
+	private void InitializeNewGameData() {
+		gameInstance.gameData.Hp = 100;
+		gameInstance.gameData.Score = 0;
+
+		var newWordResult = SetNewWord();
+		if (newWordResult.IsFailure) {
+			throw new InvalidProgramException(newWordResult.Error);
+		}
+		
 	}
 
 	private Result SetNewWord() {
@@ -40,13 +56,10 @@ public partial class MainScene : Node2D
 			GD.Print(gameStartResult.Error);
 			return Result.Failure($"Unable To Start Game: {gameStartResult.Error}");
 		}
-
 		var uiResult = SetGameUI();
 		if (uiResult.IsFailure) {
-			GD.Print(uiResult.Error);
-			return Result.Failure($"Unable To Start Game: {uiResult.Error}");
+			throw new InvalidProgramException(uiResult.Error);
 		}
-
 		return Result.Success();
 	}
 
@@ -65,7 +78,8 @@ public partial class MainScene : Node2D
 
 	public Result GuessSubmit(string guess) {
 		var guessResult = gameInstance.GuessAttempt(guess);
-		
+		GD.Print($"Current HP: {gameInstance.gameData.Hp}");
+
 		if (guessResult.IsFailure) {
 			// Hp is 0
 			// Play effects here?
@@ -75,10 +89,9 @@ public partial class MainScene : Node2D
 		}
 
 		if (guessResult.Value == null) {
-			GD.Print($"Current HP: {gameInstance.gameData.Hp}");
-			GD.Print($"Current Score: {gameInstance.gameData.Score}");
 			// Correct Guess
 			// Play effects here?
+			GD.Print($"Current Score: {gameInstance.gameData.Score}");
 
 
 			// Generate New Word and Apply

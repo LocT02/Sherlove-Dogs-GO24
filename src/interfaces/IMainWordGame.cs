@@ -8,6 +8,7 @@ namespace IMainWordGame {
         string CurrentWord { get; set; }
         string Category { get; set; }
         List<char> GuessedLetters { get; set; }
+        List<char> CorrectLetters { get; set; }
         Result<Dictionary<string, string>> GetNewWord();
         Result<char[]> CheckGuess(string guess);
         Result<int> CalculatePoints();

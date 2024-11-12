@@ -19,9 +19,9 @@ namespace GameManager
 			//read save data into references
 			//initialize all data structures before entering game
 			Instance = this;
-			gameData = new GameDataManager();
 			mainWordGame = new MainWordGame();
-			GD.Print("Successfully started GameManager.");
+			gameData = new GameDataManager();
+			GD.Print("GameManager Ready");
 		}
 
 		public Result StartGame() {

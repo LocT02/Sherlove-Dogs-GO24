@@ -1,4 +1,5 @@
 using System;
+using GameData;
 using Godot;
 using ResultManager;
 
@@ -12,10 +13,18 @@ public partial class MainSceneUIScript : CanvasLayer
 	private Button ItemSlot2;
 	private Button ItemSlot3;
 	private MainScene MainScene;
+	private GameManager.GameManager gameInstance;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		InitializeUI();
+
+		GD.Print("MainSceneUI Ready");
+	}
+
+	private void InitializeUI() {
+		gameInstance = GameManager.GameManager.Instance;
 		MainScene = GetTree().Root.GetNode<Node2D>("MainSceneNode") as MainScene;
 		CategoryLabel = GetNode<Label>("WordUI/WordGameContainer/CategoryLabel");
 		FeedbackLabel = GetNode<Label>("WordUI/WordGameContainer/FeedbackLabel");
@@ -24,8 +33,6 @@ public partial class MainSceneUIScript : CanvasLayer
 		ItemSlot1 = GetNode<Button>("WordUI/ItemButtonContainer/ItemSlot1");
 		ItemSlot2 = GetNode<Button>("WordUI/ItemButtonContainer/ItemSlot2");
 		ItemSlot3 = GetNode<Button>("WordUI/ItemButtonContainer/ItemSlot3");
-
-		GD.Print("Successfully Loaded Main Scene UI?");
 	}
 
 	public Result UpdateCategoryLabel(string category) {
@@ -119,7 +126,6 @@ public partial class MainSceneUIScript : CanvasLayer
 
 	public void OnItemSlot3ButtonPress() {
 		GD.Print("Item 3 pressed");
-
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
