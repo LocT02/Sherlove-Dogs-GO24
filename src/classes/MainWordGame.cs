@@ -16,7 +16,7 @@ namespace MainWordGameWIPNAME
 		private List<char> _CorrectLetters;
 
 		public MainWordGame() {
-			
+			GD.Print("Main Game Ready");
 		}
 
 		public string CurrentWord {
@@ -42,7 +42,7 @@ namespace MainWordGameWIPNAME
 
 		public List<char> CorrectLetters {
 			get { return _CorrectLetters; }
-			private set {
+			set {
 				_CorrectLetters = value;
 			}
 		}
