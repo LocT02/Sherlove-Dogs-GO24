@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bfker6m1dx5m5"]
+[gd_scene load_steps=7 format=3 uid="uid://bfker6m1dx5m5"]
 
 [ext_resource type="Texture2D" uid="uid://b5tk3r6lkyip4" path="res://icon.svg" id="1_1vqta"]
+[ext_resource type="Script" path="res://Scripts/MainScene/MainScene.cs" id="1_2enir"]
+[ext_resource type="Script" path="res://Scripts/MainScene/MainSceneUIScript.cs" id="1_hlaxv"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerMovement.cs" id="2_crnmh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p3obv"]
@@ -9,29 +11,107 @@ size = Vector2(127, 128)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a1v6n"]
 size = Vector2(127, 129)
 
-[node name="Node2D" type="Node2D"]
+[node name="MainSceneNode" type="Node2D"]
 position = Vector2(30, 1018)
+script = ExtResource("1_2enir")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="MainSceneUI" type="CanvasLayer" parent="."]
+script = ExtResource("1_hlaxv")
+
+[node name="WordUI" type="Control" parent="MainSceneUI"]
+layout_mode = 3
+anchor_left = 0.148
+anchor_top = 0.284
+anchor_right = 0.5
+anchor_bottom = 0.568
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WordGameContainer" type="VBoxContainer" parent="MainSceneUI/WordUI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/separation = 10
+
+[node name="CategoryLabel" type="Label" parent="MainSceneUI/WordUI/WordGameContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Category: "
+
+[node name="FeedbackLabel" type="Label" parent="MainSceneUI/WordUI/WordGameContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Feedback:"
+
+[node name="GuessInputField" type="LineEdit" parent="MainSceneUI/WordUI/WordGameContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+placeholder_text = "Input Guess Here"
+expand_to_text_length = true
+
+[node name="SubmitGuessButton" type="Button" parent="MainSceneUI/WordUI/WordGameContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Submit"
+
+[node name="ItemButtonContainer" type="HBoxContainer" parent="MainSceneUI/WordUI"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 10
+
+[node name="ItemSlot1" type="Button" parent="MainSceneUI/WordUI/ItemButtonContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+
+[node name="ItemSlot2" type="Button" parent="MainSceneUI/WordUI/ItemButtonContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+
+[node name="ItemSlot3" type="Button" parent="MainSceneUI/WordUI/ItemButtonContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+
+[node name="GamePlay" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="GamePlay"]
 position = Vector2(551, -1)
 scale = Vector2(3, 1)
 
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+[node name="Sprite2D" type="Sprite2D" parent="GamePlay/StaticBody2D"]
 scale = Vector2(3, 1)
 texture = ExtResource("1_1vqta")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GamePlay/StaticBody2D"]
 position = Vector2(-0.5, 0)
 scale = Vector2(3, 1)
 shape = SubResource("RectangleShape2D_p3obv")
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="GamePlay"]
 position = Vector2(57, -144)
 script = ExtResource("2_crnmh")
 
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+[node name="Sprite2D" type="Sprite2D" parent="GamePlay/CharacterBody2D"]
 texture = ExtResource("1_1vqta")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GamePlay/CharacterBody2D"]
 position = Vector2(-0.5, -0.5)
 shape = SubResource("RectangleShape2D_a1v6n")
+
+[connection signal="pressed" from="MainSceneUI/WordUI/WordGameContainer/SubmitGuessButton" to="MainSceneUI" method="OnSubmitGuessButtonPress"]
+[connection signal="pressed" from="MainSceneUI/WordUI/ItemButtonContainer/ItemSlot1" to="MainSceneUI" method="OnItemSlot1ButtonPress"]
+[connection signal="pressed" from="MainSceneUI/WordUI/ItemButtonContainer/ItemSlot2" to="MainSceneUI" method="OnItemSlot2ButtonPress"]
+[connection signal="pressed" from="MainSceneUI/WordUI/ItemButtonContainer/ItemSlot3" to="MainSceneUI" method="OnItemSlot3ButtonPress"]

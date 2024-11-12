@@ -12,7 +12,7 @@ namespace GameManager
 		public static GameManager Instance { get; private set; }
 		public GameDataManager gameData { get; private set; }
 		public MainWordGame mainWordGame { get; private set; }
-        public string GameState { get; set; } = "newgame";
+		public string GameState { get; set; } = "newgame";
 
 		public override void _Ready()
 		{
@@ -22,13 +22,19 @@ namespace GameManager
 			gameData = new GameDataManager();
 			mainWordGame = new MainWordGame();
 			GD.Print("Successfully started GameManager.");
-			StartGame();
 		}
 
-		public static Result StartGame() {
-			//whatever else we need for assets or variables
-			//call GetWord()
-			//switch scenes??
+		public Result StartGame() {
+			mainWordGame.ResetMainWordGame();
+
+			var newGame = mainWordGame.GetNewWord();
+
+			if (newGame.IsFailure || newGame.Value.Count != 2) {
+				return Result.Failure(newGame.Error);
+			}
+			mainWordGame.Category = newGame.Value["GeneratedCategory"];
+			mainWordGame.CurrentWord = newGame.Value["GeneratedWord"];
+			GD.Print($"Successfully started game with the word {newGame.Value["GeneratedWord"]}");
 			return Result.Success();
 		}
 
@@ -57,9 +63,39 @@ namespace GameManager
 			: Result.Failure($"Scene Change to {scenePath} failed.");
 		}
 
+		public Result<char[]> GuessAttempt(string guess) {
+			// Returns a list of characters:
+			// Apple is the word
+			// Guess is Apart
+			// Will return : ['A','P','_','_','_']
+			// '_' = wrong letter || '-' = wrong position
+			// mainWordGame contains GuessedLetters for letters to display what they guessed.
+
+			var result = mainWordGame.CheckGuess(guess);
+
+			// null means no feedback = correct guess
+			if (result.Value == null) {
+				gameData.ChangeScore(1000);
+				// Returns to main Game Scene, do effects there, then call startGame again from main Game Scene?
+				return Result.Success<char[]>(null);
+			}
+
+			if (gameData.ChangeHp(-10).Value <= 0) {
+				return Result.Failure<char[]>("Hp0");
+			}
+			// Returns feedback
+			return result;
+		}
+
 		public Result EndGame() {
-			// Do endgame stuff
+			// called from Main Game Scene
+			// Save high score
 			
+			return Result.Success();
+		}
+
+		public Result MidGameSave() {
+			// When the user wants to save Mid Game
 			return Result.Success();
 		}
 	}

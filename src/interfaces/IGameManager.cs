@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using Godot;
-using InventoryManager;
-using MainWordGameWIPNAME;
 using ResultManager;
 
 namespace IGameManager {
@@ -11,6 +6,7 @@ namespace IGameManager {
         string GameState { get; set; }
         Result SceneChanger(string scenePath);
         Result EndGame();
-        
+        Result StartGame();
+        Result<char[]> GuessAttempt(string guess);
     }
 }

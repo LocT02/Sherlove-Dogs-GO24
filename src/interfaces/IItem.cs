@@ -6,6 +6,9 @@ namespace IItemsTypes
     public interface IItem {
 
         string Name { get; }
-        Result ApplyItem();
+        bool Upgraded { get; set; }
+        string ImgFilePath { get; set; }
+        Result<char[]> ApplyItem();
+
     }
 }

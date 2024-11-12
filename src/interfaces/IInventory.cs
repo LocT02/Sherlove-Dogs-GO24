@@ -1,7 +1,6 @@
 using ResultManager;
 using System.Collections.Generic;
 using IItemsTypes;
-using Godot.Collections;
 
 namespace IInventory
 {
@@ -9,6 +8,7 @@ namespace IInventory
 
         List<IItem> Items { get; }
         Result<IItem> AddItem(IItem item);
-        Result<IItem> RemoveItem(IItem item);
+        Result<IItem> UseItem(IItem item);
+        Result<IItem> SelectRandomItem(bool upgraded);
     }
 }
