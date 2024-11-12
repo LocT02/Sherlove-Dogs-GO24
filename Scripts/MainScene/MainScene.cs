@@ -70,8 +70,14 @@ public partial class MainScene : Node2D
 		string feedbackString = string.Join("  ", gameInstance.mainWordGame.CorrectLetters);
 		var feedback = UIScript.UpdateFeedbackLabel($"Feedback:  {feedbackString}");
 		var inputFieldContraints = UIScript.SetInputConstraints(gameInstance.mainWordGame.CurrentWord.Length);
+		Result attachItems = Result.Success();
 
-		return (category.IsFailure || feedback.IsFailure || inputFieldContraints.IsFailure) 
+		if (gameInstance.gameData.Inventory.Items.Count > 0) {
+			attachItems = UIScript.AttachItemsToButtons();
+		}
+
+
+		return (category.IsFailure || feedback.IsFailure || inputFieldContraints.IsFailure || attachItems.IsFailure) 
 		? Result.Failure("Unable To Set UI") 
 		: Result.Success();
 	}

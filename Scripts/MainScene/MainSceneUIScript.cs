@@ -1,6 +1,9 @@
 using System;
+using CustomButton;
 using GameData;
 using Godot;
+using IItemsTypes;
+using InventoryManager;
 using ResultManager;
 
 public partial class MainSceneUIScript : CanvasLayer
@@ -9,9 +12,9 @@ public partial class MainSceneUIScript : CanvasLayer
 	private Label FeedbackLabel;
 	private LineEdit GuessInputField;
 	private Button SubmitGuessButton;
-	private Button ItemSlot1;
-	private Button ItemSlot2;
-	private Button ItemSlot3;
+	private ItemButton ItemSlot1;
+	private ItemButton ItemSlot2;
+	private ItemButton ItemSlot3;
 	private MainScene MainScene;
 	private GameManager.GameManager gameInstance;
 	
@@ -30,9 +33,12 @@ public partial class MainSceneUIScript : CanvasLayer
 		FeedbackLabel = GetNode<Label>("WordUI/WordGameContainer/FeedbackLabel");
 		GuessInputField = GetNode<LineEdit>("WordUI/WordGameContainer/GuessInputField");
 		SubmitGuessButton = GetNode<Button>("WordUI/WordGameContainer/SubmitGuessButton");
-		ItemSlot1 = GetNode<Button>("WordUI/ItemButtonContainer/ItemSlot1");
-		ItemSlot2 = GetNode<Button>("WordUI/ItemButtonContainer/ItemSlot2");
-		ItemSlot3 = GetNode<Button>("WordUI/ItemButtonContainer/ItemSlot3");
+		ItemSlot1 = GetNode<Button>("WordUI/ItemButtonContainer/ItemSlot1") as ItemButton;
+		ItemSlot2 = GetNode<Button>("WordUI/ItemButtonContainer/ItemSlot2") as ItemButton;
+		ItemSlot3 = GetNode<Button>("WordUI/ItemButtonContainer/ItemSlot3") as ItemButton;
+		ItemSlot1.Disabled = true;
+		ItemSlot2.Disabled = true;
+		ItemSlot3.Disabled = true;
 	}
 
 	public Result UpdateCategoryLabel(string category) {
@@ -109,23 +115,83 @@ public partial class MainSceneUIScript : CanvasLayer
 		SubmitGuessButton.Disabled = false;
 	}
 
+	public Result AttachItemsToButtons() {
+		// Attaches Item and Enables Button
+		var buttons = new ItemButton[] { ItemSlot1, ItemSlot2, ItemSlot3};
+		var inventory = gameInstance.gameData.Inventory.Items;
+
+		if (inventory == null) {
+			return Result.Failure("Inventory Does Not Exist");
+		}
+
+		for (int i = 0; i < buttons.Length; i++) {
+			
+			if ( i < inventory.Count && inventory[i] != null) {
+				buttons[i].AttachedItem = inventory[i];
+				SetButtonAssets(buttons[i]);
+			} else {
+				buttons[i].AttachedItem = null;
+			}
+		}
+		return Result.Success();
+	}
+
+	private void SetButtonAssets(ItemButton itemButton) {
+		// Set button pictures here
+		itemButton.Disabled = false;
+	}
+
 	public void OnItemSlot1ButtonPress() {
 		GD.Print("Item 1 pressed");
 		// grab button data which item it is
-		// use item
-		// adjust score
-		// set feedback to ui
-		// move items to the left most unused button?
+		IItem item = ItemSlot1.AttachedItem;
+		var resultUseItem = gameInstance.gameData.Inventory.UseItem(item);
+
+		if (resultUseItem.IsFailure) {
+			throw new InvalidProgramException(resultUseItem.Error);
+		}
+
+		var resultAttachButtons = AttachItemsToButtons();
+
+		if (resultAttachButtons.IsFailure) {
+			throw new InvalidProgramException(resultAttachButtons.Error);
+		}
 
 	}
 
 	public void OnItemSlot2ButtonPress() {
 		GD.Print("Item 2 pressed");
+		// grab button data which item it is
+		IItem item = ItemSlot1.AttachedItem;
+		var resultUseItem = gameInstance.gameData.Inventory.UseItem(item);
 
+		if (resultUseItem.IsFailure) {
+			throw new InvalidProgramException(resultUseItem.Error);
+		}
+
+		var resultAttachButtons = AttachItemsToButtons();
+
+		if (resultAttachButtons.IsFailure) {
+			throw new InvalidProgramException(resultAttachButtons.Error);
+		}
 	}
 
 	public void OnItemSlot3ButtonPress() {
 		GD.Print("Item 3 pressed");
+		// grab button data which item it is
+		IItem item = ItemSlot1.AttachedItem;
+
+		var resultUseItem = gameInstance.gameData.Inventory.UseItem(item);
+
+		if (resultUseItem.IsFailure) {
+			throw new InvalidProgramException(resultUseItem.Error);
+		}
+
+		var resultAttachButtons = AttachItemsToButtons();
+
+		if (resultAttachButtons.IsFailure) {
+			throw new InvalidProgramException(resultAttachButtons.Error);
+		}
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
