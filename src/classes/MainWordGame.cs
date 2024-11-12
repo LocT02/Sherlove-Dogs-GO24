@@ -115,7 +115,11 @@ namespace MainWordGameWIPNAME
 		private Result ConvertWordToList() {
 			CorrectLetters = new List<char>(new char[CurrentWord.Length]);
 			for (int i = 0; i < CurrentWord.Length; i++) {
-				CorrectLetters[i] = '_';
+				if (CurrentWord[i] != ' '){
+					CorrectLetters[i] = '_';
+				} else{
+					CorrectLetters[i] = ' ';
+				}
 			}
 			return Result.Success();
 		}
