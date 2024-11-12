@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Numerics;
 
 /*
 Game flow:
@@ -42,15 +43,13 @@ public partial class Memory : Control
 	private int currRound = 0;
 	private int roundsWon = 0;
 	private string playerInputString = "";
-    private List<ArrowKey> arrowSequence;
-    private List<ArrowKey> playerInput;
+    private List<ArrowKey> arrowSequence, playerInput;
     private int currentLevel = START_LEVEL;
-    private Timer displayTimer;
-	private Timer transitionTimer;
+    private Timer displayTimer, transitionTimer;
 	private HBoxContainer arrowContainer;
 	private ProgressBar progressBar;
 	private RichTextLabel progressBarText;
-	private Label topText;
+	private Label topText, roundsWonText, currRoundText;
     private Godot.Collections.Dictionary<ArrowKey,Texture2D> arrowMap;
 
 	public override void _Ready()
@@ -65,10 +64,12 @@ public partial class Memory : Control
 		};
 
 		//Get references
-		topText = GetNode<Label>("PanelContainer/VBoxContainer/Label");
-		arrowContainer = GetNode<HBoxContainer>("PanelContainer/VBoxContainer/HBoxContainer");
-		progressBar = GetNode<ProgressBar>("PanelContainer/VBoxContainer/ProgressBar");
-		progressBarText = GetNode<RichTextLabel>("PanelContainer/VBoxContainer/ProgressBar/Label");
+		topText = GetNode<Label>("GameContainer/VBoxContainer/TopText");
+		arrowContainer = GetNode<HBoxContainer>("GameContainer/VBoxContainer/ArrowContainer");
+		progressBar = GetNode<ProgressBar>("GameContainer/VBoxContainer/ProgressBar");
+		progressBarText = GetNode<RichTextLabel>("GameContainer/VBoxContainer/ProgressBar/BarText");
+		roundsWonText = GetNode<Label>("PanelContainer2/HBoxContainer/Panel/RoundsWon");
+		currRoundText = GetNode<Label>("PanelContainer2/HBoxContainer/Panel2/CurrRound");
 		progressBarText.BbcodeEnabled = true;
 		progressBar.Value = 100;
 
@@ -145,6 +146,8 @@ public partial class Memory : Control
 	private void StartLevel(){
 		//Add elements up til currentLevel
 		currRound++;
+		currRoundText.Text = currRound.ToString();
+		roundsWonText.Text = roundsWon.ToString();
 		playerInput.Clear();
 		playerInputString ="";
 		ShowSequence();
@@ -176,7 +179,7 @@ public partial class Memory : Control
 	private void NextLevel(bool localWin){
 		if(localWin) currentLevel += STEP_LEVEL;
 		if(currRound >= 4){
-			if((float)roundsWon/NUM_OF_ROUNDS >= 0.75){
+			if(roundsWon >= 3){
 				topText.Text = "You win!";
 				gameState = GameStates.Win;
 				GameWin();
