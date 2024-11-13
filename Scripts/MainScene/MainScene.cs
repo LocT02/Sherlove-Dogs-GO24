@@ -78,7 +78,7 @@ public partial class MainScene : Node2D
 
 
 		return (category.IsFailure || feedback.IsFailure || inputFieldContraints.IsFailure || attachItems.IsFailure) 
-		? Result.Failure("Unable To Set UI") 
+		? Result.Failure("Unable To Set UI Component") 
 		: Result.Success();
 	}
 

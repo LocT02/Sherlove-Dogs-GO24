@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using CustomButton;
 using GameData;
 using Godot;
@@ -17,6 +18,7 @@ public partial class MainSceneUIScript : CanvasLayer
 	private ItemButton ItemSlot3;
 	private MainScene MainScene;
 	private GameManager.GameManager gameInstance;
+	private Dictionary<string, Texture2D> textureCache = new();
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -36,9 +38,11 @@ public partial class MainSceneUIScript : CanvasLayer
 		ItemSlot1 = GetNode<Button>("WordUI/ItemButtonContainer/ItemSlot1") as ItemButton;
 		ItemSlot2 = GetNode<Button>("WordUI/ItemButtonContainer/ItemSlot2") as ItemButton;
 		ItemSlot3 = GetNode<Button>("WordUI/ItemButtonContainer/ItemSlot3") as ItemButton;
-		ItemSlot1.Disabled = true;
-		ItemSlot2.Disabled = true;
-		ItemSlot3.Disabled = true;
+		List<ItemButton> buttonList = new List<ItemButton>{ ItemSlot1, ItemSlot2, ItemSlot3 };
+		foreach (ItemButton button in buttonList) {
+			button.Disabled = true;
+			button.Visible = false;
+		}
 	}
 
 	public Result UpdateCategoryLabel(string category) {
@@ -128,59 +132,70 @@ public partial class MainSceneUIScript : CanvasLayer
 			
 			if ( i < inventory.Count && inventory[i] != null) {
 				buttons[i].AttachedItem = inventory[i];
-				SetButtonAssets(buttons[i]);
+				var resultSetButtonUI = SetButtonAssets(buttons[i]);
+				if (resultSetButtonUI.IsFailure) {
+					return resultSetButtonUI;
+				}
 			} else {
+				// Disable Button
 				buttons[i].AttachedItem = null;
+				buttons[i].Disabled = true;
+				buttons[i].Visible = false;
 			}
 		}
 		return Result.Success();
 	}
 
-	private void SetButtonAssets(ItemButton itemButton) {
-		// Set button pictures here
+	private Result SetButtonAssets(ItemButton itemButton) {
+		// Set button Texture
+		var item = itemButton.AttachedItem;
+		Texture2D texture;
+		StyleBoxTexture styleBox = new();
+		
+		// Check if Texture is cached
+		if (!textureCache.TryGetValue(item.ImgFilePath, out texture)) {
+			// Not Cached = Load and Cache Texture
+			texture = (Texture2D)GD.Load(item.ImgFilePath);
+			if (texture == null) {
+				return Result.Failure($"Unable To Load Texture: {item.ImgFilePath}");
+			}
+			textureCache[item.ImgFilePath] = texture;
+		}
+
+		if (texture == null) {
+			return Result.Failure($"Unable To Load Cached Texture: {item.ImgFilePath}");
+		}
+
+		// Set Texture and Enable button
+		styleBox.Texture = texture;
+		itemButton.AddThemeStyleboxOverride("normal", styleBox);
 		itemButton.Disabled = false;
+		itemButton.Visible = true;
+		return Result.Success();
 	}
 
 	public void OnItemSlot1ButtonPress() {
 		GD.Print("Item 1 pressed");
 		// grab button data which item it is
 		IItem item = ItemSlot1.AttachedItem;
-		var resultUseItem = gameInstance.gameData.Inventory.UseItem(item);
-
-		if (resultUseItem.IsFailure) {
-			throw new InvalidProgramException(resultUseItem.Error);
-		}
-
-		var resultAttachButtons = AttachItemsToButtons();
-
-		if (resultAttachButtons.IsFailure) {
-			throw new InvalidProgramException(resultAttachButtons.Error);
-		}
-
+		OnItemButtonPress(item);
 	}
 
 	public void OnItemSlot2ButtonPress() {
 		GD.Print("Item 2 pressed");
 		// grab button data which item it is
-		IItem item = ItemSlot1.AttachedItem;
-		var resultUseItem = gameInstance.gameData.Inventory.UseItem(item);
-
-		if (resultUseItem.IsFailure) {
-			throw new InvalidProgramException(resultUseItem.Error);
-		}
-
-		var resultAttachButtons = AttachItemsToButtons();
-
-		if (resultAttachButtons.IsFailure) {
-			throw new InvalidProgramException(resultAttachButtons.Error);
-		}
+		IItem item = ItemSlot2.AttachedItem;
+		OnItemButtonPress(item);
 	}
 
 	public void OnItemSlot3ButtonPress() {
 		GD.Print("Item 3 pressed");
 		// grab button data which item it is
-		IItem item = ItemSlot1.AttachedItem;
+		IItem item = ItemSlot3.AttachedItem;
+		OnItemButtonPress(item);
+	}
 
+	private void OnItemButtonPress(IItem item) {
 		var resultUseItem = gameInstance.gameData.Inventory.UseItem(item);
 
 		if (resultUseItem.IsFailure) {
