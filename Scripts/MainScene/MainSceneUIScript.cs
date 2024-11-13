@@ -1,6 +1,10 @@
 using System;
+using System.Collections.Generic;
+using CustomButton;
 using GameData;
 using Godot;
+using IItemsTypes;
+using InventoryManager;
 using ResultManager;
 
 public partial class MainSceneUIScript : CanvasLayer
@@ -9,11 +13,12 @@ public partial class MainSceneUIScript : CanvasLayer
 	private Label FeedbackLabel;
 	private LineEdit GuessInputField;
 	private Button SubmitGuessButton;
-	private Button ItemSlot1;
-	private Button ItemSlot2;
-	private Button ItemSlot3;
+	private ItemButton ItemSlot1;
+	private ItemButton ItemSlot2;
+	private ItemButton ItemSlot3;
 	private MainScene MainScene;
 	private GameManager.GameManager gameInstance;
+	private Dictionary<string, Texture2D> textureCache = new();
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -30,9 +35,14 @@ public partial class MainSceneUIScript : CanvasLayer
 		FeedbackLabel = GetNode<Label>("WordUI/WordGameContainer/FeedbackLabel");
 		GuessInputField = GetNode<LineEdit>("WordUI/WordGameContainer/GuessInputField");
 		SubmitGuessButton = GetNode<Button>("WordUI/WordGameContainer/SubmitGuessButton");
-		ItemSlot1 = GetNode<Button>("WordUI/ItemButtonContainer/ItemSlot1");
-		ItemSlot2 = GetNode<Button>("WordUI/ItemButtonContainer/ItemSlot2");
-		ItemSlot3 = GetNode<Button>("WordUI/ItemButtonContainer/ItemSlot3");
+		ItemSlot1 = GetNode<Button>("WordUI/ItemButtonContainer/ItemSlot1") as ItemButton;
+		ItemSlot2 = GetNode<Button>("WordUI/ItemButtonContainer/ItemSlot2") as ItemButton;
+		ItemSlot3 = GetNode<Button>("WordUI/ItemButtonContainer/ItemSlot3") as ItemButton;
+		List<ItemButton> buttonList = new List<ItemButton>{ ItemSlot1, ItemSlot2, ItemSlot3 };
+		foreach (ItemButton button in buttonList) {
+			button.Disabled = true;
+			button.Visible = false;
+		}
 	}
 
 	public Result UpdateCategoryLabel(string category) {
@@ -109,23 +119,94 @@ public partial class MainSceneUIScript : CanvasLayer
 		SubmitGuessButton.Disabled = false;
 	}
 
+	public Result AttachItemsToButtons() {
+		// Attaches Item and Enables Button
+		var buttons = new ItemButton[] { ItemSlot1, ItemSlot2, ItemSlot3};
+		var inventory = gameInstance.gameData.Inventory.Items;
+
+		if (inventory == null) {
+			return Result.Failure("Inventory Does Not Exist");
+		}
+
+		for (int i = 0; i < buttons.Length; i++) {
+			
+			if ( i < inventory.Count && inventory[i] != null) {
+				buttons[i].AttachedItem = inventory[i];
+				var resultSetButtonUI = SetButtonAssets(buttons[i]);
+				if (resultSetButtonUI.IsFailure) {
+					return resultSetButtonUI;
+				}
+			} else {
+				// Disable Button
+				buttons[i].AttachedItem = null;
+				buttons[i].Disabled = true;
+				buttons[i].Visible = false;
+			}
+		}
+		return Result.Success();
+	}
+
+	private Result SetButtonAssets(ItemButton itemButton) {
+		// Set button Texture
+		var item = itemButton.AttachedItem;
+		Texture2D texture;
+		StyleBoxTexture styleBox = new();
+		
+		// Check if Texture is cached
+		if (!textureCache.TryGetValue(item.ImgFilePath, out texture)) {
+			// Not Cached = Load and Cache Texture
+			texture = (Texture2D)GD.Load(item.ImgFilePath);
+			if (texture == null) {
+				return Result.Failure($"Unable To Load Texture: {item.ImgFilePath}");
+			}
+			textureCache[item.ImgFilePath] = texture;
+		}
+
+		if (texture == null) {
+			return Result.Failure($"Unable To Load Cached Texture: {item.ImgFilePath}");
+		}
+
+		// Set Texture and Enable button
+		styleBox.Texture = texture;
+		itemButton.AddThemeStyleboxOverride("normal", styleBox);
+		itemButton.Disabled = false;
+		itemButton.Visible = true;
+		return Result.Success();
+	}
+
 	public void OnItemSlot1ButtonPress() {
 		GD.Print("Item 1 pressed");
 		// grab button data which item it is
-		// use item
-		// adjust score
-		// set feedback to ui
-		// move items to the left most unused button?
-
+		IItem item = ItemSlot1.AttachedItem;
+		OnItemButtonPress(item);
 	}
 
 	public void OnItemSlot2ButtonPress() {
 		GD.Print("Item 2 pressed");
-
+		// grab button data which item it is
+		IItem item = ItemSlot2.AttachedItem;
+		OnItemButtonPress(item);
 	}
 
 	public void OnItemSlot3ButtonPress() {
 		GD.Print("Item 3 pressed");
+		// grab button data which item it is
+		IItem item = ItemSlot3.AttachedItem;
+		OnItemButtonPress(item);
+	}
+
+	private void OnItemButtonPress(IItem item) {
+		var resultUseItem = gameInstance.gameData.Inventory.UseItem(item);
+
+		if (resultUseItem.IsFailure) {
+			throw new InvalidProgramException(resultUseItem.Error);
+		}
+
+		var resultAttachButtons = AttachItemsToButtons();
+
+		if (resultAttachButtons.IsFailure) {
+			throw new InvalidProgramException(resultAttachButtons.Error);
+		}
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
