@@ -1,8 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://cmq4xiyrxt0j7"]
+[gd_scene load_steps=4 format=3 uid="uid://cmq4xiyrxt0j7"]
 
-[ext_resource type="Script" path="res://Scripts/Minigames/CatchTheTreat/CatchTheBone.cs" id="1_57n0y"]
 [ext_resource type="Texture2D" uid="uid://b5tk3r6lkyip4" path="res://icon.svg" id="1_kyp4v"]
-[ext_resource type="Script" path="res://Scripts/Player/PlayerMovement.cs" id="2_m8e2g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xy2ig"]
 size = Vector2(192.3, 128)
@@ -11,7 +9,6 @@ size = Vector2(192.3, 128)
 size = Vector2(130, 132)
 
 [node name="CatchTheBone" type="Node2D"]
-script = ExtResource("1_57n0y")
 
 [node name="Floor" type="StaticBody2D" parent="."]
 position = Vector2(0, 1060)
@@ -28,7 +25,6 @@ shape = SubResource("RectangleShape2D_xy2ig")
 
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(74, 985)
-script = ExtResource("2_m8e2g")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
 texture = ExtResource("1_kyp4v")
