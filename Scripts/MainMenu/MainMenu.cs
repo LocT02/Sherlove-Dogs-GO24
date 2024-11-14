@@ -15,6 +15,7 @@ public partial class MainMenu : Control
 	public async void OnPlayPressed()
 	{
 		// Put this initializing gamemanager somewhere above like _ready or something
+		GD.Print("play pressed");
 		await gameInstance.SceneChanger("res://Scenes/MainScene/main_scene.tscn");
 	}
 	public void OnSettingsPressed()

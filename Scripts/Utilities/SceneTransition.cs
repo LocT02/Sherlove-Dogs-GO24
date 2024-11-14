@@ -15,6 +15,8 @@ namespace SceneTransitionManager {
 		if (AnimationPlayer == null) {
 			throw new InvalidProgramException("Unable to GetNode AnimationPlayer");
 		}
+
+		GD.Print("Scene Transitions Ready");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

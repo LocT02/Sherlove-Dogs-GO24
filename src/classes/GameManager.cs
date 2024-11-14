@@ -24,7 +24,11 @@ namespace GameManager
 			Instance = this;
 			mainWordGame = new MainWordGame();
 			gameData = new GameDataManager();
-			sceneTransition = new SceneTransition();
+			var sceneTranstionPacked = ResourceLoader.Load<PackedScene>("res://Scenes/scene_transition.tscn");
+			sceneTransition = (SceneTransition)sceneTranstionPacked.Instantiate();
+			sceneTransition.Layer = 999;
+			CallDeferred("AddSceneTransitionToRoot");
+
 			GD.Print("GameManager Ready");
 		}
 
@@ -43,6 +47,8 @@ namespace GameManager
 		}
 
 		private async Task<Result> PlayFadeTransition(Func<Task<Result>> action) {
+			AddSceneTransitionToRoot();
+
 			var fadeInResult = await sceneTransition.StartFadeIn();
 			if (fadeInResult.IsFailure) {
 				return fadeInResult;
@@ -56,7 +62,17 @@ namespace GameManager
 			return await sceneTransition.ReverseFadeIn();
 		}
 
+		private void AddSceneTransitionToRoot()
+		{
+			// Add SceneTransition to the root if it's not already added
+			if (sceneTransition.GetParent() == null)
+			{
+				GetTree().Root.AddChild(sceneTransition);
+			}
+		}
+
 		private Result LoadAndAddScene(string scenePath) {
+			GD.Print("inside Load and Add Scene");
 			try {
 				var scene = ResourceLoader.Load<PackedScene>(scenePath);
 				GetTree().CurrentScene.AddChild(scene.Instantiate());
@@ -67,6 +83,7 @@ namespace GameManager
 		}
 
 		private Result LoadAndSwitchScene(string scenePath) {
+			GD.Print("inside Load and Switch Scene");
 			var scene = ResourceLoader.Load<PackedScene>(scenePath);
 			Error attemptSceneChange = GetTree().ChangeSceneToPacked(scene);
 
@@ -76,7 +93,8 @@ namespace GameManager
 		}
 
 		public async Task<Result> SceneChanger(string changeToScenePath) {
-			
+			GD.Print("inside SceneChanger");
+
 			if (changeToScenePath == "res://Scenes/MainScene/main_scene.tscn" && GetTree().CurrentScene.SceneFilePath.Contains("Minigames")) {
 				// Current scene is mini-game, remove it to return to main game
 				return await PlayFadeTransition(async () => {
