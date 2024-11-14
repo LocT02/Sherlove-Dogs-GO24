@@ -4,47 +4,67 @@ using System.Collections.Generic;
 public partial class Bone : Area2D
 {
     public int Points { get; private set; }
-    private Texture2D texture;
-    private CollisionShape2D coll;
-    private readonly static Dictionary<int, (Texture2D texture, int points)> boneData = new Dictionary<int, (Texture2D, int)>
-    {
-        { 0, ((Texture2D)GD.Load("res://Assets/Icons/Bone0.svg"), 50) },
-        { 1, ((Texture2D)GD.Load("res://Assets/Icons/Bone1.svg"), -50) },
-        { 2, ((Texture2D)GD.Load("res://Assets/Icons/Bone2.svg"), 25) }
-    };
+    private int speed = 150;
 
-    public void Initialize(int boneType)
+    // References to the child nodes
+    private TextureRect sprite;
+    private CollisionShape2D collisionShape;
+
+    // Dictionary to hold different textures and point values
+    private static Dictionary<int, (Texture2D texture, int points)> BoneTypes;
+
+    public override void _Ready()
     {
-        if (boneData.ContainsKey(boneType))
+    // Defer the setup to ensure the node is fully initialized
+
+        BoneTypes = new Dictionary<int, (Texture2D, int)>
         {
-            (texture, Points) = boneData[boneType];
-            var sprite = new TextureRect { Texture = texture };
-            sprite.StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered;
-            AddChild(sprite);
-        }
-        coll = new CollisionShape2D();
-        var shape = new RectangleShape2D();
-        shape.Size = new Vector2(64,64);
-        coll.Shape = shape;
-        AddChild(coll);
+            { 0, ((Texture2D)GD.Load("res://Assets/Icons/Bone0.svg"), 50) },
+            { 1, ((Texture2D)GD.Load("res://Assets/Icons/Bone1.svg"), -50) },
+            { 2, ((Texture2D)GD.Load("res://Assets/Icons/Bone2.svg"), 25) }
+        };
+        sprite = GetNode<TextureRect>("TextureRect");
+        collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
+
+        // Setup signal for when the player collides with this bone
         this.BodyEntered += OnBodyEntered;
-        
     }
 
-    public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
     {
-        Position += Vector2.Down * 150 * (float)delta; // Adjust speed as needed
+        Position += Vector2.Down * speed * (float)delta;
 
         if (Position.Y > GetViewportRect().Size.Y)
         {
             QueueFree();  // Remove bone if it falls out of view
         }
     }
+    public void Initialize(int boneType)
+    {
+        
+        if (BoneTypes.ContainsKey(boneType))
+        {
+            var boneData = BoneTypes[boneType];
+            
+            if (boneData.texture == null)
+            {
+                GD.PrintErr("Texture not loaded correctly for bone type: " + boneType);
+                return;
+            }
 
-    public static void OnBodyEntered(Node2D body){
-        GD.Print(body.GetClass());
-        if(!body.HasMethod("OnBoneCollected")) return;
+            sprite.Texture = boneData.texture;
+            Points = boneData.points;
+        }
+    }
 
-        body.Call("OnBoneCollected");
+    private void OnBodyEntered(Node body)
+    {
+        if (body is CTBPlayer)  // Replace 'Player' with the actual class name for the player
+        {
+            // Signal or directly modify score
+            var player = body as CTBPlayer;
+            player.Call("OnBoneCollected", this);
+            QueueFree();  // Destroy bone after it's collected
+        }
     }
 }
