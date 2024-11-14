@@ -4,6 +4,8 @@ using IGameManager;
 using Godot;
 using System;
 using GameData;
+using System.Threading.Tasks;
+using SceneTransitionManager;
 
 namespace GameManager
 {
@@ -12,6 +14,7 @@ namespace GameManager
 		public static GameManager Instance { get; private set; }
 		public GameDataManager gameData { get; private set; }
 		public MainWordGame mainWordGame { get; private set; }
+		private SceneTransition sceneTransition;
 		public string GameState { get; set; } = "newgame";
 
 		public override void _Ready()
@@ -21,6 +24,11 @@ namespace GameManager
 			Instance = this;
 			mainWordGame = new MainWordGame();
 			gameData = new GameDataManager();
+			var sceneTranstionPacked = ResourceLoader.Load<PackedScene>("res://Scenes/scene_transition.tscn");
+			sceneTransition = (SceneTransition)sceneTranstionPacked.Instantiate();
+			sceneTransition.Layer = 999;
+			CallDeferred("AddSceneTransitionToRoot");
+
 			GD.Print("GameManager Ready");
 		}
 
@@ -38,29 +46,67 @@ namespace GameManager
 			return Result.Success();
 		}
 
-		public Result SceneChanger(string scenePath) {
+		private async Task<Result> PlayFadeTransition(Func<Task<Result>> action) {
+			AddSceneTransitionToRoot();
 
-			var scene = ResourceLoader.Load<PackedScene>(scenePath);
-
-			if (scenePath == "res://Scenes/MainScene/main_scene.tscn" && GetTree().CurrentScene.SceneFilePath.Contains("Minigames")) {
-				// Current scene is mini-game, remove it to return to main game
-				GetTree().CurrentScene.QueueFree();
-				return Result.Success();
-			} else if (scenePath.Contains("Minigames")) {
-				// Add the new scene as a child to the current scene
-				try {
-					GetTree().CurrentScene.AddChild(scene.Instantiate());
-					return Result.Success();
-				} catch (Exception e) {
-					return Result.Failure(e.Message);
-				}
+			var fadeInResult = await sceneTransition.StartFadeIn();
+			if (fadeInResult.IsFailure) {
+				return fadeInResult;
 			}
 
+			var actionResult = await action();
+			if (actionResult.IsFailure) {
+				return actionResult;
+			}
+
+			return await sceneTransition.ReverseFadeIn();
+		}
+
+		private void AddSceneTransitionToRoot()
+		{
+			// Add SceneTransition to the root if it's not already added
+			if (sceneTransition.GetParent() == null)
+			{
+				GetTree().Root.AddChild(sceneTransition);
+			}
+		}
+
+		private Result LoadAndAddScene(string scenePath) {
+			GD.Print("inside Load and Add Scene");
+			try {
+				var scene = ResourceLoader.Load<PackedScene>(scenePath);
+				GetTree().CurrentScene.AddChild(scene.Instantiate());
+				return Result.Success();
+			} catch (Exception e) {
+				return Result.Failure(e.Message);
+			}
+		}
+
+		private Result LoadAndSwitchScene(string scenePath) {
+			GD.Print("inside Load and Switch Scene");
+			var scene = ResourceLoader.Load<PackedScene>(scenePath);
 			Error attemptSceneChange = GetTree().ChangeSceneToPacked(scene);
 
 			return attemptSceneChange == Error.Ok
 			? Result.Success()
 			: Result.Failure($"Scene Change to {scenePath} failed.");
+		}
+
+		public async Task<Result> SceneChanger(string changeToScenePath) {
+			GD.Print("inside SceneChanger");
+
+			if (changeToScenePath == "res://Scenes/MainScene/main_scene.tscn" && GetTree().CurrentScene.SceneFilePath.Contains("Minigames")) {
+				// Current scene is mini-game, remove it to return to main game
+				return await PlayFadeTransition(async () => {
+					await Task.Run(() => GetTree().CurrentScene.QueueFree());
+					return Result.Success();
+				});
+			} else if (changeToScenePath.Contains("Minigames")) {
+				// Add the new scene as a child to the current scene
+				return await PlayFadeTransition(() => Task.FromResult(LoadAndAddScene(changeToScenePath)));
+			}
+
+			return await PlayFadeTransition(() => Task.FromResult(LoadAndSwitchScene(changeToScenePath)));
 		}
 
 		public Result<char[]> GuessAttempt(string guess) {
