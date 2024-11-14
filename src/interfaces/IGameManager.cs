@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using GameData;
 using MainWordGameWIPNAME;
 using ResultManager;
@@ -8,7 +9,7 @@ namespace IGameManager {
         string GameState { get; set; }
         GameDataManager gameData { get; }
         MainWordGame mainWordGame { get; }
-        Result SceneChanger(string scenePath);
+        Task<Result> SceneChanger(string scenePath);
         Result EndGame();
         Result StartGame();
         Result<char[]> GuessAttempt(string guess);

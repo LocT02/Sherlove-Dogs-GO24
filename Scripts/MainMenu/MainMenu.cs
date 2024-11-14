@@ -12,18 +12,18 @@ public partial class MainMenu : Control
 	// public override void _Process(double delta)
 	// {
 	// }
-	public void OnPlayPressed()
+	public async void OnPlayPressed()
 	{
 		// Put this initializing gamemanager somewhere above like _ready or something
-		gameInstance.SceneChanger("res://Scenes/MainScene/main_scene.tscn");
+		await gameInstance.SceneChanger("res://Scenes/MainScene/main_scene.tscn");
 	}
 	public void OnSettingsPressed()
 	{
 		//Todo
 	}
-	public void OnContinueSavePressed() {
+	public async void OnContinueSavePressed() {
 		gameInstance.GameState = "continue";
-		gameInstance.SceneChanger("res://Scenes/MainScene/main_scene.tscn");
+		await gameInstance.SceneChanger("res://Scenes/MainScene/main_scene.tscn");
 	}
 	public void OnQuitPressed()
 	{
