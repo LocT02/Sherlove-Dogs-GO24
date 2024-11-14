@@ -1,0 +1,70 @@
+using Godot;
+using System.Collections.Generic;
+
+public partial class Bone : Area2D
+{
+    public int Points { get; private set; }
+    private int speed = 150;
+
+    // References to the child nodes
+    private TextureRect sprite;
+    private CollisionShape2D collisionShape;
+
+    // Dictionary to hold different textures and point values
+    private static Dictionary<int, (Texture2D texture, int points)> BoneTypes;
+
+    public override void _Ready()
+    {
+    // Defer the setup to ensure the node is fully initialized
+
+        BoneTypes = new Dictionary<int, (Texture2D, int)>
+        {
+            { 0, ((Texture2D)GD.Load("res://Assets/Icons/Bone0.svg"), 50) },
+            { 1, ((Texture2D)GD.Load("res://Assets/Icons/Bone1.svg"), -50) },
+            { 2, ((Texture2D)GD.Load("res://Assets/Icons/Bone2.svg"), 25) }
+        };
+        sprite = GetNode<TextureRect>("TextureRect");
+        collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
+
+        // Setup signal for when the player collides with this bone
+        this.BodyEntered += OnBodyEntered;
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        Position += Vector2.Down * speed * (float)delta;
+
+        if (Position.Y > GetViewportRect().Size.Y)
+        {
+            QueueFree();  // Remove bone if it falls out of view
+        }
+    }
+    public void Initialize(int boneType)
+    {
+        
+        if (BoneTypes.ContainsKey(boneType))
+        {
+            var boneData = BoneTypes[boneType];
+            
+            if (boneData.texture == null)
+            {
+                GD.PrintErr("Texture not loaded correctly for bone type: " + boneType);
+                return;
+            }
+
+            sprite.Texture = boneData.texture;
+            Points = boneData.points;
+        }
+    }
+
+    private void OnBodyEntered(Node body)
+    {
+        if (body is CTBPlayer)  // Replace 'Player' with the actual class name for the player
+        {
+            // Signal or directly modify score
+            var player = body as CTBPlayer;
+            player.Call("OnBoneCollected", this);
+            QueueFree();  // Destroy bone after it's collected
+        }
+    }
+}

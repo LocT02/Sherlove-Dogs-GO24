@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://jiho2akbtk5x"]
+
+[ext_resource type="Script" path="res://Scripts/Minigames/CatchTheTreat/Bone.cs" id="1_fxxmp"]
+[ext_resource type="Texture2D" uid="uid://0q1p7sb1nk1j" path="res://Assets/Icons/Bone0.svg" id="2_ur3bc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6w7vl"]
+size = Vector2(58, 56)
+
+[node name="Bone" type="Area2D"]
+script = ExtResource("1_fxxmp")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_ur3bc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(33, 31)
+shape = SubResource("RectangleShape2D_6w7vl")

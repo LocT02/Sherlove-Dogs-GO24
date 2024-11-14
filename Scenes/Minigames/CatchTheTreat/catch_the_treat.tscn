@@ -1,3 +1,38 @@
-[gd_scene format=3 uid="uid://cmq4xiyrxt0j7"]
+[gd_scene load_steps=6 format=3 uid="uid://cmq4xiyrxt0j7"]
 
-[node name="CatchTheTreat" type="Node2D"]
+[ext_resource type="Script" path="res://Scripts/Minigames/CatchTheTreat/CatchTheBone.cs" id="1_g787b"]
+[ext_resource type="Texture2D" uid="uid://b5tk3r6lkyip4" path="res://icon.svg" id="1_kyp4v"]
+[ext_resource type="Script" path="res://Scripts/Minigames/CatchTheTreat/CTBPlayer.cs" id="3_1vm51"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xy2ig"]
+size = Vector2(192.3, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_60edd"]
+size = Vector2(130, 132)
+
+[node name="CatchTheBone" type="Node2D"]
+script = ExtResource("1_g787b")
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(0, 1060)
+scale = Vector2(10, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor"]
+position = Vector2(96.55, 63)
+scale = Vector2(1.50391, 1)
+texture = ExtResource("1_kyp4v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2(96.65, 62)
+shape = SubResource("RectangleShape2D_xy2ig")
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(74, 985)
+script = ExtResource("3_1vm51")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+texture = ExtResource("1_kyp4v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(1, -2)
+shape = SubResource("RectangleShape2D_60edd")
