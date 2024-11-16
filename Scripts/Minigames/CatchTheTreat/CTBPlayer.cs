@@ -23,7 +23,7 @@ public partial class CTBPlayer : PlayerMovement
             score += boneInstance.Points;
             GD.Print("Score: " + score);
 
-            bone.QueueFree();
+            boneInstance.QueueFree();
         }
     }
 
