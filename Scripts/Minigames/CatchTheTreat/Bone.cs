@@ -39,7 +39,7 @@ public partial class Bone : Area2D
             QueueFree();  // Remove bone if it falls out of view
         }
     }
-    public void Initialize(int boneType)
+    public void Initialize(int boneType, Vector2 boneSize)
     {
         
         if (BoneTypes.ContainsKey(boneType))
@@ -54,6 +54,13 @@ public partial class Bone : Area2D
 
             sprite.Texture = boneData.texture;
             Points = boneData.points;
+
+            sprite.StretchMode = TextureRect.StretchModeEnum.Scale;
+            sprite.Size = boneSize;
+            if (collisionShape.Shape is RectangleShape2D rectShape)
+            {
+                rectShape.Size = boneSize; // Update collision shape dimensions
+            }
         }
     }
 
@@ -64,7 +71,10 @@ public partial class Bone : Area2D
             // Signal or directly modify score
             var player = body as CTBPlayer;
             player.Call("OnBoneCollected", this);
-            QueueFree();  // Destroy bone after it's collected
         }
+    }
+
+    public void SetSpeed(int speed){
+        this.speed = speed;
     }
 }

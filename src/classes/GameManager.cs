@@ -6,6 +6,7 @@ using System;
 using GameData;
 using System.Threading.Tasks;
 using SceneTransitionManager;
+using System.Collections.Generic;
 
 namespace GameManager
 {
@@ -14,6 +15,15 @@ namespace GameManager
 		public static GameManager Instance { get; private set; }
 		public GameDataManager gameData { get; private set; }
 		public MainWordGame mainWordGame { get; private set; }
+		public readonly Dictionary<string, string> scenePaths = new Dictionary<string, string> {
+			{"MAIN_SCENE", "res://Scenes/MainScene/main_scene.tscn"},
+			{"MEMORY_SCENE", "res://Scenes/Minigames/Memory/memory.tscn"},
+			{"TRANSITION_SCENE", "res://Scenes/scene_transition.tscn"},
+			{"CATCH_THE_BONE_SCENE", "res://Scenes/Minigames/CatchTheTreat/catch_the_treat.tscn"},
+			{"DDR_SCENE", "res://Scenes/Minigames/DDR/ddr.tscn"},
+			{"GAME_OVER", "res://Scenes/GameOver/game_over.tscn"}
+		};
+
 		private SceneTransition sceneTransition;
 		public string GameState { get; set; } = "newgame";
 
@@ -24,7 +34,7 @@ namespace GameManager
 			Instance = this;
 			mainWordGame = new MainWordGame();
 			gameData = new GameDataManager();
-			var sceneTranstionPacked = ResourceLoader.Load<PackedScene>("res://Scenes/scene_transition.tscn");
+			var sceneTranstionPacked = ResourceLoader.Load<PackedScene>(scenePaths["TRANSITION_SCENE"]);
 			sceneTransition = (SceneTransition)sceneTranstionPacked.Instantiate();
 			sceneTransition.Layer = 999;
 			CallDeferred("AddSceneTransitionToRoot");

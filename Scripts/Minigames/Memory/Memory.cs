@@ -1,10 +1,8 @@
 using Godot;
 using Godot.Collections;
+using InventoryManager;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Numerics;
 
 /*
 Game flow:
@@ -37,23 +35,28 @@ public partial class Memory : Control
 	const int DISPLAY_DURATION = 5;
 	const int TRANSITION_DURATION = 3;
 	const int START_LEVEL = 3;
-	const int MAX_LEVEL = 9; //MAX_LEVEL >= START_LEVEL + STEP_LEVEL(NUM_OF_ROUNDS-1)
-	const int STEP_LEVEL = 2;
-	const int NUM_OF_ROUNDS = 4;
+	const int STEP_LEVEL = 0;
+	const int NUM_OF_ROUNDS = 1;
+	private int MAX_LEVEL = START_LEVEL + STEP_LEVEL * (NUM_OF_ROUNDS-1);
 	private int currRound = 0;
 	private int roundsWon = 0;
 	private string playerInputString = "";
     private List<ArrowKey> arrowSequence, playerInput;
     private int currentLevel = START_LEVEL;
-    private Timer displayTimer, transitionTimer;
+    private Godot.Timer displayTimer, transitionTimer;
 	private HBoxContainer arrowContainer;
 	private ProgressBar progressBar;
 	private RichTextLabel progressBarText;
 	private Label topText, roundsWonText, currRoundText;
     private Godot.Collections.Dictionary<ArrowKey,Texture2D> arrowMap;
+	private GameManager.GameManager gameManagerInstance;
+	private Inventory inventoryInstance;
 
 	public override void _Ready()
 	{
+		//Initialize references to GameManager
+		gameManagerInstance = GameManager.GameManager.Instance;
+		inventoryInstance = gameManagerInstance.gameData.Inventory;
 		//Load Arrow Textures
 		arrowMap = new Godot.Collections.Dictionary<ArrowKey,Texture2D>
 		{
@@ -79,15 +82,16 @@ public partial class Memory : Control
 		//Empty list to store player input
 		playerInput = new List<ArrowKey>();
 		//Initialize display timer 
-		displayTimer = GetNode<Timer>("DisplayTimer");
+		displayTimer = GetNode<Godot.Timer>("DisplayTimer");
 		displayTimer.OneShot = true;
 		displayTimer.WaitTime = DISPLAY_DURATION;
 		displayTimer.Timeout += OnDisplayTimerTimeout;
 		//Initialize transition timer
-		transitionTimer = GetNode<Timer>("TransitionTimer");
+		transitionTimer = GetNode<Godot.Timer>("TransitionTimer");
 		transitionTimer.OneShot = true;
 		transitionTimer.WaitTime = TRANSITION_DURATION;
 		transitionTimer.Timeout += OnTransitionTimerTimeout;
+
 		
 		//Create a button to start ig idk 
 		StartLevel();
@@ -101,12 +105,13 @@ public partial class Memory : Control
 		if(gameState == GameStates.Memorize){
 			progressBar.Value = (int)(displayTimer.TimeLeft/displayTimer.WaitTime*100);
 			progressBarText.Text = $"[center]{displayTimer.TimeLeft.ToString("0.0") + 's'}[/center]";
+			topText.Text = "Memorize the sequence!";
 		}
-		if(gameState == GameStates.Transition){
+		else if(gameState == GameStates.Transition){
 			progressBar.Value = (int)((1-transitionTimer.TimeLeft/transitionTimer.WaitTime)*100);
 			progressBarText.Text = $"[center]{transitionTimer.TimeLeft.ToString("0.0") + 's'}[/center]";
 		}
-		if(gameState == GameStates.Input){
+		else if(gameState == GameStates.Input){
 			progressBarText.Text = $"[center]{playerInputString}[/center]";
 			if(playerInput.Count >= currentLevel)
 			{
@@ -152,7 +157,6 @@ public partial class Memory : Control
 		playerInputString ="";
 		ShowSequence();
 		gameState = GameStates.Memorize;
-		topText.Text = "Memorize the sequence!";
 		displayTimer.Start(DISPLAY_DURATION);
 	}
 	//Generates a new sequence and returns it
@@ -178,11 +182,11 @@ public partial class Memory : Control
 	//Continue to next level upon win
 	private void NextLevel(bool localWin){
 		if(localWin) currentLevel += STEP_LEVEL;
-		if(currRound >= 4){
-			if(roundsWon >= 3){
+		if(currRound >= NUM_OF_ROUNDS){
+			if(roundsWon >= NUM_OF_ROUNDS-1){
 				topText.Text = "You win!";
 				gameState = GameStates.Win;
-				GameWin();
+				GameWin(roundsWon == 4);
 			}else {
 				topText.Text = "You Lost!";
 				gameState = GameStates.Lose;
@@ -230,10 +234,27 @@ public partial class Memory : Control
 			GD.Print(key);
 		}
 	}
-	private void GameOver(){
-		//TODO
+	private async void GameOver(){
+		//game over screen ?
+		//scene switch
+		await gameManagerInstance.SceneChanger(gameManagerInstance.scenePaths["MAIN_SCENE"]);
 	}
-	private void GameWin(){
-		//TODO
+	
+	private async void GameWin(bool upgraded){
+		
+		var item = inventoryInstance.SelectRandomItem(upgraded);
+
+		if(item.IsFailure) {
+			GD.PushError(item.Error);
+		}
+
+		var result = inventoryInstance.AddItem(item.Value);
+		if(result.IsFailure) {
+			GD.PushError(result.Error);
+		}
+		//Show item get screen first before scene switch
+		
+		await gameManagerInstance.SceneChanger(gameManagerInstance.scenePaths["MAIN_SCENE"]);
+
 	}
 }
