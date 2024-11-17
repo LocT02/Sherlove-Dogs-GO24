@@ -41,14 +41,14 @@ public partial class Memory : Control
 	private int currRound = 0;
 	private int roundsWon = 0;
 	private string playerInputString = "";
-    private List<ArrowKey> arrowSequence, playerInput;
-    private int currentLevel = START_LEVEL;
-    private Godot.Timer displayTimer, transitionTimer;
+	private List<ArrowKey> arrowSequence, playerInput;
+	private int currentLevel = START_LEVEL;
+	private Godot.Timer displayTimer, transitionTimer;
 	private HBoxContainer arrowContainer;
 	private ProgressBar progressBar;
 	private RichTextLabel progressBarText;
 	private Label topText, roundsWonText, currRoundText;
-    private Godot.Collections.Dictionary<ArrowKey,Texture2D> arrowMap;
+	private Godot.Collections.Dictionary<ArrowKey,Texture2D> arrowMap;
 	private GameManager.GameManager gameManagerInstance;
 	private Inventory inventoryInstance;
 
