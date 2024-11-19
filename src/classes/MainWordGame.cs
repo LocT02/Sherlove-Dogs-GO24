@@ -125,41 +125,63 @@ namespace MainWordGameWIPNAME
 		}
 
 		// Probably not returning a string
-		private Result<char[]> GenerateFeedback(string guess) {
+		private Result<char[]> GenerateFeedback(string guess)
+		{
 			char[] feedback = new char[CurrentWord.Length];
+			int[] currentWordLetterCount = new int[26];  // For counting occurrences of each letter in the word
+			int[] guessLetterCount = new int[26];  // For counting occurrences of each letter in the guess
+			int[] correctLetterCount = new int[26];  // To track how many times a letter has been correctly guessed
+			bool[] usedInFeedback = new bool[CurrentWord.Length];  // Tracks if a letter is already marked as correct
 
+			// First pass: Find exact matches and count occurrences of each letter
+			for (int i = 0; i < guess.Length; i++) {
+				char guessedLetter = guess[i];
+				currentWordLetterCount[CurrentWord[i] - 'a']++;  // Track letter count in CurrentWord
+				guessLetterCount[guessedLetter - 'a']++;  // Track letter count in guess
+
+				if (guessedLetter == CurrentWord[i]) {
+					// Guessed letter is correct and in the correct position
+					CorrectLetters[i] = guessedLetter;
+					feedback[i] = guessedLetter;
+					usedInFeedback[i] = true;  // Mark as used for exact match
+					correctLetterCount[guessedLetter - 'a']++;  // Increment correct letter count
+				} else {
+					feedback[i] = '_';  // Mark as wrong initially
+				}
+			}
+
+			// Second pass: Handle misplaced letters
 			for (int i = 0; i < guess.Length; i++) {
 				char guessedLetter = guess[i];
 
-				if (guessedLetter == CurrentWord[i]) {
-					// Guessed Letter is in correct position
-					CorrectLetters[i] = guessedLetter;
-					feedback[i] = guessedLetter;
-				} else if (CurrentWord.Contains(guessedLetter) && CorrectLetters[i] == '_') {
-					// Guessed Letter is in the word but not in correct position
-					feedback[i] = '-';
-				} else {
-					// Wrong Letter
-					feedback[i] = '_';
+				if (feedback[i] == '_')  { // Only process letters that haven't been placed correctly
+					// The guessed letter must be in the word and not have been used up already
+					if (currentWordLetterCount[guessedLetter - 'a'] > correctLetterCount[guessedLetter - 'a']) {
+						// Check if this guessed letter is already placed correctly
+						bool isMisplaced = false;
+
+						// Count occurrences of the letter that have already been correctly placed
+						for (int j = 0; j < i; j++) {
+							if (guess[j] == guessedLetter && usedInFeedback[j]) {
+								isMisplaced = true;
+								break;
+							}
+						}
+
+						if (isMisplaced) {
+							feedback[i] = '-';  // Guessed letter is in the word but not in the correct position
+							correctLetterCount[guessedLetter - 'a']++;  // Increment the correct letter count
+						} else {
+							feedback[i] = '_';  // Guessed letter is completely incorrect
+						}
+					} else {
+						feedback[i] = '_';  // Guessed letter is completely incorrect
+					}
 				}
 			}
 
-			// Adds already correct letters to feedback from previous guesses
-			for (int i = 0; i < CorrectLetters.Count; i++) {
-				if (CorrectLetters[i] != '_') {
-					feedback[i] = CorrectLetters[i];
-				}
-			}
-
+			// Return the result
 			return Result.Success(feedback);
-		}
-
-		public Result<int> CalculatePoints() {
-			return Result.Success(0);
-		}
-
-		public Result<int> CalculateDamage() {
-			return Result.Success(0);
 		}
 
 		// Reveals letters 
