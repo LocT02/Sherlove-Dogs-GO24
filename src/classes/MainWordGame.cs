@@ -14,6 +14,7 @@ namespace MainWordGameWIPNAME
 		private string _Category;
 		public List<char> GuessedLetters { get; set; } = new List<char>();
 		private List<char> _CorrectLetters;
+		private Dictionary<char, int> letterCounts = new Dictionary<char, int>();
 
 		public MainWordGame() {
 			GD.Print("Main Game Ready");
@@ -27,6 +28,7 @@ namespace MainWordGameWIPNAME
 				}
 				_CurrentWord = value.ToUpper();
 				ConvertWordToList();
+				FillHistogram();
 			}
 		}
 
@@ -124,42 +126,56 @@ namespace MainWordGameWIPNAME
 			return Result.Success();
 		}
 
-		// Probably not returning a string
+		private void FillHistogram() {
+			foreach (char letter in CurrentWord) {
+				if (letterCounts.ContainsKey(letter)) {
+					letterCounts[letter]++;
+				} else {
+					letterCounts[letter] = 1;
+				}
+			}
+		}
+
 		private Result<char[]> GenerateFeedback(string guess) {
 			char[] feedback = new char[CurrentWord.Length];
 
+			// First Pass - Correct Positions
 			for (int i = 0; i < guess.Length; i++) {
 				char guessedLetter = guess[i];
 
 				if (guessedLetter == CurrentWord[i]) {
-					// Guessed Letter is in correct position
-					CorrectLetters[i] = guessedLetter;
-					feedback[i] = guessedLetter;
-				} else if (CurrentWord.Contains(guessedLetter) && CorrectLetters[i] == '_') {
-					// Guessed Letter is in the word but not in correct position
-					feedback[i] = '-';
-				} else {
-					// Wrong Letter
-					feedback[i] = '_';
+					// Correct position
+					CorrectLetters[i] = guessedLetter; // Mark as correct in CorrectLetters
+					feedback[i] = guessedLetter;       // Add to feedback
+					letterCounts[guessedLetter]--;     // Decrement count for this letter
 				}
 			}
 
-			// Adds already correct letters to feedback from previous guesses
+			// Second Pass - Misplaced Letters
+			for (int i = 0; i < guess.Length; i++) {
+				char guessedLetter = guess[i];
+
+				// Skip already correctly guessed letters
+				if (feedback[i] != '\0') {
+					continue;
+				}
+
+				// Check if guessedLetter exists elsewhere in CurrentWord and has remaining occurrences
+				if (letterCounts.ContainsKey(guessedLetter) && letterCounts[guessedLetter] > 0) {
+					feedback[i] = '-';                 // Mark as misplaced
+				} else {
+					feedback[i] = '_';                 // Mark as incorrect
+				}
+			}
+
+			// Final Step - Preserve previously correctly guessed letters
 			for (int i = 0; i < CorrectLetters.Count; i++) {
 				if (CorrectLetters[i] != '_') {
-					feedback[i] = CorrectLetters[i];
+					feedback[i] = CorrectLetters[i];   // Preserve correct letters from past guesses
 				}
 			}
 
 			return Result.Success(feedback);
-		}
-
-		public Result<int> CalculatePoints() {
-			return Result.Success(0);
-		}
-
-		public Result<int> CalculateDamage() {
-			return Result.Success(0);
 		}
 
 		// Reveals letters 
