@@ -1,15 +1,20 @@
-[gd_scene load_steps=76 format=3 uid="uid://cmq4xiyrxt0j7"]
+[gd_scene load_steps=79 format=3 uid="uid://cmq4xiyrxt0j7"]
 
 [ext_resource type="Script" path="res://Scripts/Minigames/CatchTheTreat/CatchTheBone.cs" id="1_g787b"]
-[ext_resource type="Texture2D" uid="uid://b5tk3r6lkyip4" path="res://icon.svg" id="1_kyp4v"]
 [ext_resource type="Script" path="res://Scripts/Minigames/CatchTheTreat/CTBPlayer.cs" id="3_1vm51"]
 [ext_resource type="Texture2D" uid="uid://b2lfepo5p2lmu" path="res://Assets/Art/Sprites/L_DogIdle_Spritesheet.png" id="4_fnnio"]
 [ext_resource type="Texture2D" uid="uid://ckbi0hkpmt34e" path="res://Assets/Art/Sprites/R_DogIdle_Spreadsheet.png" id="5_bsqiw"]
 [ext_resource type="Texture2D" uid="uid://rkrox8xw7h5t" path="res://Assets/Art/Sprites/L_Dog_Walk_Sheet.png" id="6_gb867"]
+[ext_resource type="Texture2D" uid="uid://3xbxmg2y0nnl" path="res://Assets/Art/Backgrounds/Minigames/Backyard_NoClouds.PNG" id="7_4lxxr"]
 [ext_resource type="Texture2D" uid="uid://bmbt1dgt82ngs" path="res://Assets/Art/Sprites/R_Dog_Walk_Sheet.png" id="7_efr0k"]
+[ext_resource type="Texture2D" uid="uid://wfwgrhvgd0hj" path="res://Assets/Art/UI/UI_Button.png" id="8_m05of"]
+[ext_resource type="FontFile" uid="uid://c2dpe22oxwlfc" path="res://Assets/Fonts/Lemon Days/Lemon Days.otf" id="9_4hq3f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xy2ig"]
-size = Vector2(192.3, 128)
+size = Vector2(192.3, 84)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_438kp"]
+size = Vector2(6.4, 1073.5)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_37cq7"]
 atlas = ExtResource("4_fnnio")
@@ -216,7 +221,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"IdleLeft",
-"speed": 5.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -245,7 +250,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"IdleRight",
-"speed": 5.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -292,7 +297,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"WalkLeft",
-"speed": 10.0
+"speed": 25.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -339,11 +344,11 @@ animations = [{
 }],
 "loop": true,
 "name": &"WalkRight",
-"speed": 10.0
+"speed": 25.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7wklo"]
-size = Vector2(127, 129)
+size = Vector2(170, 165)
 
 [sub_resource type="Animation" id="Animation_qulnr"]
 resource_name = "Idle_Left"
@@ -448,33 +453,43 @@ graph_offset = Vector2(-29, 9)
 
 [node name="CatchTheBone" type="Node2D"]
 script = ExtResource("1_g787b")
+metadata/_edit_vertical_guides_ = [343.0, 1701.0]
+metadata/_edit_horizontal_guides_ = [990.0]
 
-[node name="Floor" type="StaticBody2D" parent="."]
+[node name="Boundaries" type="StaticBody2D" parent="."]
 position = Vector2(0, 1060)
 scale = Vector2(10, 1)
 
-[node name="Sprite2D" type="Sprite2D" parent="Floor"]
-position = Vector2(96.55, 63)
-scale = Vector2(1.50391, 1)
-texture = ExtResource("1_kyp4v")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
-position = Vector2(96.65, 62)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries"]
+z_index = 1
+position = Vector2(96, -24)
 shape = SubResource("RectangleShape2D_xy2ig")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Boundaries"]
+z_index = 1
+position = Vector2(30.9, -520)
+shape = SubResource("RectangleShape2D_438kp")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Boundaries"]
+z_index = 1
+position = Vector2(173.3, -521)
+shape = SubResource("RectangleShape2D_438kp")
 
 [node name="GameplayTimer" type="Timer" parent="."]
 
 [node name="Player" type="CharacterBody2D" parent="."]
-position = Vector2(108, 990)
+z_index = 1
+position = Vector2(408, 927)
 script = ExtResource("3_1vm51")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
-scale = Vector2(0.1, 0.1)
+position = Vector2(23.45, -20.95)
+scale = Vector2(0.131225, 0.127896)
 sprite_frames = SubResource("SpriteFrames_mq84s")
-animation = &"WalkLeft"
+animation = &"IdleRight"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2(-0.5, -0.5)
+position = Vector2(21, -18.5)
 shape = SubResource("RectangleShape2D_7wklo")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
@@ -489,3 +504,70 @@ parameters/conditions/is_idle = false
 parameters/conditions/is_walking = false
 parameters/Idle/blend_position = Vector2(-0.99682, 0)
 parameters/Walk/blend_position = Vector2(0, 0)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("7_4lxxr")
+
+[node name="ScoreContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -1.0
+offset_right = 343.0
+offset_bottom = 215.0
+
+[node name="TextureRect" type="TextureRect" parent="ScoreContainer"]
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource("8_m05of")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ScoreContainer"]
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_fonts/normal_font = ExtResource("9_4hq3f")
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+scroll_active = false
+
+[node name="TimerContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1698.0
+offset_top = -6.0
+offset_right = 1919.0
+offset_bottom = 209.0
+
+[node name="TextureRect" type="TextureRect" parent="TimerContainer"]
+layout_mode = 2
+anchor_left = -0.557
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0970078
+offset_bottom = 11.0
+texture = ExtResource("8_m05of")
+expand_mode = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="TimerContainer"]
+layout_mode = 2
+anchor_left = -0.557
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0970078
+offset_bottom = 13.0
+theme_override_fonts/normal_font = ExtResource("9_4hq3f")
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+scroll_active = false
+
+[node name="WinLoseLabel" type="RichTextLabel" parent="."]
+offset_left = 587.0
+offset_top = 395.0
+offset_right = 1291.0
+offset_bottom = 711.0
+theme_override_fonts/normal_font = ExtResource("9_4hq3f")
+theme_override_font_sizes/normal_font_size = 150
+bbcode_enabled = true
+scroll_active = false

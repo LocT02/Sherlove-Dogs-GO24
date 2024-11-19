@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 public partial class CTBPlayer : PlayerMovement
@@ -6,6 +7,7 @@ public partial class CTBPlayer : PlayerMovement
 
     public override void _Ready()
     {
+        this.Speed = 300.0f;
         base._Ready();
     }
 
@@ -20,7 +22,7 @@ public partial class CTBPlayer : PlayerMovement
     {
         if (bone is Bone boneInstance)
         {
-            score += boneInstance.Points;
+            score = Math.Max(score + boneInstance.Points, 0);
             GD.Print("Score: " + score);
 
             boneInstance.QueueFree();
