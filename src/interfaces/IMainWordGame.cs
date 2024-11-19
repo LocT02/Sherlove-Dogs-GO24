@@ -11,8 +11,6 @@ namespace IMainWordGame {
         List<char> CorrectLetters { get; set; }
         Result<Dictionary<string, string>> GetNewWord();
         Result<char[]> CheckGuess(string guess);
-        Result<int> CalculatePoints();
-        Result<int> CalculateDamage();
         Result<char[]> RevealLetters(List<int> indicesToReveal);
     }
 }
