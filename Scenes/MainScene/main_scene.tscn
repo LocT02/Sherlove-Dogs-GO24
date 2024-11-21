@@ -1,17 +1,28 @@
-[gd_scene load_steps=78 format=3 uid="uid://bfker6m1dx5m5"]
+[gd_scene load_steps=85 format=3 uid="uid://bfker6m1dx5m5"]
 
 [ext_resource type="Texture2D" uid="uid://b5tk3r6lkyip4" path="res://icon.svg" id="1_1vqta"]
 [ext_resource type="Script" path="res://Scripts/MainScene/MainScene.cs" id="1_2enir"]
 [ext_resource type="Script" path="res://Scripts/MainScene/MainSceneUIScript.cs" id="1_hlaxv"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerMovement.cs" id="2_crnmh"]
+[ext_resource type="FontFile" uid="uid://c2dpe22oxwlfc" path="res://Assets/Fonts/Lemon Days/Lemon Days.otf" id="3_5d4nt"]
+[ext_resource type="Texture2D" uid="uid://b6h1f7bi27po2" path="res://Assets/Art/UI/ChatBox.PNG" id="3_aokc3"]
 [ext_resource type="Script" path="res://src/classes/ItemButton.cs" id="3_m0r7y"]
+[ext_resource type="Texture2D" uid="uid://dpvb2bxfjb4fc" path="res://Assets/Art/UI/Inventory.PNG" id="5_kui5y"]
 [ext_resource type="Texture2D" uid="uid://rkrox8xw7h5t" path="res://Assets/Art/Sprites/L_Dog_Walk_Sheet.png" id="6_qclrc"]
 [ext_resource type="Texture2D" uid="uid://bmbt1dgt82ngs" path="res://Assets/Art/Sprites/R_Dog_Walk_Sheet.png" id="7_05i0w"]
 [ext_resource type="Texture2D" uid="uid://ckbi0hkpmt34e" path="res://Assets/Art/Sprites/R_DogIdle_Spreadsheet.png" id="7_son76"]
+[ext_resource type="Script" path="res://Scripts/MainScene/DogDoor.cs" id="8_4aueb"]
 [ext_resource type="Texture2D" uid="uid://b2lfepo5p2lmu" path="res://Assets/Art/Sprites/L_DogIdle_Spritesheet.png" id="8_vvoo6"]
+[ext_resource type="Script" path="res://Scripts/MainScene/DogBed.cs" id="9_vidff"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p3obv"]
 size = Vector2(127, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5va8r"]
+size = Vector2(128, 131)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tgc82"]
+size = Vector2(130, 130)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_37cq7"]
 atlas = ExtResource("8_vvoo6")
@@ -476,16 +487,21 @@ theme_override_constants/separation = 10
 
 [node name="CategoryLabel" type="Label" parent="MainSceneUI/WordUI/WordGameContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_5d4nt")
 theme_override_font_sizes/font_size = 36
 text = "Category: "
 
 [node name="FeedbackLabel" type="Label" parent="MainSceneUI/WordUI/WordGameContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_5d4nt")
 theme_override_font_sizes/font_size = 36
 text = "Feedback:"
 
 [node name="GuessInputField" type="LineEdit" parent="MainSceneUI/WordUI/WordGameContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_5d4nt")
 theme_override_font_sizes/font_size = 24
 placeholder_text = "Input Guess Here"
 expand_to_text_length = true
@@ -493,37 +509,89 @@ expand_to_text_length = true
 [node name="SubmitGuessButton" type="Button" parent="MainSceneUI/WordUI/WordGameContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_5d4nt")
 theme_override_font_sizes/font_size = 24
 text = "Submit"
 
-[node name="ItemButtonContainer" type="HBoxContainer" parent="MainSceneUI/WordUI"]
+[node name="TextureRect" type="TextureRect" parent="MainSceneUI/WordUI"]
+z_index = -1
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = -40.0
-offset_right = 20.0
+anchors_preset = -1
+anchor_left = -0.147
+anchor_top = -0.181
+anchor_right = 1.31
+anchor_bottom = 1.095
+offset_left = 0.228477
+offset_top = -0.243675
+offset_right = 695.25
+offset_bottom = 295.342
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("3_aokc3")
+
+[node name="ItemButtonContainer" type="Control" parent="MainSceneUI"]
+layout_mode = 3
+anchor_left = 0.241
+anchor_top = 0.5
+anchor_right = 0.407
+anchor_bottom = 0.587
+offset_left = 984.28
+offset_top = 188.0
+offset_right = 2078.56
+offset_bottom = 1220.04
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/separation = 10
 
-[node name="ItemSlot1" type="Button" parent="MainSceneUI/WordUI/ItemButtonContainer"]
-custom_minimum_size = Vector2(100, 100)
+[node name="ItemSlot1" type="Button" parent="MainSceneUI/ItemButtonContainer"]
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
+anchor_left = 0.115
+anchor_top = 0.139
+anchor_right = 0.185
+anchor_bottom = 0.228
+offset_left = -0.49501
+offset_top = 0.485992
+offset_right = 0.595001
+offset_bottom = 0.271973
 script = ExtResource("3_m0r7y")
 
-[node name="ItemSlot2" type="Button" parent="MainSceneUI/WordUI/ItemButtonContainer"]
+[node name="ItemSlot2" type="Button" parent="MainSceneUI/ItemButtonContainer"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
+anchor_left = 0.156
+anchor_top = 0.054
+anchor_right = 0.227
+anchor_bottom = 0.14
+offset_left = 0.571991
+offset_top = -2.804
+offset_right = 0.248993
+offset_bottom = 0.360001
 script = ExtResource("3_m0r7y")
 
-[node name="ItemSlot3" type="Button" parent="MainSceneUI/WordUI/ItemButtonContainer"]
+[node name="ItemSlot3" type="Button" parent="MainSceneUI/ItemButtonContainer"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
+anchor_left = 0.226
+anchor_top = 0.051
+anchor_right = 0.302
+anchor_bottom = 0.139
+offset_left = 7.66199
+offset_top = -0.426003
+offset_right = 0.273987
+offset_bottom = 0.485992
 script = ExtResource("3_m0r7y")
+
+[node name="TextureRect" type="TextureRect" parent="MainSceneUI/ItemButtonContainer"]
+layout_mode = 2
+anchor_left = 0.107
+anchor_top = 0.011
+anchor_right = 0.337
+anchor_bottom = 0.311
+offset_left = -0.19101
+offset_top = -0.386001
+offset_right = 757.819
+offset_bottom = 787.814
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("5_kui5y")
 
 [node name="GamePlay" type="Node2D" parent="."]
 
@@ -540,6 +608,42 @@ position = Vector2(-0.5, 0)
 scale = Vector2(3, 1)
 shape = SubResource("RectangleShape2D_p3obv")
 
+[node name="DogDoor" type="Area2D" parent="GamePlay"]
+position = Vector2(1059, -131)
+script = ExtResource("8_4aueb")
+
+[node name="Sprite2D" type="Sprite2D" parent="GamePlay/DogDoor"]
+texture = ExtResource("1_1vqta")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GamePlay/DogDoor"]
+position = Vector2(-1, 0.5)
+shape = SubResource("RectangleShape2D_5va8r")
+
+[node name="Label" type="Label" parent="GamePlay/DogDoor"]
+offset_left = -46.0
+offset_top = -89.0
+offset_right = 51.0
+offset_bottom = -66.0
+text = "[W] Dog Door"
+
+[node name="DogBed" type="Area2D" parent="GamePlay"]
+position = Vector2(545, -131)
+script = ExtResource("9_vidff")
+
+[node name="Sprite2D" type="Sprite2D" parent="GamePlay/DogBed"]
+texture = ExtResource("1_1vqta")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GamePlay/DogBed"]
+shape = SubResource("RectangleShape2D_tgc82")
+
+[node name="Label" type="Label" parent="GamePlay/DogBed"]
+offset_left = -41.0
+offset_top = -88.0
+offset_right = 47.0
+offset_bottom = -65.0
+text = "[W] Dog Bed"
+metadata/_edit_use_anchors_ = true
+
 [node name="Player" type="CharacterBody2D" parent="."]
 z_index = 1
 position = Vector2(45, -131)
@@ -550,6 +654,7 @@ position = Vector2(23.45, -20.95)
 scale = Vector2(0.131225, 0.127896)
 sprite_frames = SubResource("SpriteFrames_1f6jo")
 animation = &"IdleRight"
+autoplay = "IdleRight"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2(21, -18.5)
@@ -569,6 +674,10 @@ parameters/Idle/blend_position = Vector2(-0.99682, 0)
 parameters/Walk/blend_position = Vector2(0, 0)
 
 [connection signal="pressed" from="MainSceneUI/WordUI/WordGameContainer/SubmitGuessButton" to="MainSceneUI" method="OnSubmitGuessButtonPress"]
-[connection signal="pressed" from="MainSceneUI/WordUI/ItemButtonContainer/ItemSlot1" to="MainSceneUI" method="OnItemSlot1ButtonPress"]
-[connection signal="pressed" from="MainSceneUI/WordUI/ItemButtonContainer/ItemSlot2" to="MainSceneUI" method="OnItemSlot2ButtonPress"]
-[connection signal="pressed" from="MainSceneUI/WordUI/ItemButtonContainer/ItemSlot3" to="MainSceneUI" method="OnItemSlot3ButtonPress"]
+[connection signal="pressed" from="MainSceneUI/ItemButtonContainer/ItemSlot1" to="MainSceneUI" method="OnItemSlot1ButtonPress"]
+[connection signal="pressed" from="MainSceneUI/ItemButtonContainer/ItemSlot2" to="MainSceneUI" method="OnItemSlot2ButtonPress"]
+[connection signal="pressed" from="MainSceneUI/ItemButtonContainer/ItemSlot3" to="MainSceneUI" method="OnItemSlot3ButtonPress"]
+[connection signal="body_entered" from="GamePlay/DogDoor" to="GamePlay/DogDoor" method="_on_body_entered"]
+[connection signal="body_exited" from="GamePlay/DogDoor" to="GamePlay/DogDoor" method="_on_body_exited"]
+[connection signal="body_entered" from="GamePlay/DogBed" to="GamePlay/DogBed" method="_on_body_entered"]
+[connection signal="body_exited" from="GamePlay/DogBed" to="GamePlay/DogBed" method="_on_body_exited"]

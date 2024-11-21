@@ -26,6 +26,7 @@ namespace GameManager
 
 		private SceneTransition sceneTransition;
 		public string GameState { get; set; } = "newgame";
+		public bool allowMinigameEntry = true;
 
 		public override void _Ready()
 		{
@@ -44,6 +45,8 @@ namespace GameManager
 
 		public Result StartGame() {
 			mainWordGame.ResetMainWordGame();
+
+			allowMinigameEntry = true;
 
 			var newGame = mainWordGame.GetNewWord();
 

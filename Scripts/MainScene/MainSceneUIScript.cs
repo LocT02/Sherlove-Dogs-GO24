@@ -35,9 +35,9 @@ public partial class MainSceneUIScript : CanvasLayer
 		FeedbackLabel = GetNode<Label>("WordUI/WordGameContainer/FeedbackLabel");
 		GuessInputField = GetNode<LineEdit>("WordUI/WordGameContainer/GuessInputField");
 		SubmitGuessButton = GetNode<Button>("WordUI/WordGameContainer/SubmitGuessButton");
-		ItemSlot1 = GetNode<Button>("WordUI/ItemButtonContainer/ItemSlot1") as ItemButton;
-		ItemSlot2 = GetNode<Button>("WordUI/ItemButtonContainer/ItemSlot2") as ItemButton;
-		ItemSlot3 = GetNode<Button>("WordUI/ItemButtonContainer/ItemSlot3") as ItemButton;
+		ItemSlot1 = GetNode<Button>("ItemButtonContainer/ItemSlot1") as ItemButton;
+		ItemSlot2 = GetNode<Button>("ItemButtonContainer/ItemSlot2") as ItemButton;
+		ItemSlot3 = GetNode<Button>("ItemButtonContainer/ItemSlot3") as ItemButton;
 		List<ItemButton> buttonList = new List<ItemButton>{ ItemSlot1, ItemSlot2, ItemSlot3 };
 		foreach (ItemButton button in buttonList) {
 			button.Disabled = true;

@@ -9,6 +9,7 @@ using System;
 using IGameDataManager;
 using MainWordGameWIPNAME;
 using System.Linq;
+using GameManager;
 
 namespace GameData {
 	public partial class GameDataManager : Node, _IGameDataManager
@@ -108,7 +109,8 @@ namespace GameData {
 				{ "CurrentWord", mainInstance.CurrentWord},
 				{ "Category", mainInstance.Category},
 				{ "GuessedLetters", new Array<char>(mainInstance.GuessedLetters)},
-				{ "CorrectLetters", new Array<char>(mainInstance.CorrectLetters)}
+				{ "CorrectLetters", new Array<char>(mainInstance.CorrectLetters)},
+				{ "AllowMinigameEntry", GameManager.GameManager.Instance.allowMinigameEntry}
 			};
 
 			string json = Json.Stringify(content);
