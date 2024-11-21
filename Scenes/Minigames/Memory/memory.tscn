@@ -180,11 +180,16 @@ grow_vertical = 2
 script = ExtResource("1_dr54m")
 
 [node name="GameContainer" type="PanelContainer" parent="."]
-layout_mode = 0
-offset_left = 360.0
-offset_top = 142.0
-offset_right = 1560.0
-offset_bottom = 322.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.187
+anchor_top = 0.131
+anchor_right = 0.812
+anchor_bottom = 0.298
+offset_left = 0.959991
+offset_top = 0.519989
+offset_right = 0.959961
+offset_bottom = 0.160004
 
 [node name="VBoxContainer" type="BoxContainer" parent="GameContainer"]
 layout_mode = 2
@@ -303,9 +308,11 @@ text = "Current Round"
 [node name="TransitionTimer" type="Timer" parent="."]
 
 [node name="BG" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchor_right = 0.021
+anchor_bottom = 0.037
+offset_right = -0.320004
+offset_bottom = 0.0400009
 
 [node name="TextureRect" type="TextureRect" parent="BG"]
 z_index = -2
