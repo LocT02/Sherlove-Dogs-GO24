@@ -189,7 +189,7 @@ region = Rect2(18000, 0, 1500, 1500)
 atlas = ExtResource("7_05i0w")
 region = Rect2(19500, 0, 1500, 1500)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_b7p1q"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_1f6jo"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -218,7 +218,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"IdleLeft",
-"speed": 5.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -247,7 +247,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"IdleRight",
-"speed": 5.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -294,7 +294,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"WalkLeft",
-"speed": 10.0
+"speed": 25.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -341,11 +341,11 @@ animations = [{
 }],
 "loop": true,
 "name": &"WalkRight",
-"speed": 10.0
+"speed": 25.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_a1v6n"]
-size = Vector2(127, 129)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_30jfi"]
+size = Vector2(170, 165)
 
 [sub_resource type="Animation" id="Animation_qulnr"]
 resource_name = "Idle_Left"
@@ -376,54 +376,54 @@ _data = {
 "Walk_Right": SubResource("Animation_xi2dy")
 }
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_d8eje"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_sf721"]
 animation = &"Idle_Left"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_obbs1"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wmmjs"]
 animation = &"Idle_Right"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xsjj6"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_toogd"]
 animation = &"Idle_Left"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_emr45"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nsw8o"]
 animation = &"Idle_Right"
 
 [sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_ipfva"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_d8eje")
+blend_point_0/node = SubResource("AnimationNodeAnimation_sf721")
 blend_point_0/pos = Vector2(-1, 0)
-blend_point_1/node = SubResource("AnimationNodeAnimation_obbs1")
+blend_point_1/node = SubResource("AnimationNodeAnimation_wmmjs")
 blend_point_1/pos = Vector2(1, 0)
-blend_point_2/node = SubResource("AnimationNodeAnimation_xsjj6")
+blend_point_2/node = SubResource("AnimationNodeAnimation_toogd")
 blend_point_2/pos = Vector2(0, 0.9)
-blend_point_3/node = SubResource("AnimationNodeAnimation_emr45")
+blend_point_3/node = SubResource("AnimationNodeAnimation_nsw8o")
 blend_point_3/pos = Vector2(0, -0.9)
 blend_mode = 2
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2lsbv"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wn44o"]
 animation = &"Walk_Left"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_y77xt"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_01amq"]
 animation = &"Walk_Right"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_j155d"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vyn27"]
 animation = &"Idle_Left"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mkbqj"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_22wsl"]
 animation = &"Walk_Left"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jiqqx"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5f8iy"]
 animation = &"Walk_Right"
 
 [sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_q6v1l"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_2lsbv")
+blend_point_0/node = SubResource("AnimationNodeAnimation_wn44o")
 blend_point_0/pos = Vector2(-1, 0)
-blend_point_1/node = SubResource("AnimationNodeAnimation_y77xt")
+blend_point_1/node = SubResource("AnimationNodeAnimation_01amq")
 blend_point_1/pos = Vector2(1, 0)
-blend_point_2/node = SubResource("AnimationNodeAnimation_j155d")
+blend_point_2/node = SubResource("AnimationNodeAnimation_vyn27")
 blend_point_2/pos = Vector2(0, 1)
-blend_point_3/node = SubResource("AnimationNodeAnimation_mkbqj")
+blend_point_3/node = SubResource("AnimationNodeAnimation_22wsl")
 blend_point_3/pos = Vector2(0, 1)
-blend_point_4/node = SubResource("AnimationNodeAnimation_jiqqx")
+blend_point_4/node = SubResource("AnimationNodeAnimation_5f8iy")
 blend_point_4/pos = Vector2(0, -0.9)
 blend_mode = 2
 
@@ -438,7 +438,7 @@ advance_condition = &"is_walking"
 advance_mode = 2
 advance_condition = &"is_idle"
 
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_iqoyv"]
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_snwje"]
 states/End/position = Vector2(925, 107)
 states/Idle/node = SubResource("AnimationNodeBlendSpace2D_ipfva")
 states/Idle/position = Vector2(523, 93)
@@ -540,27 +540,28 @@ position = Vector2(-0.5, 0)
 scale = Vector2(3, 1)
 shape = SubResource("RectangleShape2D_p3obv")
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="GamePlay"]
-position = Vector2(57, -144)
+[node name="Player" type="CharacterBody2D" parent="."]
+z_index = 1
+position = Vector2(45, -131)
 script = ExtResource("2_crnmh")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GamePlay/CharacterBody2D"]
-scale = Vector2(0.1, 0.1)
-sprite_frames = SubResource("SpriteFrames_b7p1q")
-animation = &"WalkLeft"
-frame_progress = 0.166129
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
+position = Vector2(23.45, -20.95)
+scale = Vector2(0.131225, 0.127896)
+sprite_frames = SubResource("SpriteFrames_1f6jo")
+animation = &"IdleRight"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GamePlay/CharacterBody2D"]
-position = Vector2(-0.5, -0.5)
-shape = SubResource("RectangleShape2D_a1v6n")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(21, -18.5)
+shape = SubResource("RectangleShape2D_30jfi")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="GamePlay/CharacterBody2D"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
 libraries = {
 "": SubResource("AnimationLibrary_em4ec")
 }
 
-[node name="AnimationTree" type="AnimationTree" parent="GamePlay/CharacterBody2D"]
-tree_root = SubResource("AnimationNodeStateMachine_iqoyv")
+[node name="AnimationTree" type="AnimationTree" parent="Player"]
+tree_root = SubResource("AnimationNodeStateMachine_snwje")
 anim_player = NodePath("../AnimationPlayer")
 parameters/conditions/is_idle = false
 parameters/conditions/is_walking = false

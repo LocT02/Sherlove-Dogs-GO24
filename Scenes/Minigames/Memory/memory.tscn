@@ -1,7 +1,174 @@
-[gd_scene load_steps=3 format=3 uid="uid://oj3dd82haejm"]
+[gd_scene load_steps=35 format=3 uid="uid://oj3dd82haejm"]
 
 [ext_resource type="Script" path="res://Scripts/Minigames/Memory/Memory.cs" id="1_dr54m"]
 [ext_resource type="Texture2D" uid="uid://b83eb3ly2r6le" path="res://Assets/Art/Backgrounds/Backyard_FULL.PNG" id="2_jy8tn"]
+[ext_resource type="FontFile" uid="uid://c2dpe22oxwlfc" path="res://Assets/Fonts/Lemon Days/Lemon Days.otf" id="2_rgcyv"]
+[ext_resource type="Texture2D" uid="uid://b2lfepo5p2lmu" path="res://Assets/Art/Sprites/L_DogIdle_Spritesheet.png" id="3_3bejq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_37cq7"]
+atlas = ExtResource("3_3bejq")
+region = Rect2(0, 0, 1500, 1500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_armt5"]
+atlas = ExtResource("3_3bejq")
+region = Rect2(1500, 0, 1500, 1500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pu6by"]
+atlas = ExtResource("3_3bejq")
+region = Rect2(3000, 0, 1500, 1500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_su2xj"]
+atlas = ExtResource("3_3bejq")
+region = Rect2(4500, 0, 1500, 1500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_glgj7"]
+atlas = ExtResource("3_3bejq")
+region = Rect2(6000, 0, 1500, 1500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b6yyk"]
+atlas = ExtResource("3_3bejq")
+region = Rect2(7500, 0, 1500, 1500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_elhic"]
+atlas = ExtResource("3_3bejq")
+region = Rect2(9000, 0, 1500, 1500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6smq6"]
+atlas = ExtResource("3_3bejq")
+region = Rect2(10500, 0, 1500, 1500)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ynfvt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_37cq7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_armt5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pu6by")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_su2xj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_glgj7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b6yyk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_elhic")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6smq6")
+}],
+"loop": true,
+"name": &"IdleLeft",
+"speed": 20.0
+}]
+
+[sub_resource type="Animation" id="Animation_qulnr"]
+resource_name = "Idle_Left"
+length = 0.533
+
+[sub_resource type="Animation" id="Animation_22x8y"]
+resource_name = "Idle_Right"
+length = 0.5667
+
+[sub_resource type="Animation" id="Animation_x5ohs"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_xa2d8"]
+resource_name = "Walk_Left"
+length = 0.933
+loop_mode = 1
+
+[sub_resource type="Animation" id="Animation_xi2dy"]
+resource_name = "Walk_Right"
+length = 0.933
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_em4ec"]
+_data = {
+"Idle_Left": SubResource("Animation_qulnr"),
+"Idle_Right": SubResource("Animation_22x8y"),
+"RESET": SubResource("Animation_x5ohs"),
+"Walk_Left": SubResource("Animation_xa2d8"),
+"Walk_Right": SubResource("Animation_xi2dy")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_sf721"]
+animation = &"Idle_Left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wmmjs"]
+animation = &"Idle_Right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_toogd"]
+animation = &"Idle_Left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nsw8o"]
+animation = &"Idle_Right"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_ipfva"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_sf721")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_wmmjs")
+blend_point_1/pos = Vector2(1, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_toogd")
+blend_point_2/pos = Vector2(0, 0.9)
+blend_point_3/node = SubResource("AnimationNodeAnimation_nsw8o")
+blend_point_3/pos = Vector2(0, -0.9)
+blend_mode = 2
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wn44o"]
+animation = &"Walk_Left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_01amq"]
+animation = &"Walk_Right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vyn27"]
+animation = &"Idle_Left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_22wsl"]
+animation = &"Walk_Left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5f8iy"]
+animation = &"Walk_Right"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_q6v1l"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_wn44o")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_01amq")
+blend_point_1/pos = Vector2(1, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_vyn27")
+blend_point_2/pos = Vector2(0, 1)
+blend_point_3/node = SubResource("AnimationNodeAnimation_22wsl")
+blend_point_3/pos = Vector2(0, 1)
+blend_point_4/node = SubResource("AnimationNodeAnimation_5f8iy")
+blend_point_4/pos = Vector2(0, -0.9)
+blend_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_wp703"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0v4ey"]
+advance_mode = 2
+advance_condition = &"is_walking"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_b0d8e"]
+advance_mode = 2
+advance_condition = &"is_idle"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_vy7lb"]
+states/End/position = Vector2(925, 107)
+states/Idle/node = SubResource("AnimationNodeBlendSpace2D_ipfva")
+states/Idle/position = Vector2(523, 93)
+states/Start/position = Vector2(361, 93)
+states/Walk/node = SubResource("AnimationNodeBlendSpace2D_q6v1l")
+states/Walk/position = Vector2(684, 93)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_wp703"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_0v4ey"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_b0d8e")]
+graph_offset = Vector2(-29, 9)
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -14,8 +181,10 @@ script = ExtResource("1_dr54m")
 
 [node name="GameContainer" type="PanelContainer" parent="."]
 layout_mode = 0
-offset_right = 1920.0
-offset_bottom = 159.0
+offset_left = 360.0
+offset_top = 142.0
+offset_right = 1560.0
+offset_bottom = 322.0
 
 [node name="VBoxContainer" type="BoxContainer" parent="GameContainer"]
 layout_mode = 2
@@ -40,12 +209,16 @@ layout_mode = 2
 show_percentage = false
 
 [node name="BarText" type="RichTextLabel" parent="GameContainer/VBoxContainer/ProgressBar"]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.999
+anchor_bottom = 7.25
 offset_left = -1.0
-offset_top = 6.0
-offset_right = 1919.0
-offset_bottom = 29.0
+offset_top = -44.0
+offset_right = -0.400146
+offset_bottom = -50.0
 bbcode_enabled = true
+scroll_active = false
 
 [node name="DisplayTimer" type="Timer" parent="."]
 
@@ -53,13 +226,13 @@ bbcode_enabled = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.44
-anchor_top = 0.169
+anchor_top = 0.299
 anchor_right = 0.554
-anchor_bottom = 0.253
-offset_left = 0.199951
-offset_top = 0.47998
+anchor_bottom = 0.382
+offset_left = 0.19989
+offset_top = 0.0799866
 offset_right = -0.680054
-offset_bottom = -0.240021
+offset_bottom = 0.439972
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer2"]
 layout_mode = 2
@@ -80,11 +253,15 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Label" type="Label" parent="PanelContainer2/HBoxContainer/Panel"]
-layout_mode = 0
-offset_left = -121.0
-offset_top = 67.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.21
+anchor_top = 0.744
+anchor_bottom = 1.0
+offset_top = 0.0400009
 offset_right = -4.0
-offset_bottom = 90.0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_rgcyv")
 text = "Rounds Won"
 horizontal_alignment = 2
 
@@ -111,11 +288,16 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Label" type="Label" parent="PanelContainer2/HBoxContainer/Panel2"]
-layout_mode = 0
-offset_left = 104.0
-offset_top = 68.0
-offset_right = 238.0
-offset_bottom = 91.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.04
+anchor_top = 0.756
+anchor_right = 2.38
+anchor_bottom = 1.011
+offset_top = -0.0400009
+offset_right = -1.52588e-05
+offset_bottom = 0.00999451
+theme_override_fonts/font = ExtResource("2_rgcyv")
 text = "Current Round"
 
 [node name="TransitionTimer" type="Timer" parent="."]
@@ -127,7 +309,34 @@ offset_bottom = 40.0
 
 [node name="TextureRect" type="TextureRect" parent="BG"]
 z_index = -2
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 48.0
+anchor_bottom = 27.0
+offset_right = -1880.0
+offset_bottom = -1040.0
 texture = ExtResource("2_jy8tn")
+
+[node name="Player" type="Node2D" parent="."]
+z_index = 1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
+position = Vector2(958, 865)
+scale = Vector2(0.131225, 0.127896)
+sprite_frames = SubResource("SpriteFrames_ynfvt")
+animation = &"IdleLeft"
+autoplay = "IdleLeft"
+frame_progress = 0.238742
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+libraries = {
+"": SubResource("AnimationLibrary_em4ec")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="Player"]
+tree_root = SubResource("AnimationNodeStateMachine_vy7lb")
+anim_player = NodePath("../AnimationPlayer")
+parameters/conditions/is_idle = false
+parameters/conditions/is_walking = false
+parameters/Idle/blend_position = Vector2(-0.99682, 0)
+parameters/Walk/blend_position = Vector2(0, 0)

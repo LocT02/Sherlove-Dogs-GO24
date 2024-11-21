@@ -35,8 +35,8 @@ public partial class Memory : Control
 	const int DISPLAY_DURATION = 5;
 	const int TRANSITION_DURATION = 3;
 	const int START_LEVEL = 3;
-	const int STEP_LEVEL = 0;
-	const int NUM_OF_ROUNDS = 1;
+	const int STEP_LEVEL = 2;
+	const int NUM_OF_ROUNDS = 4;
 	private int MAX_LEVEL = START_LEVEL + STEP_LEVEL * (NUM_OF_ROUNDS-1);
 	private int currRound = 0;
 	private int roundsWon = 0;
@@ -51,6 +51,7 @@ public partial class Memory : Control
 	private Godot.Collections.Dictionary<ArrowKey,Texture2D> arrowMap;
 	private GameManager.GameManager gameManagerInstance;
 	private Inventory inventoryInstance;
+	private AnimatedSprite2D dog;
 
 	public override void _Ready()
 	{
@@ -73,6 +74,7 @@ public partial class Memory : Control
 		progressBarText = GetNode<RichTextLabel>("GameContainer/VBoxContainer/ProgressBar/BarText");
 		roundsWonText = GetNode<Label>("PanelContainer2/HBoxContainer/Panel/RoundsWon");
 		currRoundText = GetNode<Label>("PanelContainer2/HBoxContainer/Panel2/CurrRound");
+		dog = GetNode<AnimatedSprite2D>("Player/AnimatedSprite2D");
 		progressBarText.BbcodeEnabled = true;
 		progressBar.Value = 100;
 
@@ -128,31 +130,35 @@ public partial class Memory : Control
 			if (Input.IsActionJustPressed("ui_left"))
 			{
 				playerInput.Add(ArrowKey.Left);
+				dog.RotationDegrees = 90.0f;
 				playerInputString += "←";
 			}
 			else if (Input.IsActionJustPressed("ui_right"))
 			{
 				playerInput.Add(ArrowKey.Right);
+				dog.RotationDegrees = 270.0f;
 				playerInputString += "→";
 			}
 			else if (Input.IsActionJustPressed("ui_up"))
 			{
 				playerInput.Add(ArrowKey.Up);
+				dog.RotationDegrees = 0.0f;
 				playerInputString += "↑";
 			}
 			else if (Input.IsActionJustPressed("ui_down"))
 			{
 				playerInput.Add(ArrowKey.Down);
+				dog.RotationDegrees = 180.0f;
 				playerInputString += "↓";
 			}
 		}
 	}
 	//Starts the current level
 	private void StartLevel(){
-		//Add elements up til currentLevel
 		currRound++;
 		currRoundText.Text = currRound.ToString();
 		roundsWonText.Text = roundsWon.ToString();
+		dog.RotationDegrees = 0.0f;
 		playerInput.Clear();
 		playerInputString ="";
 		ShowSequence();
