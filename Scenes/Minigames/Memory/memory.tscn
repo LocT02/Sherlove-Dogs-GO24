@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://oj3dd82haejm"]
+[gd_scene load_steps=3 format=3 uid="uid://oj3dd82haejm"]
 
 [ext_resource type="Script" path="res://Scripts/Minigames/Memory/Memory.cs" id="1_dr54m"]
+[ext_resource type="Texture2D" uid="uid://b83eb3ly2r6le" path="res://Assets/Art/Backgrounds/Backyard_FULL.PNG" id="2_jy8tn"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -118,3 +119,15 @@ offset_bottom = 91.0
 text = "Current Round"
 
 [node name="TransitionTimer" type="Timer" parent="."]
+
+[node name="BG" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="BG"]
+z_index = -2
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_jy8tn")

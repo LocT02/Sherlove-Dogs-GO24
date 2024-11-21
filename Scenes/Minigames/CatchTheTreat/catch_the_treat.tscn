@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=3 uid="uid://cmq4xiyrxt0j7"]
+[gd_scene load_steps=79 format=3 uid="uid://cmq4xiyrxt0j7"]
 
 [ext_resource type="Script" path="res://Scripts/Minigames/CatchTheTreat/CatchTheBone.cs" id="1_g787b"]
 [ext_resource type="Texture2D" uid="uid://b5tk3r6lkyip4" path="res://icon.svg" id="1_kyp4v"]
@@ -7,6 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://ckbi0hkpmt34e" path="res://Assets/Art/Sprites/R_DogIdle_Spreadsheet.png" id="5_bsqiw"]
 [ext_resource type="Texture2D" uid="uid://rkrox8xw7h5t" path="res://Assets/Art/Sprites/L_Dog_Walk_Sheet.png" id="6_gb867"]
 [ext_resource type="Texture2D" uid="uid://bmbt1dgt82ngs" path="res://Assets/Art/Sprites/R_Dog_Walk_Sheet.png" id="7_efr0k"]
+[ext_resource type="Texture2D" uid="uid://d1dmwwussjadb" path="res://Assets/Art/Backgrounds/BlueSky.PNG" id="8_7sc6c"]
+[ext_resource type="Texture2D" uid="uid://dsbatmgxp4oa" path="res://Assets/Art/Backgrounds/Backyard_CloudsOnly.PNG" id="9_0uvvy"]
+[ext_resource type="Texture2D" uid="uid://covpb5a21w8co" path="res://Assets/Art/Backgrounds/Backyard_NoSky.PNG" id="10_lt86t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xy2ig"]
 size = Vector2(192.3, 128)
@@ -489,3 +492,21 @@ parameters/conditions/is_idle = false
 parameters/conditions/is_walking = false
 parameters/Idle/blend_position = Vector2(-0.99682, 0)
 parameters/Walk/blend_position = Vector2(0, 0)
+
+[node name="Background" type="Node2D" parent="."]
+z_index = -1
+
+[node name="Sky" type="Sprite2D" parent="Background"]
+position = Vector2(980, 595.5)
+scale = Vector2(1.01563, 1.11204)
+texture = ExtResource("8_7sc6c")
+
+[node name="Clouds" type="Sprite2D" parent="Background"]
+position = Vector2(980, 595.5)
+scale = Vector2(1.01563, 1.11204)
+texture = ExtResource("9_0uvvy")
+
+[node name="Backyard" type="Sprite2D" parent="Background"]
+position = Vector2(980, 595.5)
+scale = Vector2(1.01563, 1.11204)
+texture = ExtResource("10_lt86t")
