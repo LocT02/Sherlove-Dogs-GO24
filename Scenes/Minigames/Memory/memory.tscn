@@ -170,16 +170,16 @@ states/Walk/position = Vector2(684, 93)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_wp703"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_0v4ey"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_b0d8e")]
 graph_offset = Vector2(-29, 9)
 
-[node name="Memory" type="Control"]
+[node name="Memory" type="Node2D"]
+
+[node name="Control" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
 script = ExtResource("1_dr54m")
 
-[node name="GameContainer" type="PanelContainer" parent="."]
+[node name="GameContainer" type="PanelContainer" parent="Control"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.187
@@ -191,29 +191,29 @@ offset_top = 0.519989
 offset_right = 0.959961
 offset_bottom = 0.160004
 
-[node name="VBoxContainer" type="BoxContainer" parent="GameContainer"]
+[node name="VBoxContainer" type="BoxContainer" parent="Control/GameContainer"]
 layout_mode = 2
 alignment = 1
 vertical = true
 
-[node name="TopText" type="Label" parent="GameContainer/VBoxContainer"]
+[node name="TopText" type="Label" parent="Control/GameContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 text = "Memorize the sequence!"
 horizontal_alignment = 1
 
-[node name="ArrowContainer" type="HBoxContainer" parent="GameContainer/VBoxContainer"]
+[node name="ArrowContainer" type="HBoxContainer" parent="Control/GameContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 124)
 layout_mode = 2
 size_flags_vertical = 3
 alignment = 1
 
-[node name="ProgressBar" type="ProgressBar" parent="GameContainer/VBoxContainer"]
+[node name="ProgressBar" type="ProgressBar" parent="Control/GameContainer/VBoxContainer"]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 show_percentage = false
 
-[node name="BarText" type="RichTextLabel" parent="GameContainer/VBoxContainer/ProgressBar"]
+[node name="BarText" type="RichTextLabel" parent="Control/GameContainer/VBoxContainer/ProgressBar"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.999
@@ -225,9 +225,9 @@ offset_bottom = -50.0
 bbcode_enabled = true
 scroll_active = false
 
-[node name="DisplayTimer" type="Timer" parent="."]
+[node name="DisplayTimer" type="Timer" parent="Control"]
 
-[node name="PanelContainer2" type="PanelContainer" parent="."]
+[node name="PanelContainer2" type="PanelContainer" parent="Control"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.44
@@ -239,15 +239,15 @@ offset_top = 0.0799866
 offset_right = -0.680054
 offset_bottom = 0.439972
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer2"]
 layout_mode = 2
 
-[node name="Panel" type="Panel" parent="PanelContainer2/HBoxContainer"]
+[node name="Panel" type="Panel" parent="Control/PanelContainer2/HBoxContainer"]
 custom_minimum_size = Vector2(100, 90)
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="RoundsWon" type="Label" parent="PanelContainer2/HBoxContainer/Panel"]
+[node name="RoundsWon" type="Label" parent="Control/PanelContainer2/HBoxContainer/Panel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.06
@@ -257,7 +257,7 @@ theme_override_font_sizes/font_size = 60
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label" type="Label" parent="PanelContainer2/HBoxContainer/Panel"]
+[node name="Label" type="Label" parent="Control/PanelContainer2/HBoxContainer/Panel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -1.21
@@ -270,17 +270,17 @@ theme_override_fonts/font = ExtResource("2_rgcyv")
 text = "Rounds Won"
 horizontal_alignment = 2
 
-[node name="WhiteBar" type="ColorRect" parent="PanelContainer2/HBoxContainer"]
+[node name="WhiteBar" type="ColorRect" parent="Control/PanelContainer2/HBoxContainer"]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Panel2" type="Panel" parent="PanelContainer2/HBoxContainer"]
+[node name="Panel2" type="Panel" parent="Control/PanelContainer2/HBoxContainer"]
 custom_minimum_size = Vector2(100, 90)
 layout_mode = 2
 size_flags_horizontal = 10
 
-[node name="CurrRound" type="Label" parent="PanelContainer2/HBoxContainer/Panel2"]
+[node name="CurrRound" type="Label" parent="Control/PanelContainer2/HBoxContainer/Panel2"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.06
@@ -292,7 +292,7 @@ theme_override_font_sizes/font_size = 60
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label" type="Label" parent="PanelContainer2/HBoxContainer/Panel2"]
+[node name="Label" type="Label" parent="Control/PanelContainer2/HBoxContainer/Panel2"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.04
@@ -305,16 +305,16 @@ offset_bottom = 0.00999451
 theme_override_fonts/font = ExtResource("2_rgcyv")
 text = "Current Round"
 
-[node name="TransitionTimer" type="Timer" parent="."]
+[node name="TransitionTimer" type="Timer" parent="Control"]
 
-[node name="BG" type="Control" parent="."]
+[node name="BG" type="Control" parent="Control"]
 layout_mode = 1
 anchor_right = 0.021
 anchor_bottom = 0.037
 offset_right = -0.320004
 offset_bottom = 0.0400009
 
-[node name="TextureRect" type="TextureRect" parent="BG"]
+[node name="TextureRect" type="TextureRect" parent="Control/BG"]
 z_index = -2
 layout_mode = 1
 anchors_preset = -1
