@@ -10,10 +10,12 @@ public partial class DogDoor : Area2D
 	private Label dogDoorLabel;
 	private GameManager.GameManager gameManager;
 	private Random random = new Random();
+	private MainSceneUIScript UIScript;
 	public override void _Ready()
 	{
 		dogDoorLabel = GetNode<Label>("Label");
 		gameManager = GameManager.GameManager.Instance;
+		UIScript = GetNode<MainSceneUIScript>("/root/MainSceneNode/MainSceneUI");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -45,6 +47,7 @@ public partial class DogDoor : Area2D
 			gameManager.scenePaths["CATCH_THE_BONE_SCENE"]
 		};
 
+		UIScript.ChangeCamera();
 		await gameManager.SceneChanger(minigamePaths[random.Next(0,minigamePaths.Length)]);
 	}
 }

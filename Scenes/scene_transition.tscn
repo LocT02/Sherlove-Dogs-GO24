@@ -1,22 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dcv3x5uubmr7p"]
+[gd_scene load_steps=6 format=3 uid="uid://dcv3x5uubmr7p"]
 
 [ext_resource type="Script" path="res://Scripts/Utilities/SceneTransition.cs" id="1_jvlb4"]
-
-[sub_resource type="Animation" id="Animation_m2cr6"]
-resource_name = "FadeIn"
-length = 3.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("FadeIn:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(2.1, 2.6, 3.6),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
-}
 
 [sub_resource type="Animation" id="Animation_d7xtu"]
 resource_name = "RESET"
@@ -24,7 +8,7 @@ length = 0.02
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("FadeIn:modulate")
+tracks/0/path = NodePath("Black:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -34,9 +18,41 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_sd8dk"]
+resource_name = "FadeInFast"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Black:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_m2cr6"]
+resource_name = "FadeInSlow"
+length = 3.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Black:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(2.26667, 2.63333, 3.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_yc3cb"]
 _data = {
-"FadeIn": SubResource("Animation_m2cr6"),
+"FadeInFast": SubResource("Animation_sd8dk"),
+"FadeInSlow": SubResource("Animation_m2cr6"),
 "RESET": SubResource("Animation_d7xtu")
 }
 
@@ -44,11 +60,15 @@ _data = {
 layer = 128
 script = ExtResource("1_jvlb4")
 
-[node name="FadeIn" type="ColorRect" parent="."]
+[node name="Black" type="ColorRect" parent="."]
 modulate = Color(1, 1, 1, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -532.0
+offset_top = -524.0
+offset_right = 573.0
+offset_bottom = 602.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2

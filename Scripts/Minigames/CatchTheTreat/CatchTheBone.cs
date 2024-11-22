@@ -14,9 +14,9 @@ public partial class CatchTheBone : Node2D
     private const int GAME_TIME = 60; //in seconds
     private const int WIN_SCORE = 1000;
     //Bone Parameters
-    private const int MIN_SPEED = 150;
-    private const int MAX_SPEED = 600;
-    private const float MIN_SPAWN_TIME = 0.25f; //half a second
+    private const int MIN_SPEED = 100;
+    private const int MAX_SPEED = 750;
+    private const float MIN_SPAWN_TIME = 0.05f; //half a second
     private GameManager.GameManager gameManagerInstance;
 	private Inventory inventoryInstance;
     private RichTextLabel timerLabel, scoreLabel, winLoseLabel;
@@ -41,7 +41,7 @@ public partial class CatchTheBone : Node2D
         player = GetNode<CTBPlayer>("Player");
         spawnTimer = new Timer();
         AddChild(spawnTimer);
-        spawnTimer.WaitTime = 0.25f;
+        spawnTimer.WaitTime = 1f;
         spawnTimer.Timeout += SpawnBone;
         spawnTimer.Start();
     }
@@ -92,8 +92,11 @@ public partial class CatchTheBone : Node2D
 
         // Position the bone at a random x-position at the top of the screen
         float xPosition = (float)random.NextDouble() * (GetViewportRect().Size.X * 0.88f - GetViewportRect().Size.X * 0.18f) + GetViewportRect().Size.X * 0.18f; //343, 1701
-        bone.Position = new Vector2(xPosition, 0);
-        bone.SetSpeed(random.Next(MIN_SPEED, MAX_SPEED));
+        bone.Position = new Vector2(xPosition, -150);
+        double bias = 0.65; // Adjust this value between 0 (min) and 1 (max), closer to 1 skews towards MAX_SPEED
+        double randomFactor = Math.Pow(random.NextDouble(), 1 - bias); 
+        int weightedSpeed = MIN_SPEED + (int)(randomFactor * (MAX_SPEED - MIN_SPEED));
+        bone.SetSpeed(weightedSpeed);
         var meteorChance = random.Next(10);
         if(meteorChance == 1)
             bone.SetSpeed(2000);

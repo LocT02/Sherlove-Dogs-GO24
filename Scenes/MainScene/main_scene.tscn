@@ -464,6 +464,7 @@ position = Vector2(30, 1018)
 script = ExtResource("1_2enir")
 
 [node name="MainSceneUI" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
 script = ExtResource("1_hlaxv")
 
 [node name="WordUI" type="Control" parent="MainSceneUI"]
@@ -672,6 +673,13 @@ parameters/conditions/is_idle = false
 parameters/conditions/is_walking = false
 parameters/Idle/blend_position = Vector2(-0.99682, 0)
 parameters/Walk/blend_position = Vector2(0, 0)
+
+[node name="MainCamera" type="Camera2D" parent="."]
+position = Vector2(-30, -2)
+offset = Vector2(960, -476)
+
+[node name="MinigameCamera" type="Camera2D" parent="."]
+offset = Vector2(3160, -478)
 
 [connection signal="pressed" from="MainSceneUI/WordUI/WordGameContainer/SubmitGuessButton" to="MainSceneUI" method="OnSubmitGuessButtonPress"]
 [connection signal="pressed" from="MainSceneUI/ItemButtonContainer/ItemSlot1" to="MainSceneUI" method="OnItemSlot1ButtonPress"]

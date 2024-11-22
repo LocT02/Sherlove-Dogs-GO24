@@ -23,7 +23,6 @@ public partial class CTBPlayer : PlayerMovement
         if (bone is Bone boneInstance)
         {
             score = Math.Max(score + boneInstance.Points, 0);
-            GD.Print("Score: " + score);
 
             boneInstance.QueueFree();
         }

@@ -59,7 +59,8 @@ public partial class Bone : Area2D
             sprite.Size = boneSize;
             if (collisionShape.Shape is RectangleShape2D rectShape)
             {
-                rectShape.Size = boneSize; // Update collision shape dimensions
+                rectShape.Size = new Vector2(boneSize.X / 2, boneSize.Y);
+                collisionShape.Position = new Vector2(boneSize.X / 2, boneSize.Y / 2);// Update collision shape dimensions
             }
         }
     }
