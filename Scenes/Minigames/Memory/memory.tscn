@@ -170,7 +170,7 @@ states/Walk/position = Vector2(684, 93)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_wp703"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_0v4ey"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_b0d8e")]
 graph_offset = Vector2(-29, 9)
 
-[node name="Control" type="Control"]
+[node name="Memory" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

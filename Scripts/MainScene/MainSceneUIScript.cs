@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CustomButton;
 using GameData;
 using Godot;
+using GodotPlugins.Game;
 using IItemsTypes;
 using InventoryManager;
 using ResultManager;
@@ -19,6 +20,8 @@ public partial class MainSceneUIScript : CanvasLayer
 	private MainScene MainScene;
 	private GameManager.GameManager gameInstance;
 	private Dictionary<string, Texture2D> textureCache = new();
+	private Camera2D MainCamera;
+	private Camera2D MinigameCamera;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -38,6 +41,9 @@ public partial class MainSceneUIScript : CanvasLayer
 		ItemSlot1 = GetNode<Button>("ItemButtonContainer/ItemSlot1") as ItemButton;
 		ItemSlot2 = GetNode<Button>("ItemButtonContainer/ItemSlot2") as ItemButton;
 		ItemSlot3 = GetNode<Button>("ItemButtonContainer/ItemSlot3") as ItemButton;
+		MainCamera = GetNode<Camera2D>("/root/MainSceneNode/MainCamera");
+		MinigameCamera = GetNode<Camera2D>("/root/MainSceneNode/MinigameCamera");
+
 		List<ItemButton> buttonList = new List<ItemButton>{ ItemSlot1, ItemSlot2, ItemSlot3 };
 		foreach (ItemButton button in buttonList) {
 			button.Disabled = true;
@@ -206,6 +212,15 @@ public partial class MainSceneUIScript : CanvasLayer
 
 		if (resultAttachButtons.IsFailure) {
 			throw new InvalidProgramException(resultAttachButtons.Error);
+		}
+	}
+
+	public void ChangeCamera() {
+		// Switches between the cameras
+		if (MainCamera.IsCurrent()) {
+			MinigameCamera.MakeCurrent();
+		} else {
+			MainCamera.MakeCurrent();
 		}
 	}
 

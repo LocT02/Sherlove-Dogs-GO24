@@ -7,6 +7,7 @@ using GameData;
 using System.Threading.Tasks;
 using SceneTransitionManager;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace GameManager
 {
@@ -25,8 +26,10 @@ namespace GameManager
 		};
 
 		private SceneTransition sceneTransition;
+		private MainSceneUIScript UIScript;
+		private Node miniGameNode;
 		public string GameState { get; set; } = "newgame";
-		public bool allowMinigameEntry = true;
+		public bool allowMinigameEntry { get; set; } = true;
 
 		public override void _Ready()
 		{
@@ -45,6 +48,11 @@ namespace GameManager
 
 		public Result StartGame() {
 			mainWordGame.ResetMainWordGame();
+			GD.Print("Starting Game");
+
+			if (UIScript is null) {
+				UIScript = GetNode<MainSceneUIScript>("/root/MainSceneNode/MainSceneUI");
+			}
 
 			allowMinigameEntry = true;
 
@@ -59,12 +67,19 @@ namespace GameManager
 			return Result.Success();
 		}
 
-		private async Task<Result> PlayFadeTransition(Func<Task<Result>> action) {
+		private async Task<Result> PlayFadeTransition(Func<Task<Result>> action, bool leaveminigame = false) {
 			AddSceneTransitionToRoot();
 
-			var fadeInResult = await sceneTransition.StartFadeIn();
-			if (fadeInResult.IsFailure) {
-				return fadeInResult;
+			if (leaveminigame) {
+				var fadeInResult = await sceneTransition.StartFadeInSlow();
+				if (fadeInResult.IsFailure) {
+					return fadeInResult;
+				}
+			} else {
+				var fadeInResult = await sceneTransition.StartFadeInFast();
+				if (fadeInResult.IsFailure) {
+					return fadeInResult;
+				}
 			}
 
 			var actionResult = await action();
@@ -72,7 +87,7 @@ namespace GameManager
 				return actionResult;
 			}
 
-			return await sceneTransition.ReverseFadeIn();
+			return await sceneTransition.ReverseFadeInFast();
 		}
 
 		private void AddSceneTransitionToRoot()
@@ -85,10 +100,18 @@ namespace GameManager
 		}
 
 		private Result LoadAndAddScene(string scenePath) {
-			GD.Print("inside Load and Add Scene");
+			GD.Print($"Adding Scene {scenePath}");
+			Godot.Vector2 MinigamePosition = new (2200,-1018);
 			try {
-				var scene = ResourceLoader.Load<PackedScene>(scenePath);
-				GetTree().CurrentScene.AddChild(scene.Instantiate());
+				miniGameNode = ResourceLoader.Load<PackedScene>(scenePath).Instantiate();
+
+				if (miniGameNode is Node2D node2DScene) {
+					node2DScene.Position = MinigamePosition;
+				} else if (miniGameNode is Control control) {
+					control.Position = MinigamePosition;
+				}
+
+				GetTree().CurrentScene.AddChild(miniGameNode);
 				return Result.Success();
 			} catch (Exception e) {
 				return Result.Failure(e.Message);
@@ -96,7 +119,6 @@ namespace GameManager
 		}
 
 		private Result LoadAndSwitchScene(string scenePath) {
-			GD.Print("inside Load and Switch Scene");
 			var scene = ResourceLoader.Load<PackedScene>(scenePath);
 			Error attemptSceneChange = GetTree().ChangeSceneToPacked(scene);
 
@@ -106,14 +128,27 @@ namespace GameManager
 		}
 
 		public async Task<Result> SceneChanger(string changeToScenePath) {
-			GD.Print("inside SceneChanger");
+			List<string> miniGameNames = new() {
+				"Memory",
+				"CatchTheBone",
+				"DDR"
+			};
+			bool isMinigame = false;
 
-			if (changeToScenePath == "res://Scenes/MainScene/main_scene.tscn" && GetTree().CurrentScene.SceneFilePath.Contains("Minigames")) {
-				// Current scene is mini-game, remove it to return to main game
+			foreach (string minigame in miniGameNames) {
+				if (GetTree().CurrentScene.HasNode(minigame)) {
+					isMinigame = true;
+				}
+			}
+
+			if (changeToScenePath == "res://Scenes/MainScene/main_scene.tscn" && isMinigame) {
+				// Remove minigame 
 				return await PlayFadeTransition(async () => {
-					await Task.Run(() => GetTree().CurrentScene.QueueFree());
+					await Task.Run(() => miniGameNode?.QueueFree());
+					miniGameNode = null;
+					UIScript.ChangeCamera();
 					return Result.Success();
-				});
+				}, true);
 			} else if (changeToScenePath.Contains("Minigames")) {
 				// Add the new scene as a child to the current scene
 				return await PlayFadeTransition(() => Task.FromResult(LoadAndAddScene(changeToScenePath)));
