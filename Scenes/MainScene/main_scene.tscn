@@ -1,6 +1,5 @@
-[gd_scene load_steps=85 format=3 uid="uid://bfker6m1dx5m5"]
+[gd_scene load_steps=87 format=3 uid="uid://bfker6m1dx5m5"]
 
-[ext_resource type="Texture2D" uid="uid://b5tk3r6lkyip4" path="res://icon.svg" id="1_1vqta"]
 [ext_resource type="Script" path="res://Scripts/MainScene/MainScene.cs" id="1_2enir"]
 [ext_resource type="Script" path="res://Scripts/MainScene/MainSceneUIScript.cs" id="1_hlaxv"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerMovement.cs" id="2_crnmh"]
@@ -12,17 +11,20 @@
 [ext_resource type="Texture2D" uid="uid://bmbt1dgt82ngs" path="res://Assets/Art/Sprites/R_Dog_Walk_Sheet.png" id="7_05i0w"]
 [ext_resource type="Texture2D" uid="uid://ckbi0hkpmt34e" path="res://Assets/Art/Sprites/R_DogIdle_Spreadsheet.png" id="7_son76"]
 [ext_resource type="Script" path="res://Scripts/MainScene/DogDoor.cs" id="8_4aueb"]
+[ext_resource type="Texture2D" uid="uid://rqqaha7xgg74" path="res://Assets/Art/Backgrounds/LivingRoom/DoggyDoor Closed.png" id="8_jad4e"]
 [ext_resource type="Texture2D" uid="uid://b2lfepo5p2lmu" path="res://Assets/Art/Sprites/L_DogIdle_Spritesheet.png" id="8_vvoo6"]
 [ext_resource type="Script" path="res://Scripts/MainScene/DogBed.cs" id="9_vidff"]
+[ext_resource type="Texture2D" uid="uid://cyd24ffhps300" path="res://Assets/Art/Backgrounds/LivingRoom/DoggieBed Cropped.png" id="10_etjap"]
+[ext_resource type="Texture2D" uid="uid://cmdlxs5is1uha" path="res://Assets/Art/Backgrounds/LivingRoom/Interior Back.png" id="16_7pvd7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p3obv"]
-size = Vector2(127, 128)
+size = Vector2(217.889, 128)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5va8r"]
-size = Vector2(128, 131)
+size = Vector2(313, 158.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tgc82"]
-size = Vector2(130, 130)
+size = Vector2(322, 146)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_37cq7"]
 atlas = ExtResource("8_vvoo6")
@@ -473,10 +475,10 @@ anchor_left = 0.148
 anchor_top = 0.284
 anchor_right = 0.5
 anchor_bottom = 0.568
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = 118.84
+offset_top = -62.72
+offset_right = 158.84
+offset_bottom = -22.72
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -501,6 +503,7 @@ theme_override_font_sizes/font_size = 36
 text = "Feedback:"
 
 [node name="GuessInputField" type="LineEdit" parent="MainSceneUI/WordUI/WordGameContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_5d4nt")
 theme_override_font_sizes/font_size = 24
@@ -514,19 +517,24 @@ theme_override_fonts/font = ExtResource("3_5d4nt")
 theme_override_font_sizes/font_size = 24
 text = "Submit"
 
-[node name="TextureRect" type="TextureRect" parent="MainSceneUI/WordUI"]
+[node name="Container" type="Control" parent="MainSceneUI/WordUI"]
 z_index = -1
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.147
-anchor_top = -0.181
-anchor_right = 1.31
-anchor_bottom = 1.095
-offset_left = 0.228477
-offset_top = -0.243675
-offset_right = 695.25
-offset_bottom = 295.342
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="MainSceneUI/WordUI/Container"]
+z_index = -2
+layout_mode = 2
+anchor_left = -2.625
+anchor_top = -1.575
+anchor_right = 18.75
+anchor_bottom = 9.495
+offset_right = 570.0
+offset_bottom = 295.2
 scale = Vector2(0.6, 0.6)
+mouse_filter = 2
 texture = ExtResource("3_aokc3")
 
 [node name="ItemButtonContainer" type="Control" parent="MainSceneUI"]
@@ -600,54 +608,59 @@ texture = ExtResource("5_kui5y")
 position = Vector2(551, -1)
 scale = Vector2(3, 1)
 
-[node name="Sprite2D" type="Sprite2D" parent="GamePlay/StaticBody2D"]
-scale = Vector2(3, 1)
-texture = ExtResource("1_1vqta")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GamePlay/StaticBody2D"]
-position = Vector2(-0.5, 0)
+position = Vector2(126.5, 0)
 scale = Vector2(3, 1)
 shape = SubResource("RectangleShape2D_p3obv")
 
 [node name="DogDoor" type="Area2D" parent="GamePlay"]
-position = Vector2(1059, -131)
+position = Vector2(1450, -134)
 script = ExtResource("8_4aueb")
 
 [node name="Sprite2D" type="Sprite2D" parent="GamePlay/DogDoor"]
-texture = ExtResource("1_1vqta")
+texture = ExtResource("8_jad4e")
+centered = false
+offset = Vector2(69, -379)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GamePlay/DogDoor"]
-position = Vector2(-1, 0.5)
+position = Vector2(223.5, -16.75)
 shape = SubResource("RectangleShape2D_5va8r")
 
 [node name="Label" type="Label" parent="GamePlay/DogDoor"]
-offset_left = -46.0
-offset_top = -89.0
-offset_right = 51.0
-offset_bottom = -66.0
-text = "[W] Dog Door"
+offset_left = 152.0
+offset_top = -409.0
+offset_right = 305.0
+offset_bottom = -386.0
+theme_override_fonts/font = ExtResource("3_5d4nt")
+text = "[W] Enter Minigame"
+metadata/_edit_use_anchors_ = true
 
 [node name="DogBed" type="Area2D" parent="GamePlay"]
-position = Vector2(545, -131)
+position = Vector2(895, -185)
 script = ExtResource("9_vidff")
 
 [node name="Sprite2D" type="Sprite2D" parent="GamePlay/DogBed"]
-texture = ExtResource("1_1vqta")
+position = Vector2(-28, 30)
+scale = Vector2(0.60875, 0.60875)
+texture = ExtResource("10_etjap")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GamePlay/DogBed"]
+position = Vector2(-22, 40)
 shape = SubResource("RectangleShape2D_tgc82")
 
 [node name="Label" type="Label" parent="GamePlay/DogBed"]
-offset_left = -41.0
-offset_top = -88.0
-offset_right = 47.0
-offset_bottom = -65.0
+offset_left = -69.0
+offset_top = -64.0
+offset_right = 26.0
+offset_bottom = -41.0
+theme_override_fonts/font = ExtResource("3_5d4nt")
 text = "[W] Dog Bed"
 metadata/_edit_use_anchors_ = true
 
 [node name="Player" type="CharacterBody2D" parent="."]
 z_index = 1
-position = Vector2(45, -131)
+position = Vector2(380, -134)
+input_pickable = true
 script = ExtResource("2_crnmh")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
@@ -681,6 +694,15 @@ offset = Vector2(960, -476)
 [node name="MinigameCamera" type="Camera2D" parent="."]
 offset = Vector2(3160, -478)
 
+[node name="TextureRect" type="TextureRect" parent="."]
+z_index = -1
+offset_left = -30.0
+offset_top = -1020.0
+offset_right = 1890.0
+offset_bottom = 60.0
+mouse_filter = 2
+texture = ExtResource("16_7pvd7")
+
 [connection signal="pressed" from="MainSceneUI/WordUI/WordGameContainer/SubmitGuessButton" to="MainSceneUI" method="OnSubmitGuessButtonPress"]
 [connection signal="pressed" from="MainSceneUI/ItemButtonContainer/ItemSlot1" to="MainSceneUI" method="OnItemSlot1ButtonPress"]
 [connection signal="pressed" from="MainSceneUI/ItemButtonContainer/ItemSlot2" to="MainSceneUI" method="OnItemSlot2ButtonPress"]
@@ -689,3 +711,4 @@ offset = Vector2(3160, -478)
 [connection signal="body_exited" from="GamePlay/DogDoor" to="GamePlay/DogDoor" method="_on_body_exited"]
 [connection signal="body_entered" from="GamePlay/DogBed" to="GamePlay/DogBed" method="_on_body_entered"]
 [connection signal="body_exited" from="GamePlay/DogBed" to="GamePlay/DogBed" method="_on_body_exited"]
+[connection signal="input_event" from="Player" to="MainSceneUI" method="_on_player_input_event"]
