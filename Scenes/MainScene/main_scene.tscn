@@ -1,8 +1,7 @@
-[gd_scene load_steps=87 format=3 uid="uid://bfker6m1dx5m5"]
+[gd_scene load_steps=88 format=3 uid="uid://bfker6m1dx5m5"]
 
 [ext_resource type="Script" path="res://Scripts/MainScene/MainScene.cs" id="1_2enir"]
 [ext_resource type="Script" path="res://Scripts/MainScene/MainSceneUIScript.cs" id="1_hlaxv"]
-[ext_resource type="Script" path="res://Scripts/Player/PlayerMovement.cs" id="2_crnmh"]
 [ext_resource type="FontFile" uid="uid://c2dpe22oxwlfc" path="res://Assets/Fonts/Lemon Days/Lemon Days.otf" id="3_5d4nt"]
 [ext_resource type="Texture2D" uid="uid://b6h1f7bi27po2" path="res://Assets/Art/UI/ChatBox.PNG" id="3_aokc3"]
 [ext_resource type="Script" path="res://src/classes/ItemButton.cs" id="3_m0r7y"]
@@ -15,7 +14,9 @@
 [ext_resource type="Texture2D" uid="uid://b2lfepo5p2lmu" path="res://Assets/Art/Sprites/L_DogIdle_Spritesheet.png" id="8_vvoo6"]
 [ext_resource type="Script" path="res://Scripts/MainScene/DogBed.cs" id="9_vidff"]
 [ext_resource type="Texture2D" uid="uid://cyd24ffhps300" path="res://Assets/Art/Backgrounds/LivingRoom/DoggieBed Cropped.png" id="10_etjap"]
+[ext_resource type="Script" path="res://Scripts/Player/MainScenePlayer.cs" id="11_ucks7"]
 [ext_resource type="Texture2D" uid="uid://cmdlxs5is1uha" path="res://Assets/Art/Backgrounds/LivingRoom/Interior Back.png" id="16_7pvd7"]
+[ext_resource type="PackedScene" uid="uid://2e1vuoc8xhgy" path="res://Scenes/PauseMenu/PauseMenu.tscn" id="17_biuep"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p3obv"]
 size = Vector2(217.889, 128)
@@ -661,7 +662,7 @@ metadata/_edit_use_anchors_ = true
 z_index = 1
 position = Vector2(380, -134)
 input_pickable = true
-script = ExtResource("2_crnmh")
+script = ExtResource("11_ucks7")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
 position = Vector2(23.45, -20.95)
@@ -702,6 +703,10 @@ offset_right = 1890.0
 offset_bottom = 60.0
 mouse_filter = 2
 texture = ExtResource("16_7pvd7")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("17_biuep")]
 
 [connection signal="pressed" from="MainSceneUI/WordUI/WordGameContainer/SubmitGuessButton" to="MainSceneUI" method="OnSubmitGuessButtonPress"]
 [connection signal="pressed" from="MainSceneUI/ItemButtonContainer/ItemSlot1" to="MainSceneUI" method="OnItemSlot1ButtonPress"]

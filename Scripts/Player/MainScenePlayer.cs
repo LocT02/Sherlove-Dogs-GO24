@@ -2,17 +2,15 @@ using System;
 using System.ComponentModel;
 using Godot;
 
-public partial class PlayerMovement : CharacterBody2D
+public partial class MainScenePlayer : PlayerMovement
 {
-	public float Speed {get; set;} = 400.0f;
-	public float Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 	private AnimatedSprite2D dog_animation;
-	public bool controllable = true;
 	private LineEdit inputBox;
 	
 	public override void _Ready() 
 	{
 		dog_animation = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+        inputBox = GetNode<LineEdit>("%GuessInputField");
 		controllable = true;
 	}
 
@@ -46,6 +44,10 @@ public partial class PlayerMovement : CharacterBody2D
 
 		Velocity = velocity;
 		MoveAndSlide();
+	}
+    private void _on_input_event(){
+		controllable = true;
+		inputBox.Editable = false;
 	}
 
 }
