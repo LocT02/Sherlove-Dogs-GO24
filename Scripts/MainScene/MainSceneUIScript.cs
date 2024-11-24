@@ -22,6 +22,8 @@ public partial class MainSceneUIScript : CanvasLayer
 	private Dictionary<string, Texture2D> textureCache = new();
 	private Camera2D MainCamera;
 	private Camera2D MinigameCamera;
+	private PlayerMovement player;
+	private DogBed dogBed;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -37,12 +39,15 @@ public partial class MainSceneUIScript : CanvasLayer
 		CategoryLabel = GetNode<Label>("WordUI/WordGameContainer/CategoryLabel");
 		FeedbackLabel = GetNode<Label>("WordUI/WordGameContainer/FeedbackLabel");
 		GuessInputField = GetNode<LineEdit>("WordUI/WordGameContainer/GuessInputField");
+		GuessInputField.Editable = false;
 		SubmitGuessButton = GetNode<Button>("WordUI/WordGameContainer/SubmitGuessButton");
 		ItemSlot1 = GetNode<Button>("ItemButtonContainer/ItemSlot1") as ItemButton;
 		ItemSlot2 = GetNode<Button>("ItemButtonContainer/ItemSlot2") as ItemButton;
 		ItemSlot3 = GetNode<Button>("ItemButtonContainer/ItemSlot3") as ItemButton;
 		MainCamera = GetNode<Camera2D>("/root/MainSceneNode/MainCamera");
 		MinigameCamera = GetNode<Camera2D>("/root/MainSceneNode/MinigameCamera");
+		player = GetNode<PlayerMovement>("/root/MainSceneNode/Player");
+		dogBed = GetNode<DogBed>("/root/MainSceneNode/GamePlay/DogBed");
 
 		List<ItemButton> buttonList = new List<ItemButton>{ ItemSlot1, ItemSlot2, ItemSlot3 };
 		foreach (ItemButton button in buttonList) {
@@ -221,6 +226,15 @@ public partial class MainSceneUIScript : CanvasLayer
 			MinigameCamera.MakeCurrent();
 		} else {
 			MainCamera.MakeCurrent();
+		}
+	}
+	private void _on_player_input_event(Node viewport, InputEvent events, int shape_idx){
+		if(events is InputEventMouseButton){
+			if (events.IsPressed()){
+				player.controllable = true;
+				GuessInputField.Editable = false;
+				dogBed.interactable = true;
+			}
 		}
 	}
 

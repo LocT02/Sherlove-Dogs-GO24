@@ -7,6 +7,8 @@ public partial class MainScene : Node2D
 	// Called when the node enters the scene tree for the first time.
 	private GameManager.GameManager gameInstance;
 	private MainSceneUIScript UIScript;
+	private PlayerMovement player;
+	private LineEdit inputBox;
 	public override void _Ready()
 	{
 		// Transition effect here
@@ -29,6 +31,8 @@ public partial class MainScene : Node2D
 	private void InitializeGame() {
 		gameInstance = GameManager.GameManager.Instance;
 		UIScript = GetNode<MainSceneUIScript>("MainSceneUI");
+		player = GetNode<PlayerMovement>("Player");
+		inputBox = GetNode<LineEdit>("%GuessInputField");
 	}
 
 	private void LoadOrInitializeNewGame() {

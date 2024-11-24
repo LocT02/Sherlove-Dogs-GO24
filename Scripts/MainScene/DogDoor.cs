@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using GameManager;
+using System.Collections.Generic;
 
 public partial class DogDoor : Area2D
 {
@@ -11,11 +12,18 @@ public partial class DogDoor : Area2D
 	private GameManager.GameManager gameManager;
 	private Random random = new Random();
 	private MainSceneUIScript UIScript;
+	private Sprite2D sprite;
+
+	private Dictionary<string, Texture2D> imagePaths = new Dictionary<string, Texture2D>{
+		{"closed",(Texture2D)GD.Load("res://Assets/Art/Backgrounds/LivingRoom/DoggyDoor Closed.png")},
+		{"open", (Texture2D)GD.Load("res://Assets/Art/Backgrounds/LivingRoom/DoggyDoor.png")}
+	};
 	public override void _Ready()
 	{
 		dogDoorLabel = GetNode<Label>("Label");
 		gameManager = GameManager.GameManager.Instance;
 		UIScript = GetNode<MainSceneUIScript>("/root/MainSceneNode/MainSceneUI");
+		sprite = GetNode<Sprite2D>("Sprite2D");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -31,12 +39,15 @@ public partial class DogDoor : Area2D
 	public void _on_body_entered(Node body){
 		if(body is CharacterBody2D){
 			showInteractionLabel = true;
+			sprite.Texture = imagePaths["open"];
 		}
-			
+		
+		
 	}
 	public void _on_body_exited(Node body){
 		if(body is CharacterBody2D){
 			showInteractionLabel = false;
+			sprite.Texture = imagePaths["closed"];
 		}
 	}
 	private async void randomMinigame(){
