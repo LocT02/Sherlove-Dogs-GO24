@@ -8,7 +8,6 @@ public partial class PlayerMovement : CharacterBody2D
 	public float Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 	private AnimatedSprite2D dog_animation;
 	public bool controllable = true;
-	private LineEdit inputBox;
 	
 	public override void _Ready() 
 	{

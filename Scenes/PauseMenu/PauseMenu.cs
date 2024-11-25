@@ -9,6 +9,7 @@ public partial class PauseMenu : Control
 	{
 		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		animationPlayer.Play("RESET");
+		this.ZIndex = 0;
 	}
 
     public override void _Process(double delta)
@@ -19,11 +20,13 @@ public partial class PauseMenu : Control
     public void resume(){
 		GetTree().Paused = false;
 		animationPlayer.PlayBackwards("blur");
+		this.ZIndex = 0;
 		
 	}
 	public void pause(){
 		GetTree().Paused = true;
 		animationPlayer.Play("blur");
+		this.ZIndex = 3;
 	}
 	public void testEsc(){
 		if(Input.IsActionJustPressed("Pause") && GetTree().Paused == false){
