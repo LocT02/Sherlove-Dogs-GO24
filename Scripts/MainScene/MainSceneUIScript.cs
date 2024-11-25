@@ -21,6 +21,7 @@ public partial class MainSceneUIScript : CanvasLayer
 	private GameManager.GameManager gameInstance;
 	private GameDataManager gameDataInstance;
 	private TextureProgressBar healthUI;
+	private Label mainScoreUI;
 	private Dictionary<string, Texture2D> textureCache = new();
 	private Camera2D MainCamera;
 	private Camera2D MinigameCamera;
@@ -52,6 +53,7 @@ public partial class MainSceneUIScript : CanvasLayer
 		player = GetNode<PlayerMovement>("/root/MainSceneNode/Player");
 		dogBed = GetNode<DogBed>("/root/MainSceneNode/GamePlay/DogBed");
 		healthUI = GetNode<TextureProgressBar>("/root/MainSceneNode/MainSceneUI/HealthUI/HealthBar");
+		mainScoreUI = GetNode<Label>("/root/MainSceneNode/MainSceneUI/ScoreUI/ScoreBG/ScoreText");
 
 		List<ItemButton> buttonList = new List<ItemButton>{ ItemSlot1, ItemSlot2, ItemSlot3 };
 		foreach (ItemButton button in buttonList) {
@@ -250,5 +252,6 @@ public partial class MainSceneUIScript : CanvasLayer
 	public override void _Process(double delta)
 	{
 		healthUI.Value = gameDataInstance.Hp;
+		mainScoreUI.Text = gameDataInstance.Score.ToString();
 	}
 }

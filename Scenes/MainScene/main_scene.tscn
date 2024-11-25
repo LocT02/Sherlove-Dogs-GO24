@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=3 uid="uid://bfker6m1dx5m5"]
+[gd_scene load_steps=93 format=3 uid="uid://bfker6m1dx5m5"]
 
 [ext_resource type="Script" path="res://Scripts/MainScene/MainScene.cs" id="1_2enir"]
 [ext_resource type="Script" path="res://Scripts/MainScene/MainSceneUIScript.cs" id="1_hlaxv"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://c7bgdbgi61m78" path="res://Assets/Art/UI/Health Bar/HealthProgressBar.png" id="9_fjga4"]
 [ext_resource type="Script" path="res://Scripts/MainScene/DogBed.cs" id="9_vidff"]
 [ext_resource type="Texture2D" uid="uid://cyd24ffhps300" path="res://Assets/Art/Backgrounds/LivingRoom/DoggieBed Cropped.png" id="10_etjap"]
+[ext_resource type="Texture2D" uid="uid://v7lsuyoj5muc" path="res://Assets/Art/UI/Health Bar/ScoreBar.PNG" id="10_nvq6q"]
 [ext_resource type="Script" path="res://Scripts/Player/MainScenePlayer.cs" id="11_ucks7"]
 [ext_resource type="Texture2D" uid="uid://cmdlxs5is1uha" path="res://Assets/Art/Backgrounds/LivingRoom/Interior Back.png" id="16_7pvd7"]
 [ext_resource type="PackedScene" uid="uid://2e1vuoc8xhgy" path="res://Scenes/PauseMenu/PauseMenu.tscn" id="17_biuep"]
@@ -625,6 +626,33 @@ value = 50.0
 texture_under = ExtResource("7_kw3mv")
 texture_over = ExtResource("8_gdoxr")
 texture_progress = ExtResource("9_fjga4")
+
+[node name="ScoreUI" type="Control" parent="MainSceneUI"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 62.0
+offset_right = 102.0
+offset_bottom = 40.0
+scale = Vector2(0.5, 0.5)
+
+[node name="ScoreBG" type="TextureRect" parent="MainSceneUI/ScoreUI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("10_nvq6q")
+
+[node name="ScoreText" type="Label" parent="MainSceneUI/ScoreUI/ScoreBG"]
+layout_mode = 0
+offset_left = 234.0
+offset_top = 182.0
+offset_right = 914.0
+offset_bottom = 304.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_5d4nt")
+theme_override_font_sizes/font_size = 80
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="GamePlay" type="Node2D" parent="."]
 
