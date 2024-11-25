@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=3 uid="uid://cmq4xiyrxt0j7"]
+[gd_scene load_steps=80 format=3 uid="uid://cmq4xiyrxt0j7"]
 
 [ext_resource type="Script" path="res://Scripts/Minigames/CatchTheTreat/CatchTheBone.cs" id="1_g787b"]
 [ext_resource type="Script" path="res://Scripts/Minigames/CatchTheTreat/CTBPlayer.cs" id="3_1vm51"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bmbt1dgt82ngs" path="res://Assets/Art/Sprites/R_Dog_Walk_Sheet.png" id="7_efr0k"]
 [ext_resource type="Texture2D" uid="uid://wfwgrhvgd0hj" path="res://Assets/Art/UI/UI_Button.png" id="8_m05of"]
 [ext_resource type="FontFile" uid="uid://c2dpe22oxwlfc" path="res://Assets/Fonts/Lemon Days/Lemon Days.otf" id="9_4hq3f"]
+[ext_resource type="Texture2D" uid="uid://di6hpqd5gyxkj" path="res://Assets/Art/UI/Timer.PNG" id="10_1a65j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xy2ig"]
 size = Vector2(192.3, 84)
@@ -527,6 +528,8 @@ texture = ExtResource("8_m05of")
 layout_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 40.045
+offset_bottom = 40.045
 theme_override_fonts/normal_font = ExtResource("9_4hq3f")
 theme_override_font_sizes/normal_font_size = 50
 bbcode_enabled = true
@@ -545,9 +548,10 @@ layout_mode = 2
 anchor_left = -0.557
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 0.0970078
+offset_left = 120.582
+offset_right = 6.485
 offset_bottom = 11.0
-texture = ExtResource("8_m05of")
+texture = ExtResource("10_1a65j")
 expand_mode = 1
 
 [node name="RichTextLabel" type="RichTextLabel" parent="TimerContainer"]
@@ -555,8 +559,10 @@ layout_mode = 2
 anchor_left = -0.557
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 0.0970078
-offset_bottom = 13.0
+offset_left = 65.332
+offset_top = 95.365
+offset_right = 65.235
+offset_bottom = 108.365
 theme_override_fonts/normal_font = ExtResource("9_4hq3f")
 theme_override_font_sizes/normal_font_size = 50
 bbcode_enabled = true
