@@ -14,7 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://dfdbatu6b781i" path="res://Assets/Art/UI/Health Bar/HealthIcon.PNG" id="8_gdoxr"]
 [ext_resource type="Texture2D" uid="uid://rqqaha7xgg74" path="res://Assets/Art/Backgrounds/LivingRoom/DoggyDoor Closed.png" id="8_jad4e"]
 [ext_resource type="Texture2D" uid="uid://b2lfepo5p2lmu" path="res://Assets/Art/Sprites/L_DogIdle_Spritesheet.png" id="8_vvoo6"]
-[ext_resource type="Texture2D" uid="uid://c7bgdbgi61m78" path="res://Assets/Art/UI/Health Bar/HealthProgressBar.png" id="9_fjga4"]
+[ext_resource type="Texture2D" uid="uid://cw7ktqr0nk3mj" path="res://Assets/Art/UI/Health Bar/HealthProgressBarV2.png" id="9_gvmbr"]
 [ext_resource type="Script" path="res://Scripts/MainScene/DogBed.cs" id="9_vidff"]
 [ext_resource type="Texture2D" uid="uid://cyd24ffhps300" path="res://Assets/Art/Backgrounds/LivingRoom/DoggieBed Cropped.png" id="10_etjap"]
 [ext_resource type="Texture2D" uid="uid://v7lsuyoj5muc" path="res://Assets/Art/UI/Health Bar/ScoreBar.PNG" id="10_nvq6q"]
@@ -622,10 +622,11 @@ scale = Vector2(0.5, 0.5)
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-value = 50.0
+value = 89.0
 texture_under = ExtResource("7_kw3mv")
 texture_over = ExtResource("8_gdoxr")
-texture_progress = ExtResource("9_fjga4")
+texture_progress = ExtResource("9_gvmbr")
+texture_progress_offset = Vector2(235.025, 62.87)
 
 [node name="ScoreUI" type="Control" parent="MainSceneUI"]
 layout_mode = 3
