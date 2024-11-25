@@ -14,6 +14,7 @@ public partial class MainScene : Node2D
 		// Transition effect here
 
 		InitializeGame();
+		gameInstance.setMainScene();
 		LoadOrInitializeNewGame();
 
 		GD.Print($"Current HP: {gameInstance.gameData.Hp}");
@@ -67,7 +68,7 @@ public partial class MainScene : Node2D
 		return Result.Success();
 	}
 
-	private Result SetGameUI() {
+	public Result SetGameUI() {
 		// set hp and score later
 		// Add guessed letters later
 		var category = UIScript.UpdateCategoryLabel($"Category: {gameInstance.mainWordGame.Category}");

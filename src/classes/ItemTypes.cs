@@ -10,7 +10,7 @@ namespace ItemTypes {
 
         public string Name { get; } = "Bark of Love"; // Sample Name
         public bool Upgraded { get; set; } = false;
-        public string ImgFilePath { get; set; } = "";
+        public string[] ImgFilePath { get; set; } = new string[]{"res://Assets/Art/Items/Bark of Love 1.svg","res://Assets/Art/Items/Bark of Love 2.svg"};
 
         public Result<char[]> ApplyItem() {
             // Reveal half vowels, upgraded reveal all vowels
@@ -52,7 +52,7 @@ namespace ItemTypes {
 
         public string Name { get; } = "A Bone for Two"; 
         public bool Upgraded { get; set; } = false;
-        public string ImgFilePath { get; set; } = "";
+        public string[] ImgFilePath { get; set; } = new string[]{"res://Assets/Art/Items/Bone For Two 1.svg","res://Assets/Art/Items/Bone For Two 2.svg"};
         
         public Result<char[]> ApplyItem() {
             // Reveal first and last letters
@@ -104,9 +104,9 @@ namespace ItemTypes {
 
     public class ItemC : IItem {
 
-        public string Name { get; } = "Pot Luck";
+        public string Name { get; } = "Neighbor's Frisbee";
         public bool Upgraded { get; set; } = false;
-        public string ImgFilePath { get; set; } = "";
+        public string[] ImgFilePath { get; set; } = new string[]{"res://Assets/Art/Items/Neighbors Frisbee 1.svg","res://Assets/Art/Items/Neighbors Frisbee 2.svg"};
 
         public Result<char[]> ApplyItem() {
             // Randomly reveal up to 2 letters, if upgraded up to 4 if there is enough letters

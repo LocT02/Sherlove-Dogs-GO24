@@ -7,7 +7,7 @@ namespace IItemsTypes
 
         string Name { get; }
         bool Upgraded { get; set; }
-        string ImgFilePath { get; set; }
+        string[] ImgFilePath { get; set; }
         Result<char[]> ApplyItem();
 
     }
