@@ -18,9 +18,10 @@ public partial class MainMenu : Control
 		GD.Print("play pressed");
 		await gameInstance.SceneChanger("res://Scenes/MainScene/main_scene.tscn");
 	}
-	public void OnSettingsPressed()
+	public async void OnSettingsPressed()
 	{
-		//Todo
+		gameInstance.GameState = "continue";
+		await gameInstance.SceneChanger("res://Scenes/MainScene/main_scene.tscn");
 	}
 	public async void OnContinueSavePressed() {
 		gameInstance.GameState = "continue";
