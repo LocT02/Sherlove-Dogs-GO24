@@ -58,6 +58,7 @@ namespace GameManager
 			if (UIScript is null) {
 				UIScript = GetNode<MainSceneUIScript>("/root/MainSceneNode/MainSceneUI");
 			}
+			UIScript.UpdateHPUI(gameData.Hp);
 
 			allowMinigameEntry = true;
 
@@ -176,6 +177,7 @@ namespace GameManager
 			// null means no feedback = correct guess
 			if (result.Value == null) {
 				gameData.ChangeScore(1000);
+				UIScript.UpdateScoreUI(gameData.Score);
 				// Returns to main Game Scene, do effects there, then call startGame again from main Game Scene?
 				return Result.Success<char[]>(null);
 			}
@@ -183,6 +185,7 @@ namespace GameManager
 			if (gameData.ChangeHp(-10).Value <= 0) {
 				return Result.Failure<char[]>("Hp0");
 			}
+			UIScript.UpdateHPUI(gameData.Hp);
 			// Returns feedback
 			return result;
 		}

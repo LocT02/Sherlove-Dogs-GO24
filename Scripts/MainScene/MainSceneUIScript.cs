@@ -19,7 +19,6 @@ public partial class MainSceneUIScript : CanvasLayer
 	private ItemButton ItemSlot3;
 	private MainScene MainScene;
 	private GameManager.GameManager gameInstance;
-	private GameDataManager gameDataInstance;
 	private TextureProgressBar healthUI;
 	private Label mainScoreUI;
 	private Dictionary<string, Texture2D> textureCache = new();
@@ -38,7 +37,6 @@ public partial class MainSceneUIScript : CanvasLayer
 
 	private void InitializeUI() {
 		gameInstance = GameManager.GameManager.Instance;
-		gameDataInstance = gameInstance.gameData;
 		MainScene = GetTree().Root.GetNode<Node2D>("MainSceneNode") as MainScene;
 		CategoryLabel = GetNode<Label>("WordUI/WordGameContainer/CategoryLabel");
 		FeedbackLabel = GetNode<Label>("WordUI/WordGameContainer/FeedbackLabel");
@@ -247,11 +245,15 @@ public partial class MainSceneUIScript : CanvasLayer
 			}
 		}
 	}
+	public void UpdateHPUI(int hp){
+		healthUI.Value = hp;
+	}
+	public void UpdateScoreUI(int score){
+		mainScoreUI.Text = score.ToString();
+	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		healthUI.Value = gameDataInstance.Hp;
-		mainScoreUI.Text = gameDataInstance.Score.ToString();
 	}
 }
