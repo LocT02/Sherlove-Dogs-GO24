@@ -129,7 +129,7 @@ namespace GameManager
 
 		public async Task<Result> SceneChanger(string changeToScenePath) {
 			List<string> miniGameNames = new() {
-				"Memory",
+				"Memory_Minigame",
 				"CatchTheBone",
 				"DDR"
 			};
