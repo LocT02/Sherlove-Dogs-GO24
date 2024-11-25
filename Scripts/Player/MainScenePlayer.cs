@@ -5,12 +5,10 @@ using Godot;
 public partial class MainScenePlayer : PlayerMovement
 {
 	private AnimatedSprite2D dog_animation;
-	private LineEdit inputBox;
 	
 	public override void _Ready() 
 	{
 		dog_animation = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-        inputBox = GetNode<LineEdit>("%GuessInputField");
 		controllable = true;
 	}
 
@@ -44,10 +42,6 @@ public partial class MainScenePlayer : PlayerMovement
 
 		Velocity = velocity;
 		MoveAndSlide();
-	}
-    private void _on_input_event(){
-		controllable = true;
-		inputBox.Editable = false;
 	}
 
 }
