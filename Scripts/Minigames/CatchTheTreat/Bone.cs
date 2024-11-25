@@ -19,9 +19,9 @@ public partial class Bone : Area2D
 
         BoneTypes = new Dictionary<int, (Texture2D, int)>
         {
-            { 0, ((Texture2D)GD.Load("res://Assets/Icons/Bone0.svg"), 50) },
-            { 1, ((Texture2D)GD.Load("res://Assets/Icons/Bone1.svg"), -50) },
-            { 2, ((Texture2D)GD.Load("res://Assets/Icons/Bone2.svg"), 25) }
+            { 0, ((Texture2D)GD.Load("res://Assets/Icons/Biscuit_Gold.svg"), 50) },
+            { 1, ((Texture2D)GD.Load("res://Assets/Icons/Tomato.svg"), -50) },
+            { 2, ((Texture2D)GD.Load("res://Assets/Icons/Biscuit_White.svg"), 25) }
         };
         sprite = GetNode<TextureRect>("TextureRect");
         collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
