@@ -229,10 +229,8 @@ public partial class MainSceneUIScript : CanvasLayer
 		}
 	}
 	private void _on_player_input_event(Node viewport, InputEvent events, int shape_idx){
-		GD.Print("playerinputevent");
 		if(events is InputEventMouseButton){
 			if (events.IsPressed()){
-				GD.Print("Dog clicked");
 				player.controllable = true;
 				GuessInputField.Editable = false;
 				dogBed.interactable = true;

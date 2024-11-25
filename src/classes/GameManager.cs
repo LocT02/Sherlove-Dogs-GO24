@@ -22,7 +22,8 @@ namespace GameManager
 			{"TRANSITION_SCENE", "res://Scenes/scene_transition.tscn"},
 			{"CATCH_THE_BONE_SCENE", "res://Scenes/Minigames/CatchTheTreat/catch_the_treat.tscn"},
 			{"DDR_SCENE", "res://Scenes/Minigames/DDR/ddr.tscn"},
-			{"GAME_OVER", "res://Scenes/GameOver/game_over.tscn"}
+			{"GAME_OVER", "res://Scenes/GameOver/game_over.tscn"},
+			{"MAIN_MENU", "res://Scenes/MainMenu/main_menu.tscn"}
 		};
 
 		private SceneTransition sceneTransition;

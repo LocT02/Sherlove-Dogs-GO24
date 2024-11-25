@@ -1,3 +1,5 @@
+using GameData;
+using GameManager;
 using Godot;
 using System;
 
@@ -5,11 +7,21 @@ public partial class PauseMenu : Control
 {
 	// Called when the node enters the scene tree for the first time.
 	private AnimationPlayer animationPlayer;
+	private GameManager.GameManager gameManagerInstance;
+	private Label gameSaveLabel;
+	private TextureButton[] textureButtons;
 	public override void _Ready()
 	{
 		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+		gameSaveLabel = GetNode<Label>("PanelContainer/VBoxContainer/Control2/Save/Label");
+		textureButtons = new TextureButton[]{
+			GetNode<TextureButton>("PanelContainer/VBoxContainer/Control/Resume"),
+			GetNode<TextureButton>("PanelContainer/VBoxContainer/Control2/Save"),
+			GetNode<TextureButton>("PanelContainer/VBoxContainer/Control3/Back")
+		};
 		animationPlayer.Play("RESET");
-		this.ZIndex = 0;
+		gameManagerInstance = GameManager.GameManager.Instance;
+		setTextureButtonMouseFilter(MouseFilterEnum.Ignore);
 	}
 
     public override void _Process(double delta)
@@ -18,15 +30,15 @@ public partial class PauseMenu : Control
     }
 
     public void resume(){
+		setTextureButtonMouseFilter(MouseFilterEnum.Ignore);
 		GetTree().Paused = false;
 		animationPlayer.PlayBackwards("blur");
-		this.ZIndex = 0;
 		
 	}
 	public void pause(){
+		setTextureButtonMouseFilter(MouseFilterEnum.Stop);
 		GetTree().Paused = true;
 		animationPlayer.Play("blur");
-		this.ZIndex = 3;
 	}
 	public void testEsc(){
 		if(Input.IsActionJustPressed("Pause") && GetTree().Paused == false){
@@ -37,13 +49,22 @@ public partial class PauseMenu : Control
 	}
 
 	public void _on_resume_pressed(){
+		gameSaveLabel.Text = "Save Game";
 		resume();
 	}
-	public void _on_settings_pressed(){
-		//settings ig idk
+	public void _on_savegame_pressed(){
+		gameManagerInstance.gameData.SaveGame();
+		gameSaveLabel.Text = "Game Saved";
 	}
-	public void _on_back_pressed(){
-		//go back to menu
+	public async void _on_back_pressed(){
+		resume();
+		await gameManagerInstance.SceneChanger(gameManagerInstance.scenePaths["MAIN_MENU"]);
+	}
+	private void setTextureButtonMouseFilter(MouseFilterEnum filter){
+		foreach (TextureButton button in textureButtons){
+			button.MouseFilter = filter;
+			button.ZIndex = (filter == MouseFilterEnum.Ignore) ? -2 : 2;
+		}
 	}
 
 }

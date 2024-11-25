@@ -732,15 +732,6 @@ mouse_filter = 2
 [node name="VBoxContainer" parent="CanvasLayer/PauseMenu/PanelContainer" index="0"]
 mouse_filter = 2
 
-[node name="Resume" parent="CanvasLayer/PauseMenu/PanelContainer/VBoxContainer" index="0"]
-mouse_filter = 1
-
-[node name="Settings" parent="CanvasLayer/PauseMenu/PanelContainer/VBoxContainer" index="1"]
-mouse_filter = 1
-
-[node name="Back" parent="CanvasLayer/PauseMenu/PanelContainer/VBoxContainer" index="2"]
-mouse_filter = 1
-
 [connection signal="pressed" from="MainSceneUI/WordUI/WordGameContainer/SubmitGuessButton" to="MainSceneUI" method="OnSubmitGuessButtonPress"]
 [connection signal="pressed" from="MainSceneUI/ItemButtonContainer/ItemSlot1" to="MainSceneUI" method="OnItemSlot1ButtonPress"]
 [connection signal="pressed" from="MainSceneUI/ItemButtonContainer/ItemSlot2" to="MainSceneUI" method="OnItemSlot2ButtonPress"]
