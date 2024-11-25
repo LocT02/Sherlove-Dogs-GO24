@@ -160,26 +160,30 @@ public partial class MainSceneUIScript : CanvasLayer
 	private Result SetButtonAssets(ItemButton itemButton) {
 		// Set button Texture
 		var item = itemButton.AttachedItem;
+		string filePath = item.Upgraded ? item.ImgFilePath[1] : item.ImgFilePath[0];
 		Texture2D texture;
 		StyleBoxTexture styleBox = new();
 		
 		// Check if Texture is cached
-		if (!textureCache.TryGetValue(item.ImgFilePath, out texture)) {
+		if (!textureCache.TryGetValue(filePath, out texture)) {
 			// Not Cached = Load and Cache Texture
-			texture = (Texture2D)GD.Load(item.ImgFilePath);
+			texture = (Texture2D)GD.Load(filePath);
 			if (texture == null) {
-				return Result.Failure($"Unable To Load Texture: {item.ImgFilePath}");
+				return Result.Failure($"Unable To Load Texture: {filePath}");
 			}
-			textureCache[item.ImgFilePath] = texture;
+			textureCache[filePath] = texture;
 		}
 
 		if (texture == null) {
-			return Result.Failure($"Unable To Load Cached Texture: {item.ImgFilePath}");
+			return Result.Failure($"Unable To Load Cached Texture: {filePath}");
 		}
 
 		// Set Texture and Enable button
 		styleBox.Texture = texture;
 		itemButton.AddThemeStyleboxOverride("normal", styleBox);
+		itemButton.AddThemeStyleboxOverride("pressed", styleBox);
+		itemButton.AddThemeStyleboxOverride("hover", styleBox);
+		itemButton.AddThemeStyleboxOverride("focused", styleBox);
 		itemButton.Disabled = false;
 		itemButton.Visible = true;
 		return Result.Success();
@@ -213,7 +217,7 @@ public partial class MainSceneUIScript : CanvasLayer
 			throw new InvalidProgramException(resultUseItem.Error);
 		}
 
-		var resultAttachButtons = AttachItemsToButtons();
+		var resultAttachButtons = MainScene.SetGameUI();
 
 		if (resultAttachButtons.IsFailure) {
 			throw new InvalidProgramException(resultAttachButtons.Error);

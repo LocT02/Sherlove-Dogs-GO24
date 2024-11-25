@@ -555,6 +555,19 @@ offset_bottom = 449.04
 grow_horizontal = 2
 grow_vertical = 0
 
+[node name="TextureRect" type="TextureRect" parent="MainSceneUI/ItemButtonContainer"]
+layout_mode = 2
+anchor_left = 0.107
+anchor_top = 0.011
+anchor_right = 0.337
+anchor_bottom = 0.311
+offset_left = 95.961
+offset_top = 10.095
+offset_right = 1069.25
+offset_bottom = 1029.59
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("5_kui5y")
+
 [node name="ItemSlot1" type="Button" parent="MainSceneUI/ItemButtonContainer"]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
@@ -593,19 +606,6 @@ offset_top = 0.098999
 offset_right = -0.0490112
 offset_bottom = -0.131012
 script = ExtResource("3_m0r7y")
-
-[node name="TextureRect" type="TextureRect" parent="MainSceneUI/ItemButtonContainer"]
-layout_mode = 2
-anchor_left = 0.107
-anchor_top = 0.011
-anchor_right = 0.337
-anchor_bottom = 0.311
-offset_left = 95.961
-offset_top = 10.095
-offset_right = 1069.25
-offset_bottom = 1029.59
-scale = Vector2(0.3, 0.3)
-texture = ExtResource("5_kui5y")
 
 [node name="GamePlay" type="Node2D" parent="."]
 

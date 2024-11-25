@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using SceneTransitionManager;
 using System.Collections.Generic;
 using System.Numerics;
+using GodotPlugins.Game;
 
 namespace GameManager
 {
@@ -29,6 +30,7 @@ namespace GameManager
 		private SceneTransition sceneTransition;
 		private MainSceneUIScript UIScript;
 		private Node miniGameNode;
+		private MainScene mainScene;
 		public string GameState { get; set; } = "newgame";
 		public bool allowMinigameEntry { get; set; } = true;
 
@@ -46,7 +48,9 @@ namespace GameManager
 
 			GD.Print("GameManager Ready");
 		}
-
+		public void setMainScene(){
+			mainScene = GetNode<MainScene>("/root/MainSceneNode");
+		}
 		public Result StartGame() {
 			mainWordGame.ResetMainWordGame();
 			GD.Print("Starting Game");
@@ -148,6 +152,7 @@ namespace GameManager
 					await Task.Run(() => miniGameNode?.QueueFree());
 					miniGameNode = null;
 					UIScript.ChangeCamera();
+					mainScene.SetGameUI();
 					return Result.Success();
 				}, true);
 			} else if (changeToScenePath.Contains("Minigames")) {

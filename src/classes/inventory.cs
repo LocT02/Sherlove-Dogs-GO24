@@ -4,14 +4,17 @@ using System.Collections.Generic;
 using IItemsTypes;
 using System;
 using ItemTypes;
+using Godot;
 
 namespace InventoryManager {
     public class Inventory : _IInventory {
         public List<IItem> Items { get; private set; } = new();
 
         public Result<IItem> AddItem(IItem item) {
+            
             if (item != null) {
                 Items.Add(item);
+                GD.Print("AN ITEM HAS BEEN ADDED");
                 return Result.Success(item);
             }
             return Result.Failure<IItem>("Failed to add Item");

@@ -183,6 +183,8 @@ public partial class Memory : Control
 			}
 		}
 		roundsWon++;
+		currRoundText.Text = currRound.ToString();
+		roundsWonText.Text = roundsWon.ToString();
 		return true;
 	}
 	//Continue to next level upon win
