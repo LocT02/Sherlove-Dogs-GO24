@@ -19,6 +19,8 @@ public partial class MainSceneUIScript : CanvasLayer
 	private ItemButton ItemSlot3;
 	private MainScene MainScene;
 	private GameManager.GameManager gameInstance;
+	private GameDataManager gameDataInstance;
+	private TextureProgressBar healthUI;
 	private Dictionary<string, Texture2D> textureCache = new();
 	private Camera2D MainCamera;
 	private Camera2D MinigameCamera;
@@ -35,6 +37,7 @@ public partial class MainSceneUIScript : CanvasLayer
 
 	private void InitializeUI() {
 		gameInstance = GameManager.GameManager.Instance;
+		gameDataInstance = gameInstance.gameData;
 		MainScene = GetTree().Root.GetNode<Node2D>("MainSceneNode") as MainScene;
 		CategoryLabel = GetNode<Label>("WordUI/WordGameContainer/CategoryLabel");
 		FeedbackLabel = GetNode<Label>("WordUI/WordGameContainer/FeedbackLabel");
@@ -48,6 +51,7 @@ public partial class MainSceneUIScript : CanvasLayer
 		MinigameCamera = GetNode<Camera2D>("/root/MainSceneNode/MinigameCamera");
 		player = GetNode<PlayerMovement>("/root/MainSceneNode/Player");
 		dogBed = GetNode<DogBed>("/root/MainSceneNode/GamePlay/DogBed");
+		healthUI = GetNode<TextureProgressBar>("/root/MainSceneNode/MainSceneUI/HealthUI/HealthBar");
 
 		List<ItemButton> buttonList = new List<ItemButton>{ ItemSlot1, ItemSlot2, ItemSlot3 };
 		foreach (ItemButton button in buttonList) {
@@ -245,5 +249,6 @@ public partial class MainSceneUIScript : CanvasLayer
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		healthUI.Value = gameDataInstance.Hp;
 	}
 }

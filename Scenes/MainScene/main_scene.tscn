@@ -1,4 +1,4 @@
-[gd_scene load_steps=89 format=3 uid="uid://bfker6m1dx5m5"]
+[gd_scene load_steps=92 format=3 uid="uid://bfker6m1dx5m5"]
 
 [ext_resource type="Script" path="res://Scripts/MainScene/MainScene.cs" id="1_2enir"]
 [ext_resource type="Script" path="res://Scripts/MainScene/MainSceneUIScript.cs" id="1_hlaxv"]
@@ -8,10 +8,13 @@
 [ext_resource type="Texture2D" uid="uid://dpvb2bxfjb4fc" path="res://Assets/Art/UI/Inventory.PNG" id="5_kui5y"]
 [ext_resource type="Texture2D" uid="uid://rkrox8xw7h5t" path="res://Assets/Art/Sprites/L_Dog_Walk_Sheet.png" id="6_qclrc"]
 [ext_resource type="Texture2D" uid="uid://bmbt1dgt82ngs" path="res://Assets/Art/Sprites/R_Dog_Walk_Sheet.png" id="7_05i0w"]
+[ext_resource type="Texture2D" uid="uid://uwgkxithaqvo" path="res://Assets/Art/UI/Health Bar/HealthBar.PNG" id="7_kw3mv"]
 [ext_resource type="Texture2D" uid="uid://ckbi0hkpmt34e" path="res://Assets/Art/Sprites/R_DogIdle_Spreadsheet.png" id="7_son76"]
 [ext_resource type="Script" path="res://Scripts/MainScene/DogDoor.cs" id="8_4aueb"]
+[ext_resource type="Texture2D" uid="uid://dfdbatu6b781i" path="res://Assets/Art/UI/Health Bar/HealthIcon.PNG" id="8_gdoxr"]
 [ext_resource type="Texture2D" uid="uid://rqqaha7xgg74" path="res://Assets/Art/Backgrounds/LivingRoom/DoggyDoor Closed.png" id="8_jad4e"]
 [ext_resource type="Texture2D" uid="uid://b2lfepo5p2lmu" path="res://Assets/Art/Sprites/L_DogIdle_Spritesheet.png" id="8_vvoo6"]
+[ext_resource type="Texture2D" uid="uid://c7bgdbgi61m78" path="res://Assets/Art/UI/Health Bar/HealthProgressBar.png" id="9_fjga4"]
 [ext_resource type="Script" path="res://Scripts/MainScene/DogBed.cs" id="9_vidff"]
 [ext_resource type="Texture2D" uid="uid://cyd24ffhps300" path="res://Assets/Art/Backgrounds/LivingRoom/DoggieBed Cropped.png" id="10_etjap"]
 [ext_resource type="Script" path="res://Scripts/Player/MainScenePlayer.cs" id="11_ucks7"]
@@ -606,6 +609,22 @@ offset_top = 0.098999
 offset_right = -0.0490112
 offset_bottom = -0.131012
 script = ExtResource("3_m0r7y")
+
+[node name="HealthUI" type="Control" parent="MainSceneUI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(0.5, 0.5)
+
+[node name="HealthBar" type="TextureProgressBar" parent="MainSceneUI/HealthUI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+value = 50.0
+texture_under = ExtResource("7_kw3mv")
+texture_over = ExtResource("8_gdoxr")
+texture_progress = ExtResource("9_fjga4")
 
 [node name="GamePlay" type="Node2D" parent="."]
 
