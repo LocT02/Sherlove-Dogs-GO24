@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://rkrox8xw7h5t" path="res://Assets/Art/Sprites/L_Dog_Walk_Sheet.png" id="6_gb867"]
 [ext_resource type="Texture2D" uid="uid://3xbxmg2y0nnl" path="res://Assets/Art/Backgrounds/Minigames/Backyard_NoClouds.PNG" id="7_4lxxr"]
 [ext_resource type="Texture2D" uid="uid://bmbt1dgt82ngs" path="res://Assets/Art/Sprites/R_Dog_Walk_Sheet.png" id="7_efr0k"]
-[ext_resource type="Texture2D" uid="uid://wfwgrhvgd0hj" path="res://Assets/Art/UI/UI_Button.png" id="8_m05of"]
+[ext_resource type="Texture2D" uid="uid://dnqr721yxfob7" path="res://Assets/Art/UI/UI_ButtonV2.png" id="8_rr24n"]
 [ext_resource type="FontFile" uid="uid://c2dpe22oxwlfc" path="res://Assets/Fonts/Lemon Days/Lemon Days.otf" id="9_4hq3f"]
 [ext_resource type="Texture2D" uid="uid://di6hpqd5gyxkj" path="res://Assets/Art/UI/Timer.PNG" id="10_1a65j"]
 
@@ -522,14 +522,14 @@ offset_bottom = 215.0
 layout_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
-texture = ExtResource("8_m05of")
+texture = ExtResource("8_rr24n")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="ScoreContainer"]
 layout_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 40.045
-offset_bottom = 40.045
+offset_top = 65.0
+offset_bottom = 65.0
 theme_override_fonts/normal_font = ExtResource("9_4hq3f")
 theme_override_font_sizes/normal_font_size = 50
 bbcode_enabled = true
