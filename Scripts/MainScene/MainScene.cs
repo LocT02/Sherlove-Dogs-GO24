@@ -77,6 +77,7 @@ public partial class MainScene : Node2D
 		var inputFieldContraints = UIScript.SetInputConstraints(gameInstance.mainWordGame.CurrentWord.Length);
 		Result attachItems = Result.Success();
 		UIScript.UpdateHPUI(gameInstance.gameData.Hp);
+		UIScript.UpdateScoreUI(gameInstance.gameData.Score);
 
 		if (gameInstance.gameData.Inventory.Items.Count > 0) {
 			attachItems = UIScript.AttachItemsToButtons();
