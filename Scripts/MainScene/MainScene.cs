@@ -9,6 +9,8 @@ public partial class MainScene : Node2D
 	private MainSceneUIScript UIScript;
 	private PlayerMovement player;
 	private LineEdit inputBox;
+	private TextureProgressBar healthUI;
+	private Label mainScoreUI;
 	public override void _Ready()
 	{
 		// Transition effect here
@@ -34,6 +36,8 @@ public partial class MainScene : Node2D
 		UIScript = GetNode<MainSceneUIScript>("MainSceneUI");
 		player = GetNode<PlayerMovement>("Player");
 		inputBox = GetNode<LineEdit>("%GuessInputField");
+		healthUI = GetNode<TextureProgressBar>("/root/MainSceneNode/MainSceneUI/HealthUI/HealthBar");
+		mainScoreUI = GetNode<Label>("/root/MainSceneNode/MainSceneUI/ScoreUI/ScoreBG/ScoreText");
 	}
 
 	private void LoadOrInitializeNewGame() {
@@ -69,15 +73,13 @@ public partial class MainScene : Node2D
 	}
 
 	public Result SetGameUI() {
-		// set hp and score later
-		// Add guessed letters later
 		var category = UIScript.UpdateCategoryLabel($"Category: {gameInstance.mainWordGame.Category}");
 		string feedbackString = string.Join("  ", gameInstance.mainWordGame.CorrectLetters);
 		var feedback = UIScript.UpdateFeedbackLabel($"Feedback:  {feedbackString}");
 		var inputFieldContraints = UIScript.SetInputConstraints(gameInstance.mainWordGame.CurrentWord.Length);
 		Result attachItems = Result.Success();
-		UIScript.UpdateHPUI(gameInstance.gameData.Hp);
-		UIScript.UpdateScoreUI(gameInstance.gameData.Score);
+		UpdateHPUI(gameInstance.gameData.Hp);
+		UpdateScoreUI(gameInstance.gameData.Score);
 
 		if (gameInstance.gameData.Inventory.Items.Count > 0) {
 			attachItems = UIScript.AttachItemsToButtons();
@@ -128,6 +130,12 @@ public partial class MainScene : Node2D
 		return Result.Success();
 	}
 
+	public void UpdateHPUI(int hp){
+		healthUI.Value = hp;
+	}
+	public void UpdateScoreUI(int score){
+		mainScoreUI.Text = score.ToString();
+	}
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{

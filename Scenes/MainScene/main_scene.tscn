@@ -552,12 +552,13 @@ anchor_left = 0.241
 anchor_top = 0.5
 anchor_right = 0.407
 anchor_bottom = 0.587
-offset_left = 984.28
-offset_top = 188.0
-offset_right = 1142.56
-offset_bottom = 449.04
+offset_left = 949.205
+offset_top = 177.485
+offset_right = 1107.48
+offset_bottom = 438.525
 grow_horizontal = 2
 grow_vertical = 0
+scale = Vector2(1.21, 1.21)
 
 [node name="TextureRect" type="TextureRect" parent="MainSceneUI/ItemButtonContainer"]
 layout_mode = 2
@@ -648,7 +649,7 @@ offset_left = 234.0
 offset_top = 182.0
 offset_right = 914.0
 offset_bottom = 304.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.615686, 0.505882, 0.537255, 1)
 theme_override_fonts/font = ExtResource("3_5d4nt")
 theme_override_font_sizes/font_size = 80
 text = "0"
@@ -692,6 +693,7 @@ offset_left = 152.0
 offset_top = -409.0
 offset_right = 305.0
 offset_bottom = -386.0
+theme_override_colors/font_color = Color(0.615686, 0.505882, 0.537255, 1)
 theme_override_fonts/font = ExtResource("3_5d4nt")
 text = "[W] Enter Minigame"
 metadata/_edit_use_anchors_ = true
@@ -714,6 +716,7 @@ offset_left = -69.0
 offset_top = -64.0
 offset_right = 26.0
 offset_bottom = -41.0
+theme_override_colors/font_color = Color(0.615686, 0.505882, 0.537255, 1)
 theme_override_fonts/font = ExtResource("3_5d4nt")
 text = "[W] Dog Bed"
 metadata/_edit_use_anchors_ = true
@@ -779,6 +782,15 @@ mouse_filter = 2
 
 [node name="VBoxContainer" parent="CanvasLayer/PauseMenu/PanelContainer" index="0"]
 mouse_filter = 2
+
+[node name="Label" parent="CanvasLayer/PauseMenu/PanelContainer/VBoxContainer/Control/Resume" index="0"]
+theme_override_colors/font_color = Color(0.615686, 0.505882, 0.537255, 1)
+
+[node name="Label" parent="CanvasLayer/PauseMenu/PanelContainer/VBoxContainer/Control2/Save" index="0"]
+theme_override_colors/font_color = Color(0.615686, 0.505882, 0.537255, 1)
+
+[node name="Label" parent="CanvasLayer/PauseMenu/PanelContainer/VBoxContainer/Control3/Back" index="0"]
+theme_override_colors/font_color = Color(0.615686, 0.505882, 0.537255, 1)
 
 [connection signal="pressed" from="MainSceneUI/WordUI/WordGameContainer/SubmitGuessButton" to="MainSceneUI" method="OnSubmitGuessButtonPress"]
 [connection signal="pressed" from="MainSceneUI/ItemButtonContainer/ItemSlot1" to="MainSceneUI" method="OnItemSlot1ButtonPress"]

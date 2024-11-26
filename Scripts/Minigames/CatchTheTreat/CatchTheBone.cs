@@ -11,8 +11,8 @@ public partial class CatchTheBone : Node2D
     private PackedScene boneScene = (PackedScene)GD.Load("res://Scenes/Minigames/CatchTheTreat/Bone.tscn");
     private CTBPlayer player;
     private Timer gameDurationTimer;
-    private const int GAME_TIME = 60; //in seconds
-    private const int WIN_SCORE = 1000;
+    private const int GAME_TIME = 1; //in seconds
+    private const int WIN_SCORE = -50;
     //Bone Parameters
     private const int MIN_SPEED = 100;
     private const int MAX_SPEED = 750;

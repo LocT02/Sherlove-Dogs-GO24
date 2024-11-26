@@ -19,8 +19,6 @@ public partial class MainSceneUIScript : CanvasLayer
 	private ItemButton ItemSlot3;
 	private MainScene MainScene;
 	private GameManager.GameManager gameInstance;
-	private TextureProgressBar healthUI;
-	private Label mainScoreUI;
 	private Dictionary<string, Texture2D> textureCache = new();
 	private Camera2D MainCamera;
 	private Camera2D MinigameCamera;
@@ -50,8 +48,6 @@ public partial class MainSceneUIScript : CanvasLayer
 		MinigameCamera = GetNode<Camera2D>("/root/MainSceneNode/MinigameCamera");
 		player = GetNode<PlayerMovement>("/root/MainSceneNode/Player");
 		dogBed = GetNode<DogBed>("/root/MainSceneNode/GamePlay/DogBed");
-		healthUI = GetNode<TextureProgressBar>("/root/MainSceneNode/MainSceneUI/HealthUI/HealthBar");
-		mainScoreUI = GetNode<Label>("/root/MainSceneNode/MainSceneUI/ScoreUI/ScoreBG/ScoreText");
 
 		List<ItemButton> buttonList = new List<ItemButton>{ ItemSlot1, ItemSlot2, ItemSlot3 };
 		foreach (ItemButton button in buttonList) {
@@ -158,6 +154,8 @@ public partial class MainSceneUIScript : CanvasLayer
 				buttons[i].Visible = false;
 			}
 		}
+
+		
 		return Result.Success();
 	}
 
@@ -244,12 +242,6 @@ public partial class MainSceneUIScript : CanvasLayer
 				dogBed.interactable = true;
 			}
 		}
-	}
-	public void UpdateHPUI(int hp){
-		healthUI.Value = hp;
-	}
-	public void UpdateScoreUI(int score){
-		mainScoreUI.Text = score.ToString();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
