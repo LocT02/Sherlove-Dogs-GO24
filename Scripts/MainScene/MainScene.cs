@@ -81,9 +81,8 @@ public partial class MainScene : Node2D
 		UpdateHPUI(gameInstance.gameData.Hp);
 		UpdateScoreUI(gameInstance.gameData.Score);
 
-		if (gameInstance.gameData.Inventory.Items.Count > 0) {
-			attachItems = UIScript.AttachItemsToButtons();
-		}
+		attachItems = UIScript.AttachItemsToButtons();
+		
 
 
 		return (category.IsFailure || feedback.IsFailure || inputFieldContraints.IsFailure || attachItems.IsFailure) 
