@@ -24,12 +24,12 @@ public partial class PauseMenu : Control
 		setTextureButtonMouseFilter(MouseFilterEnum.Ignore);
 	}
 
-    public override void _Process(double delta)
-    {
-        testEsc();
-    }
+	public override void _Process(double delta)
+	{
+		testEsc();
+	}
 
-    public void resume(){
+	public void resume(){
 		setTextureButtonMouseFilter(MouseFilterEnum.Ignore);
 		GetTree().Paused = false;
 		animationPlayer.PlayBackwards("blur");

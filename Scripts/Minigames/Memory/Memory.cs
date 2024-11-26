@@ -130,25 +130,25 @@ public partial class Memory : Control
 			if (Input.IsActionJustPressed("ui_left"))
 			{
 				playerInput.Add(ArrowKey.Left);
-				dog.RotationDegrees = 90.0f;
+				dog.Play("Left");
 				playerInputString += "←";
 			}
 			else if (Input.IsActionJustPressed("ui_right"))
 			{
 				playerInput.Add(ArrowKey.Right);
-				dog.RotationDegrees = 270.0f;
+				dog.Play("Right");
 				playerInputString += "→";
 			}
 			else if (Input.IsActionJustPressed("ui_up"))
 			{
 				playerInput.Add(ArrowKey.Up);
-				dog.RotationDegrees = 0.0f;
+				dog.Play("Up");
 				playerInputString += "↑";
 			}
 			else if (Input.IsActionJustPressed("ui_down"))
 			{
 				playerInput.Add(ArrowKey.Down);
-				dog.RotationDegrees = 180.0f;
+				dog.Play("Down");
 				playerInputString += "↓";
 			}
 		}
@@ -189,6 +189,7 @@ public partial class Memory : Control
 	}
 	//Continue to next level upon win
 	private void NextLevel(bool localWin){
+		dog.Play("IdleLeft");
 		if(localWin) currentLevel += STEP_LEVEL;
 		if(currRound >= NUM_OF_ROUNDS){
 			if(roundsWon >= NUM_OF_ROUNDS-1){

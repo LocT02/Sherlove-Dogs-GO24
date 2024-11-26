@@ -1,9 +1,13 @@
-[gd_scene load_steps=35 format=3 uid="uid://oj3dd82haejm"]
+[gd_scene load_steps=39 format=3 uid="uid://oj3dd82haejm"]
 
 [ext_resource type="Script" path="res://Scripts/Minigames/Memory/Memory.cs" id="1_dr54m"]
 [ext_resource type="Texture2D" uid="uid://b83eb3ly2r6le" path="res://Assets/Art/Backgrounds/Backyard_FULL.PNG" id="2_jy8tn"]
 [ext_resource type="FontFile" uid="uid://c2dpe22oxwlfc" path="res://Assets/Fonts/Lemon Days/Lemon Days.otf" id="2_rgcyv"]
 [ext_resource type="Texture2D" uid="uid://b2lfepo5p2lmu" path="res://Assets/Art/Sprites/L_DogIdle_Spritesheet.png" id="3_3bejq"]
+[ext_resource type="Texture2D" uid="uid://c62n1wgce1qqu" path="res://Assets/Art/Sprites/DogDirections/DogDown.png" id="4_vejom"]
+[ext_resource type="Texture2D" uid="uid://csd5vthajogbm" path="res://Assets/Art/Sprites/DogDirections/DogLeft.png" id="6_hbmtj"]
+[ext_resource type="Texture2D" uid="uid://blgyo5fl2r0kn" path="res://Assets/Art/Sprites/DogDirections/DogRight.png" id="7_3waej"]
+[ext_resource type="Texture2D" uid="uid://bvhqsv1qfr7x7" path="res://Assets/Art/Sprites/DogDirections/DogUp.png" id="8_lh6bv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_37cq7"]
 atlas = ExtResource("3_3bejq")
@@ -41,6 +45,14 @@ region = Rect2(10500, 0, 1500, 1500)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("4_vejom")
+}],
+"loop": true,
+"name": &"Down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_37cq7")
 }, {
 "duration": 1.0,
@@ -67,6 +79,30 @@ animations = [{
 "loop": true,
 "name": &"IdleLeft",
 "speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_hbmtj")
+}],
+"loop": true,
+"name": &"Left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_3waej")
+}],
+"loop": true,
+"name": &"Right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_lh6bv")
+}],
+"loop": true,
+"name": &"Up",
+"speed": 5.0
 }]
 
 [sub_resource type="Animation" id="Animation_qulnr"]
@@ -199,6 +235,7 @@ vertical = true
 [node name="TopText" type="Label" parent="Memory/GameContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("2_rgcyv")
 text = "Memorize the sequence!"
 horizontal_alignment = 1
 
@@ -263,10 +300,14 @@ anchors_preset = -1
 anchor_left = -1.21
 anchor_top = 0.744
 anchor_bottom = 1.0
-offset_top = 0.0400009
-offset_right = -4.0
+offset_left = 104.0
+offset_top = -87.96
+offset_right = 100.0
+offset_bottom = -88.0
 grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_rgcyv")
+theme_override_font_sizes/font_size = 15
 text = "Rounds Won"
 horizontal_alignment = 2
 
@@ -299,10 +340,13 @@ anchor_left = 1.04
 anchor_top = 0.756
 anchor_right = 2.38
 anchor_bottom = 1.011
-offset_top = -0.0400009
-offset_right = -1.52588e-05
-offset_bottom = 0.00999451
+offset_left = -102.0
+offset_top = -88.04
+offset_right = -102.0
+offset_bottom = -87.99
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_rgcyv")
+theme_override_font_sizes/font_size = 13
 text = "Current Round"
 
 [node name="TransitionTimer" type="Timer" parent="Memory"]
@@ -333,7 +377,6 @@ scale = Vector2(0.131225, 0.127896)
 sprite_frames = SubResource("SpriteFrames_ynfvt")
 animation = &"IdleLeft"
 autoplay = "IdleLeft"
-frame_progress = 0.238742
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Memory/Player"]
 libraries = {
