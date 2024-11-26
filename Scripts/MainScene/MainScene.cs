@@ -17,6 +17,7 @@ public partial class MainScene : Node2D
 
 		InitializeGame();
 		gameInstance.setMainScene();
+		gameInstance.setUIScript();
 		LoadOrInitializeNewGame();
 
 		GD.Print($"Current HP: {gameInstance.gameData.Hp}");

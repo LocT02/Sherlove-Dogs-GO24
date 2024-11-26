@@ -51,13 +51,12 @@ namespace GameManager
 		public void setMainScene(){
 			mainScene = GetNode<MainScene>("/root/MainSceneNode");
 		}
+		public void setUIScript(){
+			UIScript = GetNode<MainSceneUIScript>("/root/MainSceneNode/MainSceneUI");
+		}
 		public Result StartGame() {
 			mainWordGame.ResetMainWordGame();
 			GD.Print("Starting Game");
-
-			if (UIScript is null) {
-				UIScript = GetNode<MainSceneUIScript>("/root/MainSceneNode/MainSceneUI");
-			}
 
 			allowMinigameEntry = true;
 
@@ -200,5 +199,7 @@ namespace GameManager
 			// When the user wants to save Mid Game
 			return Result.Success();
 		}
+
+
 	}
 }
