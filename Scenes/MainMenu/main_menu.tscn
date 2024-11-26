@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cmtu61pyvolat"]
+[gd_scene load_steps=3 format=3 uid="uid://cmtu61pyvolat"]
 
 [ext_resource type="Script" path="res://Scripts/MainMenu/MainMenu.cs" id="1_n3wff"]
+[ext_resource type="Texture2D" uid="uid://cqrv7018g201w" path="res://Assets/Art/Backgrounds/MainMenu/Start screen.png" id="2_w8i5y"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -37,6 +38,16 @@ text = "Settings"
 [node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Quit"
+
+[node name="Play2" type="TextureButton" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BG" type="TextureRect" parent="."]
+z_index = -1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_w8i5y")
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Play" to="." method="OnPlayPressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Settings" to="." method="OnSettingsPressed"]
