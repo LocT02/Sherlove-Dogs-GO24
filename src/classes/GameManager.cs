@@ -58,7 +58,6 @@ namespace GameManager
 			if (UIScript is null) {
 				UIScript = GetNode<MainSceneUIScript>("/root/MainSceneNode/MainSceneUI");
 			}
-			UIScript.UpdateHPUI(gameData.Hp);
 
 			allowMinigameEntry = true;
 
