@@ -190,7 +190,7 @@ namespace GameManager
 
 		public Result EndGame() {
 			// called from Main Game Scene
-			// Save high score
+			LoadAndSwitchScene("res://Scenes/GameOver/game_over.tscn");
 			
 			return Result.Success();
 		}
