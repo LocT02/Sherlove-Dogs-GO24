@@ -52,7 +52,7 @@ namespace ItemTypes {
 
         public string Name { get; } = "A Bone for Two"; 
         public bool Upgraded { get; set; } = false;
-        public string[] ImgFilePath { get; set; } = new string[]{"res://Assets/Art/Items/Bone For Two 1.svg","res://Assets/Art/Items/Bone For Two 2.svg"};
+        public string[] ImgFilePath { get; set; } = new string[]{"res://Assets/Art/Items/Bone For Two 1.svg","res://Assets/Art/Items/Bone for Two 2.svg"};
         
         public Result<char[]> ApplyItem() {
             // Reveal first and last letters

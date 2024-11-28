@@ -608,8 +608,9 @@ texture = ExtResource("11_t74qj")
 
 [node name="ItemNameText" type="Label" parent="ItemController/ItemGetPanel/ItemDisplay"]
 layout_mode = 0
+offset_left = -239.0
 offset_top = -27.0
-offset_right = 101.0
+offset_right = 337.0
 offset_bottom = 3.0
 theme_override_colors/font_color = Color(0.615686, 0.505882, 0.537255, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)

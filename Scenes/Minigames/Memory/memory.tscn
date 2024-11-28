@@ -412,8 +412,9 @@ texture = ExtResource("9_vay1n")
 
 [node name="ItemNameText" type="Label" parent="Memory/ItemGetPanel/ItemDisplay"]
 layout_mode = 0
+offset_left = -252.0
 offset_top = -27.0
-offset_right = 101.0
+offset_right = 349.0
 offset_bottom = 3.0
 theme_override_colors/font_color = Color(0.615686, 0.505882, 0.537255, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
