@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://oj3dd82haejm"]
+[gd_scene load_steps=40 format=3 uid="uid://oj3dd82haejm"]
 
 [ext_resource type="Script" path="res://Scripts/Minigames/Memory/Memory.cs" id="1_dr54m"]
 [ext_resource type="Texture2D" uid="uid://b83eb3ly2r6le" path="res://Assets/Art/Backgrounds/Backyard_FULL.PNG" id="2_jy8tn"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://csd5vthajogbm" path="res://Assets/Art/Sprites/DogDirections/DogLeft.png" id="6_hbmtj"]
 [ext_resource type="Texture2D" uid="uid://blgyo5fl2r0kn" path="res://Assets/Art/Sprites/DogDirections/DogRight.png" id="7_3waej"]
 [ext_resource type="Texture2D" uid="uid://bvhqsv1qfr7x7" path="res://Assets/Art/Sprites/DogDirections/DogUp.png" id="8_lh6bv"]
+[ext_resource type="Texture2D" uid="uid://b6wae3jglylgl" path="res://Assets/Art/Items/Bark of Love 2.svg" id="9_vay1n"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_37cq7"]
 atlas = ExtResource("3_3bejq")
@@ -390,3 +391,32 @@ parameters/conditions/is_idle = false
 parameters/conditions/is_walking = false
 parameters/Idle/blend_position = Vector2(-0.99682, 0)
 parameters/Walk/blend_position = Vector2(0, 0)
+
+[node name="ItemGetPanel" type="PanelContainer" parent="Memory"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -50.0
+offset_top = 35.0
+offset_right = 50.0
+offset_bottom = 135.0
+grow_horizontal = 2
+
+[node name="ItemDisplay" type="TextureRect" parent="Memory/ItemGetPanel"]
+layout_mode = 2
+texture = ExtResource("9_vay1n")
+
+[node name="ItemNameText" type="Label" parent="Memory/ItemGetPanel/ItemDisplay"]
+layout_mode = 0
+offset_top = -27.0
+offset_right = 101.0
+offset_bottom = 3.0
+theme_override_colors/font_color = Color(0.615686, 0.505882, 0.537255, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_rgcyv")
+theme_override_font_sizes/font_size = 20
+text = "Item Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2

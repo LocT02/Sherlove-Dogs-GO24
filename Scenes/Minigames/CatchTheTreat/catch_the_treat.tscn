@@ -1,4 +1,4 @@
-[gd_scene load_steps=80 format=3 uid="uid://cmq4xiyrxt0j7"]
+[gd_scene load_steps=81 format=3 uid="uid://cmq4xiyrxt0j7"]
 
 [ext_resource type="Script" path="res://Scripts/Minigames/CatchTheTreat/CatchTheBone.cs" id="1_g787b"]
 [ext_resource type="Script" path="res://Scripts/Minigames/CatchTheTreat/CTBPlayer.cs" id="3_1vm51"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://dnqr721yxfob7" path="res://Assets/Art/UI/UI_ButtonV2.png" id="8_rr24n"]
 [ext_resource type="FontFile" uid="uid://c2dpe22oxwlfc" path="res://Assets/Fonts/Lemon Days/Lemon Days.otf" id="9_4hq3f"]
 [ext_resource type="Texture2D" uid="uid://di6hpqd5gyxkj" path="res://Assets/Art/UI/Timer.PNG" id="10_1a65j"]
+[ext_resource type="Texture2D" uid="uid://nuk3g6qu0gqk" path="res://Assets/Art/Items/Bone for Two 2.svg" id="11_t74qj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xy2ig"]
 size = Vector2(192.3, 84)
@@ -579,3 +580,38 @@ theme_override_fonts/normal_font = ExtResource("9_4hq3f")
 theme_override_font_sizes/normal_font_size = 150
 bbcode_enabled = true
 scroll_active = false
+
+[node name="ItemController" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="ItemGetPanel" type="PanelContainer" parent="ItemController"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -50.0
+offset_top = 35.0
+offset_right = 50.0
+offset_bottom = 135.0
+grow_horizontal = 2
+
+[node name="ItemDisplay" type="TextureRect" parent="ItemController/ItemGetPanel"]
+layout_mode = 2
+texture = ExtResource("11_t74qj")
+
+[node name="ItemNameText" type="Label" parent="ItemController/ItemGetPanel/ItemDisplay"]
+layout_mode = 0
+offset_top = -27.0
+offset_right = 101.0
+offset_bottom = 3.0
+theme_override_colors/font_color = Color(0.615686, 0.505882, 0.537255, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_4hq3f")
+theme_override_font_sizes/font_size = 20
+text = "Item Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2

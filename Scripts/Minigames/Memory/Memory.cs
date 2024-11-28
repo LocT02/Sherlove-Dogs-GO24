@@ -1,6 +1,7 @@
 using Godot;
 using Godot.Collections;
 using InventoryManager;
+using ResultManager;
 using System;
 using System.Collections.Generic;
 
@@ -52,6 +53,10 @@ public partial class Memory : Control
 	private GameManager.GameManager gameManagerInstance;
 	private Inventory inventoryInstance;
 	private AnimatedSprite2D dog;
+	private int ItemTextureValue;
+	private PanelContainer ItemGetPanel;
+	private TextureRect ItemDisplay;
+	private Label ItemNameText;
 
 	public override void _Ready()
 	{
@@ -75,9 +80,12 @@ public partial class Memory : Control
 		roundsWonText = GetNode<Label>("PanelContainer2/HBoxContainer/Panel/RoundsWon");
 		currRoundText = GetNode<Label>("PanelContainer2/HBoxContainer/Panel2/CurrRound");
 		dog = GetNode<AnimatedSprite2D>("Player/AnimatedSprite2D");
+		ItemGetPanel = GetNode<PanelContainer>("ItemGetPanel");
+		ItemDisplay = GetNode<TextureRect>("ItemGetPanel/ItemDisplay");
+		ItemNameText = GetNode<Label>("ItemGetPanel/ItemDisplay/ItemNameText");
+		ItemGetPanel.Visible = false;
 		progressBarText.BbcodeEnabled = true;
 		progressBar.Value = 100;
-
 
 		//Generate arrow sequence (all 12)
 		arrowSequence = GenerateNewSequence(MAX_LEVEL);
@@ -250,12 +258,21 @@ public partial class Memory : Control
 	}
 	
 	private async void GameWin(bool upgraded){
-		
+		if(!upgraded){
+			ItemTextureValue = 0;
+		} else{
+			ItemTextureValue = 1;
+		}
+
 		var item = inventoryInstance.SelectRandomItem(upgraded);
 
 		if(item.IsFailure) {
 			GD.PushError(item.Error);
 		}
+
+		ItemGetPanel.Visible = true;
+		ItemDisplay.Texture = (Texture2D)GD.Load(item.Value.ImgFilePath[ItemTextureValue]);
+		ItemNameText.Text = item.Value.Name;
 
 		var result = inventoryInstance.AddItem(item.Value);
 		if(result.IsFailure) {

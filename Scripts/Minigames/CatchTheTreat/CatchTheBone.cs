@@ -12,7 +12,10 @@ public partial class CatchTheBone : Node2D
 	private CTBPlayer player;
 	private Timer gameDurationTimer;
 	private const int GAME_TIME = 60; //in seconds
-	private const int WIN_SCORE = 1000;
+	private const int WIN_SCORE = 1000; // threshold to get normal item
+	private const int UPGRADED_WIN_SCORE = 1200; //threshold to get upgraded item
+	private bool isUpgradeable;
+	private int ItemTextureValue;
 	//Bone Parameters
 	private const int MIN_SPEED = 100;
 	private const int MAX_SPEED = 750;
@@ -22,6 +25,9 @@ public partial class CatchTheBone : Node2D
 	private RichTextLabel timerLabel, scoreLabel, winLoseLabel;
 
 	private Vector2[] sizes = new[] { new Vector2(64, 64), new Vector2(96, 96), new Vector2(128, 128) };
+	private PanelContainer ItemGetPanel;
+	private TextureRect ItemDisplay;
+	private Label ItemNameText;
 
 	public override void _Ready()
 	{
@@ -31,6 +37,11 @@ public partial class CatchTheBone : Node2D
 		timerLabel = GetNode<RichTextLabel>("TimerContainer/RichTextLabel");
 		scoreLabel = GetNode<RichTextLabel>("ScoreContainer/RichTextLabel");
 		winLoseLabel = GetNode<RichTextLabel>("WinLoseLabel");
+
+		ItemGetPanel = GetNode<PanelContainer>("ItemController/ItemGetPanel");
+		ItemDisplay = GetNode<TextureRect>("ItemController/ItemGetPanel/ItemDisplay");
+		ItemNameText = GetNode<Label>("ItemController/ItemGetPanel/ItemDisplay/ItemNameText");
+		ItemGetPanel.Visible = false;
 
 		gameDurationTimer = GetNode<Timer>("GameplayTimer");
 		gameDurationTimer.OneShot = true;
@@ -66,11 +77,27 @@ public partial class CatchTheBone : Node2D
 			return;
 		}
 		winLoseLabel.Text = $"[center][color=green]YOU WON[/color][/center]";
-		var item = inventoryInstance.SelectRandomItem(score >= WIN_SCORE);
+
+		//Check if score reaches threshold to get normal item, but less than upgraded threshold.
+		if(score >= WIN_SCORE && score < UPGRADED_WIN_SCORE){
+			isUpgradeable = false;
+			ItemTextureValue = 0;
+		}
+		//Check if score reaches threshold to get upgraded item
+		else{
+			isUpgradeable = true;
+			ItemTextureValue = 1;
+		}
+		
+		var item = inventoryInstance.SelectRandomItem(isUpgradeable);
 
 		if(item.IsFailure) {
 			GD.PushError(item.Error);
 		}
+
+		ItemGetPanel.Visible = true;
+		ItemDisplay.Texture = (Texture2D)GD.Load(item.Value.ImgFilePath[ItemTextureValue]);
+		ItemNameText.Text = item.Value.Name;
 
 		var result = inventoryInstance.AddItem(item.Value);
 		if(result.IsFailure) {
