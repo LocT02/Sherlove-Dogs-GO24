@@ -47,18 +47,21 @@ public partial class CatchTheBone : Node2D
 		gameDurationTimer.OneShot = true;
 		gameDurationTimer.WaitTime = GAME_TIME;
 		gameDurationTimer.Timeout += gameOver; 
-		gameDurationTimer.Start();
 
 		player = GetNode<CTBPlayer>("Player");
 		spawnTimer = new Timer();
 		AddChild(spawnTimer);
 		spawnTimer.WaitTime = 1f;
 		spawnTimer.Timeout += SpawnBone;
-		spawnTimer.Start();
 	}
 
 	public override void _Process(double delta)
 	{
+		if(gameManagerInstance.allowMinigameStart){
+			gameDurationTimer.Start();
+			spawnTimer.Start();
+			gameManagerInstance.allowMinigameStart = false;
+		}
 		timerLabel.Text = $"[center]{gameDurationTimer.TimeLeft.ToString("00")}[/center]";
 		scoreLabel.Text = $"[center]Score:{player.GetScore()}[/center]";
 	}

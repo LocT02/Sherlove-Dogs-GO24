@@ -33,6 +33,7 @@ namespace GameManager
 		private MainScene mainScene;
 		public string GameState { get; set; } = "newgame";
 		public bool allowMinigameEntry { get; set; } = true;
+		public bool allowMinigameStart { get; set; } = false;
 
 		public override void _Ready()
 		{

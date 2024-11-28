@@ -24,6 +24,7 @@ public partial class MainSceneUIScript : CanvasLayer
 	private Camera2D MinigameCamera;
 	private PlayerMovement player;
 	private DogBed dogBed;
+	private CanvasLayer HowToOverlay;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -48,6 +49,8 @@ public partial class MainSceneUIScript : CanvasLayer
 		MinigameCamera = GetNode<Camera2D>("/root/MainSceneNode/MinigameCamera");
 		player = GetNode<PlayerMovement>("/root/MainSceneNode/Player");
 		dogBed = GetNode<DogBed>("/root/MainSceneNode/GamePlay/DogBed");
+		HowToOverlay = GetNode<CanvasLayer>("HowToUI/HowToOverlay");
+		HowToOverlay.Visible = false;
 
 		List<ItemButton> buttonList = new List<ItemButton>{ ItemSlot1, ItemSlot2, ItemSlot3 };
 		foreach (ItemButton button in buttonList) {
@@ -242,6 +245,15 @@ public partial class MainSceneUIScript : CanvasLayer
 				dogBed.interactable = true;
 			}
 		}
+	}
+
+	private void OnHowToButtonPressed(){
+		HowToOverlay.Visible = true;
+		GetTree().Paused = true;
+	}
+	private void OnHowToExitButtonPressed(){
+		HowToOverlay.Visible = false;
+		GetTree().Paused = false;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

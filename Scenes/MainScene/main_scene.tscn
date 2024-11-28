@@ -1,4 +1,4 @@
-[gd_scene load_steps=139 format=3 uid="uid://bfker6m1dx5m5"]
+[gd_scene load_steps=142 format=3 uid="uid://bfker6m1dx5m5"]
 
 [ext_resource type="Script" path="res://Scripts/MainScene/MainScene.cs" id="1_2enir"]
 [ext_resource type="Script" path="res://Scripts/MainScene/MainSceneUIScript.cs" id="1_hlaxv"]
@@ -18,7 +18,10 @@
 [ext_resource type="Script" path="res://Scripts/MainScene/DogBed.cs" id="9_vidff"]
 [ext_resource type="Texture2D" uid="uid://cyd24ffhps300" path="res://Assets/Art/Backgrounds/LivingRoom/DoggieBed Cropped.png" id="10_etjap"]
 [ext_resource type="Texture2D" uid="uid://v7lsuyoj5muc" path="res://Assets/Art/UI/Health Bar/ScoreBar.PNG" id="10_nvq6q"]
+[ext_resource type="Texture2D" uid="uid://bdjhqlorv4ml2" path="res://Assets/Art/Items/Bark of Love 1.svg" id="11_kujxi"]
 [ext_resource type="Script" path="res://Scripts/Player/MainScenePlayer.cs" id="11_ucks7"]
+[ext_resource type="Texture2D" uid="uid://b6wae3jglylgl" path="res://Assets/Art/Items/Bark of Love 2.svg" id="12_k315p"]
+[ext_resource type="Texture2D" uid="uid://bn87u3v4a6rb3" path="res://Assets/Art/UI/Main game.png" id="13_lxo10"]
 [ext_resource type="Texture2D" uid="uid://cmdlxs5is1uha" path="res://Assets/Art/Backgrounds/LivingRoom/Interior Back.png" id="16_7pvd7"]
 [ext_resource type="Texture2D" uid="uid://c7bt8rbmeysw8" path="res://Assets/Art/Sprites/DogHappy/HappyDog.png" id="16_ycf5r"]
 [ext_resource type="PackedScene" uid="uid://2e1vuoc8xhgy" path="res://Scenes/PauseMenu/PauseMenu.tscn" id="17_biuep"]
@@ -993,6 +996,55 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="HowToUI" type="Control" parent="MainSceneUI"]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -108.67
+offset_right = -68.67
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="HowToBttn" type="TextureButton" parent="MainSceneUI/HowToUI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("11_kujxi")
+texture_pressed = ExtResource("11_kujxi")
+texture_hover = ExtResource("12_k315p")
+
+[node name="HowToOverlay" type="CanvasLayer" parent="MainSceneUI/HowToUI"]
+process_mode = 2
+
+[node name="HowToPage" type="TextureRect" parent="MainSceneUI/HowToUI/HowToOverlay"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -450.0
+offset_top = -450.0
+offset_right = 450.0
+offset_bottom = 450.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("13_lxo10")
+
+[node name="X_Btn" type="TextureButton" parent="MainSceneUI/HowToUI/HowToOverlay/HowToPage"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -76.725
+offset_top = -25.7
+offset_right = 19.275
+offset_bottom = 70.3
+grow_horizontal = 0
+texture_normal = ExtResource("11_kujxi")
+texture_pressed = ExtResource("11_kujxi")
+texture_hover = ExtResource("12_k315p")
+
 [node name="GamePlay" type="Node2D" parent="."]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="GamePlay"]
@@ -1140,6 +1192,8 @@ autoplay = "Talk"
 [connection signal="pressed" from="MainSceneUI/ItemButtonContainer/ItemSlot1" to="MainSceneUI" method="OnItemSlot1ButtonPress"]
 [connection signal="pressed" from="MainSceneUI/ItemButtonContainer/ItemSlot2" to="MainSceneUI" method="OnItemSlot2ButtonPress"]
 [connection signal="pressed" from="MainSceneUI/ItemButtonContainer/ItemSlot3" to="MainSceneUI" method="OnItemSlot3ButtonPress"]
+[connection signal="pressed" from="MainSceneUI/HowToUI/HowToBttn" to="MainSceneUI" method="OnHowToButtonPressed"]
+[connection signal="pressed" from="MainSceneUI/HowToUI/HowToOverlay/HowToPage/X_Btn" to="MainSceneUI" method="OnHowToExitButtonPressed"]
 [connection signal="body_entered" from="GamePlay/DogDoor" to="GamePlay/DogDoor" method="_on_body_entered"]
 [connection signal="body_exited" from="GamePlay/DogDoor" to="GamePlay/DogDoor" method="_on_body_exited"]
 [connection signal="body_entered" from="GamePlay/DogBed" to="GamePlay/DogBed" method="_on_body_entered"]

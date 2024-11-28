@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=3 uid="uid://cmq4xiyrxt0j7"]
+[gd_scene load_steps=85 format=3 uid="uid://cmq4xiyrxt0j7"]
 
 [ext_resource type="Script" path="res://Scripts/Minigames/CatchTheTreat/CatchTheBone.cs" id="1_g787b"]
 [ext_resource type="Script" path="res://Scripts/Minigames/CatchTheTreat/CTBPlayer.cs" id="3_1vm51"]
@@ -11,6 +11,10 @@
 [ext_resource type="FontFile" uid="uid://c2dpe22oxwlfc" path="res://Assets/Fonts/Lemon Days/Lemon Days.otf" id="9_4hq3f"]
 [ext_resource type="Texture2D" uid="uid://di6hpqd5gyxkj" path="res://Assets/Art/UI/Timer.PNG" id="10_1a65j"]
 [ext_resource type="Texture2D" uid="uid://nuk3g6qu0gqk" path="res://Assets/Art/Items/Bone for Two 2.svg" id="11_t74qj"]
+[ext_resource type="Script" path="res://Scripts/Utilities/HowToUi.cs" id="12_bu23g"]
+[ext_resource type="Texture2D" uid="uid://mwhjwlryyv0p" path="res://Assets/Art/UI/Catch the Treat.png" id="13_6r15b"]
+[ext_resource type="Texture2D" uid="uid://bdjhqlorv4ml2" path="res://Assets/Art/Items/Bark of Love 1.svg" id="14_j7v7n"]
+[ext_resource type="Texture2D" uid="uid://b6wae3jglylgl" path="res://Assets/Art/Items/Bark of Love 2.svg" id="15_30hdb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xy2ig"]
 size = Vector2(192.3, 84)
@@ -615,3 +619,46 @@ text = "Item Name"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+
+[node name="HowToUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -108.67
+offset_right = -68.67
+offset_bottom = 40.0
+grow_horizontal = 0
+script = ExtResource("12_bu23g")
+
+[node name="HowToOverlay" type="CanvasLayer" parent="HowToUI"]
+
+[node name="HowToPage" type="TextureRect" parent="HowToUI/HowToOverlay"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -450.0
+offset_top = -450.0
+offset_right = 450.0
+offset_bottom = 450.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("13_6r15b")
+
+[node name="X_Btn" type="TextureButton" parent="HowToUI/HowToOverlay/HowToPage"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -76.725
+offset_top = -25.7
+offset_right = 19.275
+offset_bottom = 70.3
+grow_horizontal = 0
+texture_normal = ExtResource("14_j7v7n")
+texture_pressed = ExtResource("14_j7v7n")
+texture_hover = ExtResource("15_30hdb")
+
+[connection signal="pressed" from="HowToUI/HowToOverlay/HowToPage/X_Btn" to="HowToUI" method="OnHowToExitButtonPressed"]

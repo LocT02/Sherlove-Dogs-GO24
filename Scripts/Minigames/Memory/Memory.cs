@@ -102,14 +102,16 @@ public partial class Memory : Control
 		transitionTimer.WaitTime = TRANSITION_DURATION;
 		transitionTimer.Timeout += OnTransitionTimerTimeout;
 
-		
-		//Create a button to start ig idk 
-		StartLevel();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		//Start when player exit the how-to overlay.
+		if(gameManagerInstance.allowMinigameStart){
+			StartLevel();
+			gameManagerInstance.allowMinigameStart = false;
+		}
 		
 		//(int)(displayTimer.TimeLeft/displayTimer.WaitTime*100) : (int)(1-(transitionTimer.TimeLeft/transitionTimer.WaitTime)*100);
 		if(gameState == GameStates.Memorize){
