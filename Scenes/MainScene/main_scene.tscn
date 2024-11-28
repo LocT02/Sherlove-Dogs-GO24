@@ -1014,6 +1014,19 @@ texture_normal = ExtResource("11_kujxi")
 texture_pressed = ExtResource("11_kujxi")
 texture_hover = ExtResource("12_k315p")
 
+[node name="?_Text" type="Label" parent="MainSceneUI/HowToUI/HowToBttn"]
+layout_mode = 0
+offset_left = 30.83
+offset_top = 19.04
+offset_right = 70.83
+offset_bottom = 80.04
+theme_override_colors/font_color = Color(0.615686, 0.505882, 0.537255, 1)
+theme_override_fonts/font = ExtResource("3_5d4nt")
+theme_override_font_sizes/font_size = 40
+text = "?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="HowToOverlay" type="CanvasLayer" parent="MainSceneUI/HowToUI"]
 process_mode = 2
 
@@ -1044,6 +1057,19 @@ grow_horizontal = 0
 texture_normal = ExtResource("11_kujxi")
 texture_pressed = ExtResource("11_kujxi")
 texture_hover = ExtResource("12_k315p")
+
+[node name="X_Text" type="Label" parent="MainSceneUI/HowToUI/HowToOverlay/HowToPage/X_Btn"]
+layout_mode = 0
+offset_left = 30.37
+offset_top = 23.66
+offset_right = 70.37
+offset_bottom = 70.66
+theme_override_colors/font_color = Color(0.615686, 0.505882, 0.537255, 1)
+theme_override_fonts/font = ExtResource("3_5d4nt")
+theme_override_font_sizes/font_size = 36
+text = "X"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="GamePlay" type="Node2D" parent="."]
 

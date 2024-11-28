@@ -661,4 +661,16 @@ texture_normal = ExtResource("14_j7v7n")
 texture_pressed = ExtResource("14_j7v7n")
 texture_hover = ExtResource("15_30hdb")
 
+[node name="X_Text" type="Label" parent="HowToUI/HowToOverlay/HowToPage/X_Btn"]
+offset_left = 30.37
+offset_top = 23.66
+offset_right = 70.37
+offset_bottom = 70.66
+theme_override_colors/font_color = Color(0.615686, 0.505882, 0.537255, 1)
+theme_override_fonts/font = ExtResource("9_4hq3f")
+theme_override_font_sizes/font_size = 36
+text = "X"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="pressed" from="HowToUI/HowToOverlay/HowToPage/X_Btn" to="HowToUI" method="OnHowToExitButtonPressed"]
