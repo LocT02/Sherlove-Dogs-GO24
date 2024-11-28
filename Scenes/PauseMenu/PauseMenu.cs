@@ -31,12 +31,18 @@ public partial class PauseMenu : Control
 
 	public void resume(){
 		setTextureButtonMouseFilter(MouseFilterEnum.Ignore);
+		foreach(TextureButton btn in textureButtons){
+			btn.Disabled = true;
+		}
 		GetTree().Paused = false;
 		animationPlayer.PlayBackwards("blur");
 		
 	}
 	public void pause(){
 		setTextureButtonMouseFilter(MouseFilterEnum.Stop);
+		foreach(TextureButton btn in textureButtons){
+			btn.Disabled = false;
+		}
 		GetTree().Paused = true;
 		animationPlayer.Play("blur");
 	}
