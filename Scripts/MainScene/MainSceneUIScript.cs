@@ -248,6 +248,12 @@ public partial class MainSceneUIScript : CanvasLayer
 		}
 	}
 
+	private void OnEnterKeySubmit() {
+		if (Input.IsActionJustPressed("EnterKey") && GuessInputField.Editable && !player.controllable) {
+			OnSubmitGuessButtonPress();
+		}
+	}
+
 	private void OnHowToButtonPressed(){
 		HowToOverlay.Visible = true;
 		GetTree().Paused = true;
@@ -260,5 +266,6 @@ public partial class MainSceneUIScript : CanvasLayer
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		OnEnterKeySubmit();
 	}
 }

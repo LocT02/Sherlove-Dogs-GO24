@@ -92,9 +92,7 @@ namespace GameManager
 				return actionResult;
 			}
 
-			UIScript.ChangeCamera();
-
-			return await sceneTransition.ReverseFadeInFast();
+			return Result.Success();
 		}
 
 		private void AddSceneTransitionToRoot()
@@ -150,18 +148,34 @@ namespace GameManager
 
 			if (changeToScenePath == "res://Scenes/MainScene/main_scene.tscn" && isMinigame) {
 				// Remove minigame 
-				return await PlayFadeTransition(async () => {
+				var result =  await PlayFadeTransition(async () => {
 					await Task.Run(() => miniGameNode?.QueueFree());
 					miniGameNode = null;
 					mainScene.SetGameUI();
 					return Result.Success();
 				}, true);
+				CameraAndFade();
+				return result;
 			} else if (changeToScenePath.Contains("Minigames")) {
 				// Add the new scene as a child to the current scene
-				return await PlayFadeTransition(() => Task.FromResult(LoadAndAddScene(changeToScenePath)));
+				var result = await PlayFadeTransition(() => Task.FromResult(LoadAndAddScene(changeToScenePath)));
+				CameraAndFade();
+				return result;
 			}
 
-			return await PlayFadeTransition(() => Task.FromResult(LoadAndSwitchScene(changeToScenePath)));
+			var mainSceneResult = await PlayFadeTransition(() => Task.FromResult(LoadAndSwitchScene(changeToScenePath)));
+			
+			if (mainSceneResult.IsSuccess) {
+				sceneTransition.ReverseFadeInFast();
+				return mainSceneResult;
+			}
+
+			return Result.Failure("SceneChanger Failed To Operate");
+		}
+
+		private void CameraAndFade() {
+			UIScript.ChangeCamera();
+			sceneTransition.ReverseFadeInFast();
 		}
 
 		public Result<char[]> GuessAttempt(string guess) {

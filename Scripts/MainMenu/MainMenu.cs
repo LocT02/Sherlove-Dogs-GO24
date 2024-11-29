@@ -16,8 +16,8 @@ public partial class MainMenu : Control
 	}
 
 	private void CheckLoad() {
-		var save = GameDataManager.JsonToDictionary("res://Globals/Data/categories.json");
-		if (save.Value != null || save.Value.Count > 0) {
+		var save = GameDataManager.JsonToDictionary(System.IO.Path.Join(ProjectSettings.GlobalizePath("user://"), "GameData.json"));
+		if (save.Value != null && save.Value.Values.Count > 0) {
 			ContinueButton.Disabled = false;
 			var color = ContinueButton.SelfModulate;
 			color.A = 255;

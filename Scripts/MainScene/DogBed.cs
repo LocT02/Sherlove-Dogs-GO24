@@ -26,6 +26,8 @@ public partial class DogBed : Area2D
 			inputBox.Editable = true;
 			player.controllable = false;
 			interactable = false;
+			inputBox.GrabFocus();
+			inputBox.GrabClickFocus();
 		}
 	}
 
