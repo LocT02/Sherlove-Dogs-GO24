@@ -60,9 +60,9 @@ namespace MainWordGameWIPNAME
 		// Gets a word to start game
 		public Result<Dictionary<string, string>> GetNewWord() {
 
-			string categoryFilePath = "Globals/Data/categories.json";
+			string categoryFilePath = "res://Globals/Data/categories.json";
 
-			if (!File.Exists(categoryFilePath)) {
+			if (!Godot.FileAccess.FileExists(categoryFilePath)) {
 				return Result.Failure<Dictionary<string, string>>($"Category Does Not Exist at: {categoryFilePath}");
 			}
 

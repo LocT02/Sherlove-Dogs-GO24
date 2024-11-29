@@ -121,7 +121,8 @@ namespace GameData {
 		private static Result<string> LoadDataFromFile(string filePath){
 			string data;
 			try{
-				data = File.ReadAllText(filePath);
+				using var file = Godot.FileAccess.Open(filePath, Godot.FileAccess.ModeFlags.Read);
+    			data = file.GetAsText();
 			}
 			catch (Exception e) {
 				return Result.Failure<string>(e.Message);
