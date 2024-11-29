@@ -1,4 +1,4 @@
-[gd_scene load_steps=145 format=3 uid="uid://bfker6m1dx5m5"]
+[gd_scene load_steps=146 format=3 uid="uid://bfker6m1dx5m5"]
 
 [ext_resource type="Script" path="res://Scripts/MainScene/MainScene.cs" id="1_2enir"]
 [ext_resource type="Script" path="res://Scripts/MainScene/MainSceneUIScript.cs" id="1_hlaxv"]
@@ -29,6 +29,7 @@
 [ext_resource type="Texture2D" uid="uid://dsap0jcp8p14y" path="res://Assets/Art/Sprites/Girl/Girl_Angry.PNG" id="22_qcoki"]
 [ext_resource type="Texture2D" uid="uid://cronlynmqq8oc" path="res://Assets/Art/Sprites/Girl/Girl_Happy.PNG" id="23_62rnv"]
 [ext_resource type="Texture2D" uid="uid://bqp1g7q77jvvq" path="res://Assets/Art/Sprites/Human_Talk/Girl_Talk_Sheet.PNG" id="24_r1oy3"]
+[ext_resource type="AudioStream" uid="uid://bhttnak8wp18q" path="res://Assets/Audio/BGM/Tuesday.wav" id="25_1yqvq"]
 [ext_resource type="Texture2D" uid="uid://dnqr721yxfob7" path="res://Assets/Art/UI/UI_ButtonV2.png" id="27_kkbn6"]
 [ext_resource type="Texture2D" uid="uid://cxcrfhuhw0p3b" path="res://Assets/Art/UI/UI_Button_Pressed.png" id="28_dfw3g"]
 [ext_resource type="Texture2D" uid="uid://8nw2lyib8nmv" path="res://Assets/Art/UI/UI_Button_Hover.png" id="29_gmykw"]
@@ -1257,6 +1258,11 @@ scale = Vector2(0.225, 0.225)
 sprite_frames = SubResource("SpriteFrames_1rvbf")
 animation = &"Talk"
 autoplay = "Talk"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("25_1yqvq")
+autoplay = true
 
 [connection signal="pressed" from="MainSceneUI/WordUI/SubmitGuessButton" to="MainSceneUI" method="OnSubmitGuessButtonPress"]
 [connection signal="pressed" from="MainSceneUI/ItemButtonContainer/ItemSlot1" to="MainSceneUI" method="OnItemSlot1ButtonPress"]

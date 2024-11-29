@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cgfqlnk0a5fw8"
+path="res://.godot/imported/Treat Caught.wav-696d89554f6173695cef6fe219a67d67.sample"
+
+[deps]
+
+source_file="res://Assets/Audio/SFX/Treat Caught.wav"
+dest_files=["res://.godot/imported/Treat Caught.wav-696d89554f6173695cef6fe219a67d67.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

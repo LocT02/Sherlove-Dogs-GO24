@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cmtu61pyvolat"]
+[gd_scene load_steps=9 format=3 uid="uid://cmtu61pyvolat"]
 
 [ext_resource type="Script" path="res://Scripts/MainMenu/MainMenu.cs" id="1_n3wff"]
 [ext_resource type="Texture2D" uid="uid://dnqr721yxfob7" path="res://Assets/Art/UI/UI_ButtonV2.png" id="2_s765v"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cfc664rm31l1d" path="res://Assets/Art/title.png" id="3_sotic"]
 [ext_resource type="Texture2D" uid="uid://cxcrfhuhw0p3b" path="res://Assets/Art/UI/UI_Button_Pressed.png" id="3_tbjlb"]
 [ext_resource type="Texture2D" uid="uid://8nw2lyib8nmv" path="res://Assets/Art/UI/UI_Button_Hover.png" id="4_5ctwv"]
+[ext_resource type="AudioStream" uid="uid://bhttnak8wp18q" path="res://Assets/Audio/BGM/Tuesday.wav" id="8_afsie"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -124,6 +125,11 @@ offset_top = -107.895
 offset_right = 1199.0
 offset_bottom = 916.105
 texture = ExtResource("3_sotic")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("8_afsie")
+autoplay = true
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Play" to="." method="OnPlayPressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Continue" to="." method="OnContinueSavePressed"]

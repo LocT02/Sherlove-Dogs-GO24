@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b65e31lxyv0ii"
+path="res://.godot/imported/Doggy Door.wav-f7f97d4781a34a82303ad5e063102a4a.sample"
+
+[deps]
+
+source_file="res://Assets/Audio/SFX/Doggy Door.wav"
+dest_files=["res://.godot/imported/Doggy Door.wav-f7f97d4781a34a82303ad5e063102a4a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
