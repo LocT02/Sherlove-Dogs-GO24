@@ -53,6 +53,7 @@ namespace MainWordGameWIPNAME
 			CurrentWord = "";
 			Category = "";
 			GuessedLetters.Clear();
+			letterCounts.Clear();
 			return Result.Success();
 		}
 

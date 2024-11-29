@@ -11,9 +11,6 @@ public partial class MainScene : Node2D
 	private LineEdit inputBox;
 	private TextureProgressBar healthUI;
 	private Label mainScoreUI;
-	private AnimatedSprite2D girlSprite;
-	private AnimatedSprite2D dogSprite;
-	private bool reaction_finished;
 	public override void _Ready()
 	{
 		// Transition effect here
@@ -22,9 +19,6 @@ public partial class MainScene : Node2D
 		gameInstance.setMainScene();
 		gameInstance.setUIScript();
 		LoadOrInitializeNewGame();
-
-		GD.Print($"Current HP: {gameInstance.gameData.Hp}");
-		GD.Print($"Current Score: {gameInstance.gameData.Score}");
 
 		var uiResult = SetGameUI();
 		if (uiResult.IsFailure) {
@@ -42,9 +36,6 @@ public partial class MainScene : Node2D
 		inputBox = GetNode<LineEdit>("%GuessInputField");
 		healthUI = GetNode<TextureProgressBar>("/root/MainSceneNode/MainSceneUI/HealthUI/HealthBar");
 		mainScoreUI = GetNode<Label>("/root/MainSceneNode/MainSceneUI/ScoreUI/ScoreBG/ScoreText");
-		girlSprite = GetNode<AnimatedSprite2D>("GirlAnimation");
-		girlSprite.Play("Talk");
-		dogSprite = GetNode<AnimatedSprite2D>("Player/AnimatedSprite2D");
 	}
 
 	private void LoadOrInitializeNewGame() {
@@ -69,7 +60,6 @@ public partial class MainScene : Node2D
 	private Result SetNewWord() {
 		var gameStartResult = gameInstance.StartGame();
 		if (gameStartResult.IsFailure) {
-			GD.Print(gameStartResult.Error);
 			return Result.Failure($"Unable To Start Game: {gameStartResult.Error}");
 		}
 		var uiResult = SetGameUI();
@@ -80,15 +70,13 @@ public partial class MainScene : Node2D
 	}
 
 	public Result SetGameUI() {
-		var category = UIScript.UpdateCategoryLabel($"Category: {gameInstance.mainWordGame.Category}");
-		string feedbackString = string.Join("  ", gameInstance.mainWordGame.CorrectLetters);
-		var feedback = UIScript.UpdateFeedbackLabel($"Feedback:  {feedbackString}");
+		var category = UIScript.UpdateCategoryLabel($"{gameInstance.mainWordGame.Category}");
+		var feedback = UIScript.UpdateFeedbackLabel(gameInstance.mainWordGame.CorrectLetters.ToArray());
 		var inputFieldContraints = UIScript.SetInputConstraints(gameInstance.mainWordGame.CurrentWord.Length);
-		Result attachItems = Result.Success();
 		UpdateHPUI(gameInstance.gameData.Hp);
 		UpdateScoreUI(gameInstance.gameData.Score);
 
-		attachItems = UIScript.AttachItemsToButtons();
+		var attachItems = UIScript.AttachItemsToButtons();
 		
 
 
@@ -99,22 +87,16 @@ public partial class MainScene : Node2D
 
 	public Result GuessSubmit(string guess) {
 		var guessResult = gameInstance.GuessAttempt(guess);
-		GD.Print($"Current HP: {gameInstance.gameData.Hp}");
 
 		if (guessResult.IsFailure) {
 			// Hp is 0
-			// Play effects here?
+
 			gameInstance.EndGame();
 			return Result.Success("Game Ending");
 		}
 
 		if (guessResult.Value == null) {
-			girlSprite.Play("Happy");
-			dogSprite.Play("HappyDog");
-			// Correct Guess
-			// Play effects here?
-			GD.Print($"Current Score: {gameInstance.gameData.Score}");
-
+			//Correct Guess
 
 			// Generate New Word and Apply
 			var newWordResult = SetNewWord();
@@ -125,11 +107,11 @@ public partial class MainScene : Node2D
 
 			return Result.Success();
 		}
-		girlSprite.Play("Angry");
-		dogSprite.Play("SadDog");
+
+		//Incorrect guess here
+
 		// set new feedback, clear inputfield.
-		string feedbackString = string.Join("  ", guessResult.Value);
-		var feedback = UIScript.UpdateFeedbackLabel($"Feedback:  {feedbackString}");
+		var feedback = UIScript.UpdateFeedbackLabel(guessResult.Value);
 
 		if (feedback.IsFailure) {
 			return feedback;
@@ -137,15 +119,7 @@ public partial class MainScene : Node2D
 
 		return Result.Success();
 	}
-	
-	private void OnGirlAnimationFinished() {
-		girlSprite.Play("Talk");
-	}
-	
-	private void OnDogAnimationFinished() {
-		dogSprite.Play("IdleRight");
-	}
-	
+
 	public void UpdateHPUI(int hp){
 		healthUI.Value = hp;
 	}

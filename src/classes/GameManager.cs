@@ -92,6 +92,8 @@ namespace GameManager
 				return actionResult;
 			}
 
+			UIScript.ChangeCamera();
+
 			return await sceneTransition.ReverseFadeInFast();
 		}
 
@@ -151,7 +153,6 @@ namespace GameManager
 				return await PlayFadeTransition(async () => {
 					await Task.Run(() => miniGameNode?.QueueFree());
 					miniGameNode = null;
-					UIScript.ChangeCamera();
 					mainScene.SetGameUI();
 					return Result.Success();
 				}, true);

@@ -122,7 +122,7 @@ namespace GameData {
 			string data;
 			try{
 				using var file = Godot.FileAccess.Open(filePath, Godot.FileAccess.ModeFlags.Read);
-    			data = file.GetAsText();
+				data = file.GetAsText();
 			}
 			catch (Exception e) {
 				return Result.Failure<string>(e.Message);
@@ -133,6 +133,7 @@ namespace GameData {
 		//String containing json content -> Dictionary (without item types)
 		public static Result<Dictionary> JsonToDictionary(string filePath) {
 			string content = LoadDataFromFile(filePath).Value;
+
 			Json jsonLoader = new();
 			Error loadError = jsonLoader.Parse(content);
 
