@@ -53,6 +53,7 @@ namespace MainWordGameWIPNAME
 			CurrentWord = "";
 			Category = "";
 			GuessedLetters.Clear();
+			letterCounts.Clear();
 			return Result.Success();
 		}
 
@@ -172,6 +173,12 @@ namespace MainWordGameWIPNAME
 			for (int i = 0; i < CorrectLetters.Count; i++) {
 				if (CorrectLetters[i] != '_') {
 					feedback[i] = CorrectLetters[i];   // Preserve correct letters from past guesses
+				}
+			}
+
+			for (int i = 0; i < feedback.Length; i++) {
+				if (feedback[i] == ' ') {
+					feedback[i] = '\n';
 				}
 			}
 

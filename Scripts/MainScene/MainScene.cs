@@ -74,15 +74,14 @@ public partial class MainScene : Node2D
 	}
 
 	public Result SetGameUI() {
-		var category = UIScript.UpdateCategoryLabel($"Category: {gameInstance.mainWordGame.Category}");
+		var category = UIScript.UpdateCategoryLabel($"{gameInstance.mainWordGame.Category}");
 		string feedbackString = string.Join("  ", gameInstance.mainWordGame.CorrectLetters);
-		var feedback = UIScript.UpdateFeedbackLabel($"Feedback:  {feedbackString}");
+		var feedback = UIScript.UpdateFeedbackLabel($"{feedbackString}");
 		var inputFieldContraints = UIScript.SetInputConstraints(gameInstance.mainWordGame.CurrentWord.Length);
-		Result attachItems = Result.Success();
 		UpdateHPUI(gameInstance.gameData.Hp);
 		UpdateScoreUI(gameInstance.gameData.Score);
 
-		attachItems = UIScript.AttachItemsToButtons();
+		var attachItems = UIScript.AttachItemsToButtons();
 		
 
 

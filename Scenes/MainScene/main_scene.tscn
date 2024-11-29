@@ -831,41 +831,6 @@ offset_bottom = -22.72
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="WordGameContainer" type="VBoxContainer" parent="MainSceneUI/WordUI"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-theme_override_constants/separation = 10
-
-[node name="CategoryLabel" type="Label" parent="MainSceneUI/WordUI/WordGameContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_5d4nt")
-theme_override_font_sizes/font_size = 36
-text = "Category: "
-
-[node name="FeedbackLabel" type="Label" parent="MainSceneUI/WordUI/WordGameContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_5d4nt")
-theme_override_font_sizes/font_size = 36
-text = "Feedback:"
-
-[node name="GuessInputField" type="LineEdit" parent="MainSceneUI/WordUI/WordGameContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_fonts/font = ExtResource("3_5d4nt")
-theme_override_font_sizes/font_size = 24
-placeholder_text = "Input Guess Here"
-expand_to_text_length = true
-
-[node name="SubmitGuessButton" type="Button" parent="MainSceneUI/WordUI/WordGameContainer"]
-custom_minimum_size = Vector2(50, 50)
-layout_mode = 2
-theme_override_fonts/font = ExtResource("3_5d4nt")
-theme_override_font_sizes/font_size = 24
-text = "Submit"
-
 [node name="Container" type="Control" parent="MainSceneUI/WordUI"]
 z_index = -1
 anchors_preset = 0
@@ -878,24 +843,85 @@ z_index = -2
 layout_mode = 2
 anchor_left = -2.625
 anchor_top = -1.575
-anchor_right = 18.75
+anchor_right = 22.425
 anchor_bottom = 9.495
-offset_right = 570.0
+offset_right = 668.0
 offset_bottom = 295.2
 scale = Vector2(0.6, 0.6)
 mouse_filter = 2
 texture = ExtResource("3_aokc3")
 
+[node name="CategoryLabel" type="Label" parent="MainSceneUI/WordUI"]
+layout_mode = 2
+anchor_left = 0.279
+anchor_top = -0.231
+anchor_right = 0.873
+anchor_bottom = -0.095
+offset_left = -8.71936
+offset_top = -4.90767
+offset_right = 8.07172
+offset_bottom = 10.9384
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_5d4nt")
+theme_override_font_sizes/font_size = 48
+text = "Category: "
+horizontal_alignment = 1
+
+[node name="FeedbackLabel" type="Label" parent="MainSceneUI/WordUI"]
+layout_mode = 2
+anchor_left = 0.001
+anchor_top = 0.02
+anchor_right = 1.129
+anchor_bottom = 0.447
+offset_left = 0.28416
+offset_top = 0.065599
+offset_right = -0.18335
+offset_bottom = 0.0161438
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_5d4nt")
+theme_override_font_sizes/font_size = 42
+text = "FeedBack Boxu"
+horizontal_alignment = 1
+
+[node name="GuessInputField" type="LineEdit" parent="MainSceneUI/WordUI"]
+unique_name_in_owner = true
+layout_mode = 2
+anchor_top = 0.476
+anchor_right = 0.909
+anchor_bottom = 0.643
+offset_top = -0.0387421
+offset_right = 0.301453
+offset_bottom = 0.059021
+theme_override_fonts/font = ExtResource("3_5d4nt")
+theme_override_font_sizes/font_size = 24
+placeholder_text = "Input Guess Here"
+
+[node name="SubmitGuessButton" type="Button" parent="MainSceneUI/WordUI"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+anchor_left = 0.95
+anchor_top = 0.464
+anchor_right = 1.136
+anchor_bottom = 0.652
+offset_left = -0.0479736
+offset_top = 0.121902
+offset_right = -0.194214
+offset_bottom = -0.0614624
+theme_override_fonts/font = ExtResource("3_5d4nt")
+theme_override_font_sizes/font_size = 24
+text = "Guess
+"
+
 [node name="ItemButtonContainer" type="Control" parent="MainSceneUI"]
 layout_mode = 3
-anchor_left = 0.241
-anchor_top = 0.5
-anchor_right = 0.407
-anchor_bottom = 0.587
-offset_left = 949.205
-offset_top = 177.485
-offset_right = 1107.48
-offset_bottom = 438.525
+anchor_left = 0.735
+anchor_top = 0.664
+anchor_right = 1.036
+anchor_bottom = 1.062
+offset_left = 0.724976
+offset_top = 0.364929
+offset_right = -100.2
+offset_bottom = -74.4751
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(1.21, 1.21)
@@ -1184,6 +1210,7 @@ mouse_filter = 2
 texture = ExtResource("16_7pvd7")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("17_biuep")]
 z_as_relative = false
@@ -1215,7 +1242,7 @@ sprite_frames = SubResource("SpriteFrames_1rvbf")
 animation = &"Talk"
 autoplay = "Talk"
 
-[connection signal="pressed" from="MainSceneUI/WordUI/WordGameContainer/SubmitGuessButton" to="MainSceneUI" method="OnSubmitGuessButtonPress"]
+[connection signal="pressed" from="MainSceneUI/WordUI/SubmitGuessButton" to="MainSceneUI" method="OnSubmitGuessButtonPress"]
 [connection signal="pressed" from="MainSceneUI/ItemButtonContainer/ItemSlot1" to="MainSceneUI" method="OnItemSlot1ButtonPress"]
 [connection signal="pressed" from="MainSceneUI/ItemButtonContainer/ItemSlot2" to="MainSceneUI" method="OnItemSlot2ButtonPress"]
 [connection signal="pressed" from="MainSceneUI/ItemButtonContainer/ItemSlot3" to="MainSceneUI" method="OnItemSlot3ButtonPress"]

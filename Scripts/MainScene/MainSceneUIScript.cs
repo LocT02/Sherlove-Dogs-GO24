@@ -37,11 +37,11 @@ public partial class MainSceneUIScript : CanvasLayer
 	private void InitializeUI() {
 		gameInstance = GameManager.GameManager.Instance;
 		MainScene = GetTree().Root.GetNode<Node2D>("MainSceneNode") as MainScene;
-		CategoryLabel = GetNode<Label>("WordUI/WordGameContainer/CategoryLabel");
-		FeedbackLabel = GetNode<Label>("WordUI/WordGameContainer/FeedbackLabel");
-		GuessInputField = GetNode<LineEdit>("WordUI/WordGameContainer/GuessInputField");
+		CategoryLabel = GetNode<Label>("WordUI/CategoryLabel");
+		FeedbackLabel = GetNode<Label>("WordUI/FeedbackLabel");
+		GuessInputField = GetNode<LineEdit>("WordUI/GuessInputField");
 		GuessInputField.Editable = false;
-		SubmitGuessButton = GetNode<Button>("WordUI/WordGameContainer/SubmitGuessButton");
+		SubmitGuessButton = GetNode<Button>("WordUI/SubmitGuessButton");
 		ItemSlot1 = GetNode<Button>("ItemButtonContainer/ItemSlot1") as ItemButton;
 		ItemSlot2 = GetNode<Button>("ItemButtonContainer/ItemSlot2") as ItemButton;
 		ItemSlot3 = GetNode<Button>("ItemButtonContainer/ItemSlot3") as ItemButton;
@@ -50,7 +50,6 @@ public partial class MainSceneUIScript : CanvasLayer
 		player = GetNode<PlayerMovement>("/root/MainSceneNode/Player");
 		dogBed = GetNode<DogBed>("/root/MainSceneNode/GamePlay/DogBed");
 		HowToOverlay = GetNode<CanvasLayer>("HowToUI/HowToOverlay");
-		HowToOverlay.Visible = false;
 
 		List<ItemButton> buttonList = new List<ItemButton>{ ItemSlot1, ItemSlot2, ItemSlot3 };
 		foreach (ItemButton button in buttonList) {
