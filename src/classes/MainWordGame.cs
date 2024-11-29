@@ -176,12 +176,6 @@ namespace MainWordGameWIPNAME
 				}
 			}
 
-			for (int i = 0; i < feedback.Length; i++) {
-				if (feedback[i] == ' ') {
-					feedback[i] = '\n';
-				}
-			}
-
 			return Result.Success(feedback);
 		}
 

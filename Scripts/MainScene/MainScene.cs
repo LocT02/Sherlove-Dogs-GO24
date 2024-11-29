@@ -75,8 +75,7 @@ public partial class MainScene : Node2D
 
 	public Result SetGameUI() {
 		var category = UIScript.UpdateCategoryLabel($"{gameInstance.mainWordGame.Category}");
-		string feedbackString = string.Join("  ", gameInstance.mainWordGame.CorrectLetters);
-		var feedback = UIScript.UpdateFeedbackLabel($"{feedbackString}");
+		var feedback = UIScript.UpdateFeedbackLabel(gameInstance.mainWordGame.CorrectLetters.ToArray());
 		var inputFieldContraints = UIScript.SetInputConstraints(gameInstance.mainWordGame.CurrentWord.Length);
 		UpdateHPUI(gameInstance.gameData.Hp);
 		UpdateScoreUI(gameInstance.gameData.Score);
@@ -116,8 +115,7 @@ public partial class MainScene : Node2D
 		//Incorrect guess here
 
 		// set new feedback, clear inputfield.
-		string feedbackString = string.Join("  ", guessResult.Value);
-		var feedback = UIScript.UpdateFeedbackLabel($"{feedbackString}");
+		var feedback = UIScript.UpdateFeedbackLabel(guessResult.Value);
 
 		if (feedback.IsFailure) {
 			return feedback;

@@ -880,7 +880,6 @@ offset_bottom = 0.0161438
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_5d4nt")
 theme_override_font_sizes/font_size = 42
-text = "FeedBack Boxu"
 horizontal_alignment = 1
 
 [node name="GuessInputField" type="LineEdit" parent="MainSceneUI/WordUI"]
@@ -911,6 +910,20 @@ theme_override_fonts/font = ExtResource("3_5d4nt")
 theme_override_font_sizes/font_size = 24
 text = "Guess
 "
+
+[node name="FeedbackLabel2" type="RichTextLabel" parent="MainSceneUI/WordUI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.129
+anchor_bottom = 0.424
+offset_right = -0.18335
+offset_bottom = -0.00930786
+theme_override_fonts/normal_font = ExtResource("3_5d4nt")
+theme_override_fonts/bold_font = ExtResource("3_5d4nt")
+theme_override_font_sizes/normal_font_size = 44
+theme_override_font_sizes/bold_font_size = 44
+bbcode_enabled = true
+text = "Test\\n"
 
 [node name="ItemButtonContainer" type="Control" parent="MainSceneUI"]
 layout_mode = 3

@@ -11,7 +11,7 @@ using ResultManager;
 public partial class MainSceneUIScript : CanvasLayer
 {
 	private Label CategoryLabel;
-	private Label FeedbackLabel;
+	private RichTextLabel FeedbackLabel;
 	private LineEdit GuessInputField;
 	private Button SubmitGuessButton;
 	private ItemButton ItemSlot1;
@@ -38,7 +38,7 @@ public partial class MainSceneUIScript : CanvasLayer
 		gameInstance = GameManager.GameManager.Instance;
 		MainScene = GetTree().Root.GetNode<Node2D>("MainSceneNode") as MainScene;
 		CategoryLabel = GetNode<Label>("WordUI/CategoryLabel");
-		FeedbackLabel = GetNode<Label>("WordUI/FeedbackLabel");
+		FeedbackLabel = GetNode<RichTextLabel>("WordUI/FeedbackLabel2");
 		GuessInputField = GetNode<LineEdit>("WordUI/GuessInputField");
 		GuessInputField.Editable = false;
 		SubmitGuessButton = GetNode<Button>("WordUI/SubmitGuessButton");
@@ -66,11 +66,14 @@ public partial class MainSceneUIScript : CanvasLayer
 		return Result.Success();
 	}
 
-	public Result UpdateFeedbackLabel(string feedback) {
+	public Result UpdateFeedbackLabel(char[] feedback) {
 		if (feedback == null) {
-			return Result.Failure("Input Feedback String is Null");
+			return Result.Failure("Input Feedback is Null");
 		}
-		FeedbackLabel.Text = feedback;
+		string spacedLetters = string.Join(" ", feedback);
+		string newLined = spacedLetters.Replace("   ", "\n");
+		GD.Print(newLined);
+		FeedbackLabel.Text = $"[center][color=black]{newLined}[/color][/center]";
 		return Result.Success();
 	}
 

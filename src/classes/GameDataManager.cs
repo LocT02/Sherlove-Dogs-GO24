@@ -132,6 +132,7 @@ namespace GameData {
 		//String containing json content -> Dictionary (without item types)
 		public static Result<Dictionary> JsonToDictionary(string filePath) {
 			string content = LoadDataFromFile(filePath).Value;
+
 			Json jsonLoader = new();
 			Error loadError = jsonLoader.Parse(content);
 
