@@ -53,7 +53,9 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Continue" type="TextureButton" parent="MarginContainer/VBoxContainer"]
+self_modulate = Color(1, 1, 1, 0.517647)
 layout_mode = 2
+disabled = true
 texture_normal = ExtResource("2_s765v")
 texture_pressed = ExtResource("2_s765v")
 texture_hover = ExtResource("2_s765v")

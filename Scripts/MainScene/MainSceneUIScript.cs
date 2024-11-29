@@ -38,7 +38,7 @@ public partial class MainSceneUIScript : CanvasLayer
 		gameInstance = GameManager.GameManager.Instance;
 		MainScene = GetTree().Root.GetNode<Node2D>("MainSceneNode") as MainScene;
 		CategoryLabel = GetNode<Label>("WordUI/CategoryLabel");
-		FeedbackLabel = GetNode<RichTextLabel>("WordUI/FeedbackLabel2");
+		FeedbackLabel = GetNode<RichTextLabel>("WordUI/FeedbackLabel");
 		GuessInputField = GetNode<LineEdit>("WordUI/GuessInputField");
 		GuessInputField.Editable = false;
 		SubmitGuessButton = GetNode<Button>("WordUI/SubmitGuessButton");
@@ -72,7 +72,6 @@ public partial class MainSceneUIScript : CanvasLayer
 		}
 		string spacedLetters = string.Join(" ", feedback);
 		string newLined = spacedLetters.Replace("   ", "\n");
-		GD.Print(newLined);
 		FeedbackLabel.Text = $"[center][color=black]{newLined}[/color][/center]";
 		return Result.Success();
 	}

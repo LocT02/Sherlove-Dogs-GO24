@@ -20,9 +20,6 @@ public partial class MainScene : Node2D
 		gameInstance.setUIScript();
 		LoadOrInitializeNewGame();
 
-		GD.Print($"Current HP: {gameInstance.gameData.Hp}");
-		GD.Print($"Current Score: {gameInstance.gameData.Score}");
-
 		var uiResult = SetGameUI();
 		if (uiResult.IsFailure) {
 			throw new InvalidProgramException(uiResult.Error);
@@ -63,7 +60,6 @@ public partial class MainScene : Node2D
 	private Result SetNewWord() {
 		var gameStartResult = gameInstance.StartGame();
 		if (gameStartResult.IsFailure) {
-			GD.Print(gameStartResult.Error);
 			return Result.Failure($"Unable To Start Game: {gameStartResult.Error}");
 		}
 		var uiResult = SetGameUI();

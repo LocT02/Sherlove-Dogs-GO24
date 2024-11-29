@@ -122,7 +122,7 @@ namespace GameData {
 			string data;
 			try{
 				using var file = Godot.FileAccess.Open(filePath, Godot.FileAccess.ModeFlags.Read);
-    			data = file.GetAsText();
+				data = file.GetAsText();
 			}
 			catch (Exception e) {
 				return Result.Failure<string>(e.Message);
