@@ -21,7 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://bdjhqlorv4ml2" path="res://Assets/Art/Items/Bark of Love 1.svg" id="11_kujxi"]
 [ext_resource type="Script" path="res://Scripts/Player/MainScenePlayer.cs" id="11_ucks7"]
 [ext_resource type="Texture2D" uid="uid://b6wae3jglylgl" path="res://Assets/Art/Items/Bark of Love 2.svg" id="12_k315p"]
-[ext_resource type="Texture2D" uid="uid://bn87u3v4a6rb3" path="res://Assets/Art/UI/Main game.png" id="13_lxo10"]
+[ext_resource type="Texture2D" uid="uid://dhurxj63h30gi" path="res://Assets/Art/UI/Main_game.png" id="13_qu0bw"]
 [ext_resource type="Texture2D" uid="uid://cmdlxs5is1uha" path="res://Assets/Art/Backgrounds/LivingRoom/Interior Back.png" id="16_7pvd7"]
 [ext_resource type="Texture2D" uid="uid://c7bt8rbmeysw8" path="res://Assets/Art/Sprites/DogHappy/HappyDog.png" id="16_ycf5r"]
 [ext_resource type="PackedScene" uid="uid://2e1vuoc8xhgy" path="res://Scenes/PauseMenu/PauseMenu.tscn" id="17_biuep"]
@@ -1054,9 +1054,9 @@ vertical_alignment = 1
 
 [node name="HowToOverlay" type="CanvasLayer" parent="MainSceneUI/HowToUI"]
 process_mode = 2
+visible = false
 
 [node name="HowToPage" type="TextureRect" parent="MainSceneUI/HowToUI/HowToOverlay"]
-visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -1068,7 +1068,7 @@ offset_right = 450.0
 offset_bottom = 450.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("13_lxo10")
+texture = ExtResource("13_qu0bw")
 
 [node name="X_Btn" type="TextureButton" parent="MainSceneUI/HowToUI/HowToOverlay/HowToPage"]
 layout_mode = 1
