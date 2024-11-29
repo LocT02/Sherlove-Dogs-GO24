@@ -1054,6 +1054,7 @@ vertical_alignment = 1
 
 [node name="HowToOverlay" type="CanvasLayer" parent="MainSceneUI/HowToUI"]
 process_mode = 2
+visible = false
 
 [node name="HowToPage" type="TextureRect" parent="MainSceneUI/HowToUI/HowToOverlay"]
 anchors_preset = 8
