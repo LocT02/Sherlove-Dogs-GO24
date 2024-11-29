@@ -50,12 +50,11 @@ namespace SceneTransitionManager {
 		return Result.Success();
 		}
 
-		public async Task<Result> ReverseFadeInFast() {
+		public Result ReverseFadeInFast() {
 			if (AnimationPlayer == null) {
 				return Result.Failure("AnimationPlayer null");
 			}
 			AnimationPlayer.PlayBackwards("FadeInFast");
-			await ToSignal(AnimationPlayer, "animation_finished");
 			return Result.Success();
 		}
 	}

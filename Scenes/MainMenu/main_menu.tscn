@@ -20,9 +20,9 @@ layout_mode = 1
 anchors_preset = -1
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 550.0
+offset_left = 825.0
 offset_top = -580.0
-offset_right = 1606.0
+offset_right = 1150.0
 offset_bottom = 99.0
 grow_vertical = 0
 scale = Vector2(0.8, 0.8)
@@ -40,9 +40,9 @@ stretch_mode = 5
 
 [node name="PlayText" type="Label" parent="MarginContainer/VBoxContainer/Play"]
 layout_mode = 0
-offset_left = 458.0
+offset_left = 100.0
 offset_top = 65.045
-offset_right = 595.0
+offset_right = 237.0
 offset_bottom = 145.045
 theme_override_colors/font_color = Color(0.615686, 0.505882, 0.537255, 1)
 theme_override_fonts/font = ExtResource("3_05el6")
@@ -53,7 +53,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Continue" type="TextureButton" parent="MarginContainer/VBoxContainer"]
-self_modulate = Color(1, 1, 1, 0.517647)
+self_modulate = Color(1, 1, 1, 0.388235)
 layout_mode = 2
 disabled = true
 texture_normal = ExtResource("2_s765v")
@@ -63,9 +63,9 @@ stretch_mode = 5
 
 [node name="ContinueText" type="Label" parent="MarginContainer/VBoxContainer/Continue"]
 layout_mode = 0
-offset_left = 387.39
+offset_left = 25.0
 offset_top = 59.785
-offset_right = 665.39
+offset_right = 303.0
 offset_bottom = 139.785
 theme_override_colors/font_color = Color(0.615686, 0.505882, 0.537255, 1)
 theme_override_fonts/font = ExtResource("3_05el6")
@@ -84,9 +84,9 @@ stretch_mode = 5
 
 [node name="QuitText" type="Label" parent="MarginContainer/VBoxContainer/Quit"]
 layout_mode = 0
-offset_left = 460.0
+offset_left = 100.0
 offset_top = 64.69
-offset_right = 594.0
+offset_right = 234.0
 offset_bottom = 144.69
 theme_override_colors/font_color = Color(0.615686, 0.505882, 0.537255, 1)
 theme_override_fonts/font = ExtResource("3_05el6")

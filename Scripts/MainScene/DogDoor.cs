@@ -57,8 +57,7 @@ public partial class DogDoor : Area2D
 			gameManager.scenePaths["MEMORY_SCENE"],
 			gameManager.scenePaths["CATCH_THE_BONE_SCENE"]
 		};
-
-		UIScript.ChangeCamera();
+		
 		await gameManager.SceneChanger(minigamePaths[random.Next(0,minigamePaths.Length)]);
 	}
 }
