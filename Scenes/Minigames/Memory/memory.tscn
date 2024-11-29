@@ -467,6 +467,7 @@ texture_pressed = ExtResource("12_e0yhr")
 texture_hover = ExtResource("9_vay1n")
 
 [node name="X_Text" type="Label" parent="Memory/HowToUI/HowToOverlay/HowToPage/X_Btn"]
+layout_mode = 0
 offset_left = 30.37
 offset_top = 23.66
 offset_right = 70.37
