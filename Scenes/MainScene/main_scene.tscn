@@ -1,4 +1,4 @@
-[gd_scene load_steps=142 format=3 uid="uid://bfker6m1dx5m5"]
+[gd_scene load_steps=145 format=3 uid="uid://bfker6m1dx5m5"]
 
 [ext_resource type="Script" path="res://Scripts/MainScene/MainScene.cs" id="1_2enir"]
 [ext_resource type="Script" path="res://Scripts/MainScene/MainSceneUIScript.cs" id="1_hlaxv"]
@@ -29,6 +29,9 @@
 [ext_resource type="Texture2D" uid="uid://dsap0jcp8p14y" path="res://Assets/Art/Sprites/Girl/Girl_Angry.PNG" id="22_qcoki"]
 [ext_resource type="Texture2D" uid="uid://cronlynmqq8oc" path="res://Assets/Art/Sprites/Girl/Girl_Happy.PNG" id="23_62rnv"]
 [ext_resource type="Texture2D" uid="uid://bqp1g7q77jvvq" path="res://Assets/Art/Sprites/Human_Talk/Girl_Talk_Sheet.PNG" id="24_r1oy3"]
+[ext_resource type="Texture2D" uid="uid://dnqr721yxfob7" path="res://Assets/Art/UI/UI_ButtonV2.png" id="27_kkbn6"]
+[ext_resource type="Texture2D" uid="uid://cxcrfhuhw0p3b" path="res://Assets/Art/UI/UI_Button_Pressed.png" id="28_dfw3g"]
+[ext_resource type="Texture2D" uid="uid://8nw2lyib8nmv" path="res://Assets/Art/UI/UI_Button_Hover.png" id="29_gmykw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p3obv"]
 size = Vector2(217.889, 128)
@@ -1224,11 +1227,26 @@ mouse_filter = 2
 [node name="VBoxContainer" parent="CanvasLayer/PauseMenu/PanelContainer" index="0"]
 mouse_filter = 2
 
+[node name="Resume" parent="CanvasLayer/PauseMenu/PanelContainer/VBoxContainer/Control" index="0"]
+texture_normal = ExtResource("27_kkbn6")
+texture_pressed = ExtResource("28_dfw3g")
+texture_hover = ExtResource("29_gmykw")
+
 [node name="Label" parent="CanvasLayer/PauseMenu/PanelContainer/VBoxContainer/Control/Resume" index="0"]
 theme_override_colors/font_color = Color(0.615686, 0.505882, 0.537255, 1)
 
+[node name="Save" parent="CanvasLayer/PauseMenu/PanelContainer/VBoxContainer/Control2" index="0"]
+texture_normal = ExtResource("27_kkbn6")
+texture_pressed = ExtResource("28_dfw3g")
+texture_hover = ExtResource("29_gmykw")
+
 [node name="Label" parent="CanvasLayer/PauseMenu/PanelContainer/VBoxContainer/Control2/Save" index="0"]
 theme_override_colors/font_color = Color(0.615686, 0.505882, 0.537255, 1)
+
+[node name="Back" parent="CanvasLayer/PauseMenu/PanelContainer/VBoxContainer/Control3" index="0"]
+texture_normal = ExtResource("27_kkbn6")
+texture_pressed = ExtResource("28_dfw3g")
+texture_hover = ExtResource("29_gmykw")
 
 [node name="Label" parent="CanvasLayer/PauseMenu/PanelContainer/VBoxContainer/Control3/Back" index="0"]
 theme_override_colors/font_color = Color(0.615686, 0.505882, 0.537255, 1)
