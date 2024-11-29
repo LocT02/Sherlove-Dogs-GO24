@@ -13,7 +13,7 @@ public partial class CatchTheBone : Node2D
 	private Timer gameDurationTimer;
 	private const int GAME_TIME = 60; //in seconds
 	private const int WIN_SCORE = 1000; // threshold to get normal item
-	private const int UPGRADED_WIN_SCORE = 1200; //threshold to get upgraded item
+	private const int UPGRADED_WIN_SCORE = 1500; //threshold to get upgraded item
 	private bool isUpgradeable;
 	private int ItemTextureValue;
 	//Bone Parameters
