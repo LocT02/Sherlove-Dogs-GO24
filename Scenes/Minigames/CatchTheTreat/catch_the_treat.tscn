@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://di6hpqd5gyxkj" path="res://Assets/Art/UI/Timer.PNG" id="10_1a65j"]
 [ext_resource type="Texture2D" uid="uid://nuk3g6qu0gqk" path="res://Assets/Art/Items/Bone for Two 2.svg" id="11_t74qj"]
 [ext_resource type="Script" path="res://Scripts/Utilities/HowToUi.cs" id="12_bu23g"]
-[ext_resource type="Texture2D" uid="uid://mwhjwlryyv0p" path="res://Assets/Art/UI/Catch the Treat.png" id="13_6r15b"]
+[ext_resource type="Texture2D" uid="uid://cwc0qjekrkkyw" path="res://Assets/Art/UI/Catch_the_Treat.png" id="13_2bjhu"]
 [ext_resource type="Texture2D" uid="uid://bdjhqlorv4ml2" path="res://Assets/Art/Items/Bark of Love 1.svg" id="14_j7v7n"]
 [ext_resource type="Texture2D" uid="uid://b6wae3jglylgl" path="res://Assets/Art/Items/Bark of Love 2.svg" id="15_30hdb"]
 
@@ -646,7 +646,7 @@ offset_right = 450.0
 offset_bottom = 450.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("13_6r15b")
+texture = ExtResource("13_2bjhu")
 
 [node name="X_Btn" type="TextureButton" parent="HowToUI/HowToOverlay/HowToPage"]
 layout_mode = 1

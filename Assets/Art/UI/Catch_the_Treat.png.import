@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://mwhjwlryyv0p"
-path="res://.godot/imported/Catch the Treat.png-d7dcd12a4fb2497c554ddada34f5c226.ctex"
+uid="uid://cwc0qjekrkkyw"
+path="res://.godot/imported/Catch_the_Treat.png-4d3a5edd190c5efe024d1903755807d1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/UI/Catch the Treat.png"
-dest_files=["res://.godot/imported/Catch the Treat.png-d7dcd12a4fb2497c554ddada34f5c226.ctex"]
+source_file="res://Assets/Art/UI/Catch_the_Treat.png"
+dest_files=["res://.godot/imported/Catch_the_Treat.png-4d3a5edd190c5efe024d1903755807d1.ctex"]
 
 [params]
 
