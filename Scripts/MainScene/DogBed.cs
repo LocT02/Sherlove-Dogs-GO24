@@ -5,7 +5,7 @@ using  GameManager;
 public partial class DogBed : Area2D
 {
 	// Called when the node enters the scene tree for the first time.
-
+	private GameManager.GameManager gameManager;
 	private bool showInteractionLabel = false;
 	private Label dobBedLabel;
 	private LineEdit inputBox;
@@ -15,6 +15,7 @@ public partial class DogBed : Area2D
 	{
 		dobBedLabel = GetNode<Label>("Label");
 		inputBox = GetNode<LineEdit>("%GuessInputField");
+		gameManager = GameManager.GameManager.Instance;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -22,6 +23,7 @@ public partial class DogBed : Area2D
 	{
 		dobBedLabel.Visible = showInteractionLabel;
 		if(showInteractionLabel && Input.IsActionJustPressed("Interact") && interactable){
+			gameManager.PlaySFX("MainSceneNode", gameManager.sfxPaths["BUTTON_CLICKED"]);
 			GD.Print("interacted with dog bed");
 			inputBox.Editable = true;
 			player.controllable = false;

@@ -76,10 +76,12 @@ public partial class CatchTheBone : Node2D
 		var score = player.GetScore();
 		if(score < WIN_SCORE * 0.75){
 			winLoseLabel.Text = $"[center][color=red]YOU LOST[/color][/center]";
+			gameManagerInstance.PlaySFX("MainSceneNode", gameManagerInstance.sfxPaths["MINIGAME_LOSS"]); // Play SFX when Minigame Loss
 			await gameManagerInstance.SceneChanger(gameManagerInstance.scenePaths["MAIN_SCENE"]);
 			return;
 		}
 		winLoseLabel.Text = $"[center][color=green]YOU WON[/color][/center]";
+		gameManagerInstance.PlaySFX("MainSceneNode", gameManagerInstance.sfxPaths["MINIGAME_WIN"]); // Play SFX when Minigame Won
 
 		//Check if score reaches threshold to get normal item, but less than upgraded threshold.
 		if(score >= WIN_SCORE && score < UPGRADED_WIN_SCORE){

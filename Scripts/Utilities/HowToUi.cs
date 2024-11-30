@@ -15,6 +15,7 @@ public partial class HowToUi : Control
 	}
 
 	private void OnHowToExitButtonPressed(){
+		gameManagerInstance.PlaySFX("MainSceneNode", gameManagerInstance.sfxPaths["BUTTON_CLICKED"]);
 		HowToOverlay.Visible = false;
 		gameManagerInstance.allowMinigameStart = true;
 	}

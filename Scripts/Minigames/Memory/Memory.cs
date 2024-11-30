@@ -129,34 +129,40 @@ public partial class Memory : Control
 			{
 				progressBarText.Clear();
 				if(CheckPlayerInput()){
+					gameManagerInstance.PlaySFX("MainSceneNode", gameManagerInstance.sfxPaths["MEMORY_CORRECT"]); //SFX for round won
 					topText.Text = "Good job! You got it right!";
 					NextLevel(true);
 				}
 				else{
+					gameManagerInstance.PlaySFX("MainSceneNode", gameManagerInstance.sfxPaths["MEMORY_INCORRECT"]); //SFX for round lost
 					topText.Text = "Uh oh, try again!";
 					NextLevel(false);
 				}
 			}
 			if (Input.IsActionJustPressed("ui_left"))
 			{
+				gameManagerInstance.PlaySFX("MainSceneNode", gameManagerInstance.sfxPaths["BUTTON_CLICKED"]); //SFX for input
 				playerInput.Add(ArrowKey.Left);
 				dog.Play("Left");
 				playerInputString += "←";
 			}
 			else if (Input.IsActionJustPressed("ui_right"))
 			{
+				gameManagerInstance.PlaySFX("MainSceneNode", gameManagerInstance.sfxPaths["BUTTON_CLICKED"]); //SFX for input
 				playerInput.Add(ArrowKey.Right);
 				dog.Play("Right");
 				playerInputString += "→";
 			}
 			else if (Input.IsActionJustPressed("ui_up"))
 			{
+				gameManagerInstance.PlaySFX("MainSceneNode", gameManagerInstance.sfxPaths["BUTTON_CLICKED"]); //SFX for input
 				playerInput.Add(ArrowKey.Up);
 				dog.Play("Up");
 				playerInputString += "↑";
 			}
 			else if (Input.IsActionJustPressed("ui_down"))
 			{
+				gameManagerInstance.PlaySFX("MainSceneNode", gameManagerInstance.sfxPaths["BUTTON_CLICKED"]); //SFX for input
 				playerInput.Add(ArrowKey.Down);
 				dog.Play("Down");
 				playerInputString += "↓";
@@ -254,12 +260,13 @@ public partial class Memory : Control
 		}
 	}
 	private async void GameOver(){
-		//game over screen ?
+		gameManagerInstance.PlaySFX("MainSceneNode", gameManagerInstance.sfxPaths["MINIGAME_LOSS"]);
 		//scene switch
 		await gameManagerInstance.SceneChanger(gameManagerInstance.scenePaths["MAIN_SCENE"]);
 	}
 	
 	private async void GameWin(bool upgraded){
+		gameManagerInstance.PlaySFX("MainSceneNode", gameManagerInstance.sfxPaths["MINIGAME_WIN"]);
 		if(!upgraded){
 			ItemTextureValue = 0;
 		} else{

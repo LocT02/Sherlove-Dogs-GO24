@@ -9,6 +9,7 @@ using SceneTransitionManager;
 using System.Collections.Generic;
 using System.Numerics;
 using GodotPlugins.Game;
+using System.IO;
 
 namespace GameManager
 {
@@ -26,6 +27,17 @@ namespace GameManager
 			{"GAME_OVER", "res://Scenes/GameOver/game_over.tscn"},
 			{"MAIN_MENU", "res://Scenes/MainMenu/main_menu.tscn"}
 		};
+		public readonly Dictionary<string, string> sfxPaths = new Dictionary<string, string> {
+			{"BUTTON_CLICKED", "res://Assets/Audio/SFX/Button Clicked.wav"},
+			{"DOGGY_DOOR", "res://Assets/Audio/SFX/Doggy Door.wav"},
+			{"HAPPY_DOG", "res://Assets/Audio/SFX/Happy Dog.wav"},
+			{"MEMORY_CORRECT", "res://Assets/Audio/SFX/Memory Correct.wav"},
+			{"MEMORY_INCORRECT", "res://Assets/Audio/SFX/Memory Incorrect.wav"},
+			{"MINIGAME_LOSS", "res://Assets/Audio/SFX/Minigame Loss.wav"},
+			{"TOMATO_CAUGHT", "res://Assets/Audio/SFX/Tomato Caught.wav"},
+			{"TREAT_CAUGHT", "res://Assets/Audio/SFX/Treat Caught.wav"},
+			{"MINIGAME_WIN", "res://Assets/Audio/SFX/Win.wav"}
+		};
 
 		private SceneTransition sceneTransition;
 		private MainSceneUIScript UIScript;
@@ -34,6 +46,7 @@ namespace GameManager
 		public string GameState { get; set; } = "newgame";
 		public bool allowMinigameEntry { get; set; } = true;
 		public bool allowMinigameStart { get; set; } = false;
+		private AudioStreamPlayer AudioPlayer;
 
 		public override void _Ready()
 		{
@@ -207,7 +220,6 @@ namespace GameManager
 		public Result EndGame() {
 			// called from Main Game Scene
 			LoadAndSwitchScene("res://Scenes/GameOver/game_over.tscn");
-			
 			return Result.Success();
 		}
 
@@ -216,6 +228,10 @@ namespace GameManager
 			return Result.Success();
 		}
 
-
+		public void PlaySFX(string sceneRoot, string soundPath){
+			AudioPlayer = GetNode<AudioStreamPlayer>($"/root/{sceneRoot}/SFXPlayer");
+			AudioPlayer.Stream = GD.Load<AudioStream>(soundPath);
+			AudioPlayer.Play();
+		}
 	}
 }

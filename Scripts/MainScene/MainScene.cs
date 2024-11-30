@@ -90,14 +90,13 @@ public partial class MainScene : Node2D
 
 		if (guessResult.IsFailure) {
 			// Hp is 0
-
 			gameInstance.EndGame();
 			return Result.Success("Game Ending");
 		}
 
 		if (guessResult.Value == null) {
 			//Correct Guess
-
+			gameInstance.PlaySFX("MainSceneNode", gameInstance.sfxPaths["HAPPY_DOG"]); // Play SFX for correct guess
 			// Generate New Word and Apply
 			var newWordResult = SetNewWord();
 

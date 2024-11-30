@@ -31,6 +31,7 @@ public partial class DogDoor : Area2D
 	{
 		dogDoorLabel.Visible = showInteractionLabel;
 		if(showInteractionLabel && Input.IsActionJustPressed("Interact") && gameManager.allowMinigameEntry){
+			gameManager.PlaySFX("MainSceneNode", gameManager.sfxPaths["DOGGY_DOOR"]);
 			GD.Print("interacted with dog door");
 			randomMinigame();
 		}

@@ -33,19 +33,17 @@ public partial class MainMenu : Control
 	{
 		// Put this initializing gamemanager somewhere above like _ready or something
 		GD.Print("play pressed");
-		await gameInstance.SceneChanger("res://Scenes/MainScene/main_scene.tscn");
-	}
-	public async void OnSettingsPressed()
-	{
-		gameInstance.GameState = "continue";
+		gameInstance.PlaySFX("MainMenu", gameInstance.sfxPaths["BUTTON_CLICKED"]);
 		await gameInstance.SceneChanger("res://Scenes/MainScene/main_scene.tscn");
 	}
 	public async void OnContinueSavePressed() {
 		gameInstance.GameState = "continue";
+		gameInstance.PlaySFX("MainMenu", gameInstance.sfxPaths["BUTTON_CLICKED"]);
 		await gameInstance.SceneChanger("res://Scenes/MainScene/main_scene.tscn");
 	}
 	public void OnQuitPressed()
 	{
+		gameInstance.PlaySFX("MainMenu", gameInstance.sfxPaths["BUTTON_CLICKED"]);
 		GetTree().Quit();
 	}
 }

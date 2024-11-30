@@ -9,6 +9,7 @@ public partial class Bone : Area2D
     // References to the child nodes
     private TextureRect sprite;
     private CollisionShape2D collisionShape;
+    public int boneTypeForSFX;
 
     // Dictionary to hold different textures and point values
     private static Dictionary<int, (Texture2D texture, int points)> BoneTypes;
@@ -45,6 +46,7 @@ public partial class Bone : Area2D
         if (BoneTypes.ContainsKey(boneType))
         {
             var boneData = BoneTypes[boneType];
+            boneTypeForSFX = boneType; // Grab bone type data to play SFX based on bone type
             
             if (boneData.texture == null)
             {

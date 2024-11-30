@@ -197,6 +197,7 @@ public partial class MainSceneUIScript : CanvasLayer
 
 	public void OnItemSlot1ButtonPress() {
 		GD.Print("Item 1 pressed");
+		gameInstance.PlaySFX("MainSceneNode", gameInstance.sfxPaths["BUTTON_CLICKED"]);
 		// grab button data which item it is
 		IItem item = ItemSlot1.AttachedItem;
 		OnItemButtonPress(item);
@@ -204,6 +205,7 @@ public partial class MainSceneUIScript : CanvasLayer
 
 	public void OnItemSlot2ButtonPress() {
 		GD.Print("Item 2 pressed");
+		gameInstance.PlaySFX("MainSceneNode", gameInstance.sfxPaths["BUTTON_CLICKED"]);
 		// grab button data which item it is
 		IItem item = ItemSlot2.AttachedItem;
 		OnItemButtonPress(item);
@@ -211,6 +213,7 @@ public partial class MainSceneUIScript : CanvasLayer
 
 	public void OnItemSlot3ButtonPress() {
 		GD.Print("Item 3 pressed");
+		gameInstance.PlaySFX("MainSceneNode", gameInstance.sfxPaths["BUTTON_CLICKED"]);
 		// grab button data which item it is
 		IItem item = ItemSlot3.AttachedItem;
 		OnItemButtonPress(item);
@@ -241,6 +244,7 @@ public partial class MainSceneUIScript : CanvasLayer
 	private void _on_player_input_event(Node viewport, InputEvent events, int shape_idx){
 		if(events is InputEventMouseButton){
 			if (events.IsPressed()){
+				gameInstance.PlaySFX("MainSceneNode", gameInstance.sfxPaths["BUTTON_CLICKED"]);
 				player.controllable = true;
 				GuessInputField.Editable = false;
 				dogBed.interactable = true;
@@ -255,10 +259,12 @@ public partial class MainSceneUIScript : CanvasLayer
 	}
 
 	private void OnHowToButtonPressed(){
+		gameInstance.PlaySFX("MainSceneNode", gameInstance.sfxPaths["BUTTON_CLICKED"]);
 		HowToOverlay.Visible = true;
 		GetTree().Paused = true;
 	}
 	private void OnHowToExitButtonPressed(){
+		gameInstance.PlaySFX("MainSceneNode", gameInstance.sfxPaths["BUTTON_CLICKED"]);
 		HowToOverlay.Visible = false;
 		GetTree().Paused = false;
 	}

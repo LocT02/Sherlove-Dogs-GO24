@@ -56,13 +56,16 @@ public partial class PauseMenu : Control
 
 	public void _on_resume_pressed(){
 		gameSaveLabel.Text = "Save Game";
+		gameManagerInstance.PlaySFX("MainSceneNode", gameManagerInstance.sfxPaths["BUTTON_CLICKED"]);
 		resume();
 	}
 	public void _on_savegame_pressed(){
+		gameManagerInstance.PlaySFX("MainSceneNode", gameManagerInstance.sfxPaths["BUTTON_CLICKED"]);
 		gameManagerInstance.gameData.SaveGame();
 		gameSaveLabel.Text = "Game Saved";
 	}
 	public async void _on_back_pressed(){
+		gameManagerInstance.PlaySFX("MainSceneNode", gameManagerInstance.sfxPaths["BUTTON_CLICKED"]);
 		resume();
 		await gameManagerInstance.SceneChanger(gameManagerInstance.scenePaths["MAIN_MENU"]);
 	}
