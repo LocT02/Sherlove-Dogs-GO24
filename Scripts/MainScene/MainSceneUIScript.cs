@@ -25,6 +25,7 @@ public partial class MainSceneUIScript : CanvasLayer
 	private PlayerMovement player;
 	private DogBed dogBed;
 	private CanvasLayer HowToOverlay;
+	public Label ExitBedText;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -50,6 +51,8 @@ public partial class MainSceneUIScript : CanvasLayer
 		player = GetNode<PlayerMovement>("/root/MainSceneNode/Player");
 		dogBed = GetNode<DogBed>("/root/MainSceneNode/GamePlay/DogBed");
 		HowToOverlay = GetNode<CanvasLayer>("HowToUI/HowToOverlay");
+		ExitBedText = GetNode<Label>("ExitBedUI/ExitBedText");
+		ExitBedText.Visible = false;
 
 		List<ItemButton> buttonList = new List<ItemButton>{ ItemSlot1, ItemSlot2, ItemSlot3 };
 		foreach (ItemButton button in buttonList) {
@@ -245,6 +248,7 @@ public partial class MainSceneUIScript : CanvasLayer
 		if(events is InputEventMouseButton){
 			if (events.IsPressed()){
 				gameInstance.PlaySFX("MainSceneNode", gameInstance.sfxPaths["BUTTON_CLICKED"]);
+				ExitBedText.Visible = false;
 				player.controllable = true;
 				GuessInputField.Editable = false;
 				dogBed.interactable = true;

@@ -24,6 +24,7 @@ public partial class DogBed : Area2D
 		dobBedLabel.Visible = showInteractionLabel;
 		if(showInteractionLabel && Input.IsActionJustPressed("Interact") && interactable){
 			gameManager.PlaySFX("MainSceneNode", gameManager.sfxPaths["BUTTON_CLICKED"]);
+			gameManager.UIScript.ExitBedText.Visible = true;
 			GD.Print("interacted with dog bed");
 			inputBox.Editable = true;
 			player.controllable = false;

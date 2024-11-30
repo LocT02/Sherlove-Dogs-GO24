@@ -40,7 +40,7 @@ namespace GameManager
 		};
 
 		private SceneTransition sceneTransition;
-		private MainSceneUIScript UIScript;
+		public MainSceneUIScript UIScript;
 		private Node miniGameNode;
 		private MainScene mainScene;
 		public string GameState { get; set; } = "newgame";
