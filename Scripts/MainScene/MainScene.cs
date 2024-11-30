@@ -11,6 +11,9 @@ public partial class MainScene : Node2D
 	private LineEdit inputBox;
 	private TextureProgressBar healthUI;
 	private Label mainScoreUI;
+	private AnimatedSprite2D girlSprite;
+	private AnimatedSprite2D dogSprite;
+	private bool reaction_finished;
 	public override void _Ready()
 	{
 		// Transition effect here
@@ -36,6 +39,9 @@ public partial class MainScene : Node2D
 		inputBox = GetNode<LineEdit>("%GuessInputField");
 		healthUI = GetNode<TextureProgressBar>("/root/MainSceneNode/MainSceneUI/HealthUI/HealthBar");
 		mainScoreUI = GetNode<Label>("/root/MainSceneNode/MainSceneUI/ScoreUI/ScoreBG/ScoreText");
+		girlSprite = GetNode<AnimatedSprite2D>("GirlAnimation");
+		girlSprite.Play("Talk");
+		dogSprite = GetNode<AnimatedSprite2D>("Player/AnimatedSprite2D");
 	}
 
 	private void LoadOrInitializeNewGame() {
@@ -97,6 +103,9 @@ public partial class MainScene : Node2D
 		if (guessResult.Value == null) {
 			//Correct Guess
 			gameInstance.PlaySFX("MainSceneNode", gameInstance.sfxPaths["HAPPY_DOG"]); // Play SFX for correct guess
+			//Play animation for Girl and Dog
+			girlSprite.Play("Happy");
+			dogSprite.Play("HappyDog");
 			// Generate New Word and Apply
 			var newWordResult = SetNewWord();
 
@@ -108,6 +117,9 @@ public partial class MainScene : Node2D
 		}
 
 		//Incorrect guess here
+		//Play Animation for Girl and Dog
+		girlSprite.Play("Angry");
+		dogSprite.Play("SadDog");
 
 		// set new feedback, clear inputfield.
 		var feedback = UIScript.UpdateFeedbackLabel(guessResult.Value);
@@ -117,6 +129,14 @@ public partial class MainScene : Node2D
 		}
 
 		return Result.Success();
+	}
+	
+	private void OnGirlAnimationFinished() {
+		girlSprite.Play("Talk");
+	}
+	
+	private void OnDogAnimationFinished() {
+		dogSprite.Play("IdleRight");
 	}
 
 	public void UpdateHPUI(int hp){
