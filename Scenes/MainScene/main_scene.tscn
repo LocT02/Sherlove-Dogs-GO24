@@ -981,6 +981,87 @@ offset_right = -0.0490112
 offset_bottom = -0.131012
 script = ExtResource("3_m0r7y")
 
+[node name="HowToItemUI" type="Control" parent="MainSceneUI/ItemButtonContainer"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="HowToItemBttn" type="TextureButton" parent="MainSceneUI/ItemButtonContainer/HowToItemUI"]
+layout_mode = 0
+offset_left = -158.0
+offset_top = -90.0
+offset_right = -62.0
+offset_bottom = 6.0
+rotation = -0.389208
+texture_normal = ExtResource("11_kujxi")
+texture_pressed = ExtResource("11_kujxi")
+texture_hover = ExtResource("12_k315p")
+
+[node name="?_Text" type="Label" parent="MainSceneUI/ItemButtonContainer/HowToItemUI/HowToItemBttn"]
+layout_mode = 0
+offset_left = 30.83
+offset_top = 19.04
+offset_right = 70.83
+offset_bottom = 80.04
+theme_override_colors/font_color = Color(0.615686, 0.505882, 0.537255, 1)
+theme_override_fonts/font = ExtResource("3_5d4nt")
+theme_override_font_sizes/font_size = 40
+text = "?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HowToOverlay" type="CanvasLayer" parent="MainSceneUI/ItemButtonContainer/HowToItemUI"]
+process_mode = 2
+visible = false
+
+[node name="HowToPage" type="TextureRect" parent="MainSceneUI/ItemButtonContainer/HowToItemUI/HowToOverlay"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -450.0
+offset_top = -450.0
+offset_right = 450.0
+offset_bottom = 450.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("13_qu0bw")
+
+[node name="X_Btn" type="TextureButton" parent="MainSceneUI/ItemButtonContainer/HowToItemUI/HowToOverlay/HowToPage"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -76.725
+offset_top = -25.7
+offset_right = 19.275
+offset_bottom = 70.3
+grow_horizontal = 0
+texture_normal = ExtResource("11_kujxi")
+texture_pressed = ExtResource("11_kujxi")
+texture_hover = ExtResource("12_k315p")
+
+[node name="X_Text" type="Label" parent="MainSceneUI/ItemButtonContainer/HowToItemUI/HowToOverlay/HowToPage/X_Btn"]
+layout_mode = 0
+offset_left = 30.37
+offset_top = 23.66
+offset_right = 70.37
+offset_bottom = 70.66
+theme_override_colors/font_color = Color(0.615686, 0.505882, 0.537255, 1)
+theme_override_fonts/font = ExtResource("3_5d4nt")
+theme_override_font_sizes/font_size = 36
+text = "X"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="HealthUI" type="Control" parent="MainSceneUI"]
 layout_mode = 3
 anchors_preset = 0
@@ -1302,6 +1383,10 @@ volume_db = -10.0
 [connection signal="pressed" from="MainSceneUI/ItemButtonContainer/ItemSlot2" to="MainSceneUI" method="OnItemSlot2ButtonPress"]
 [connection signal="mouse_entered" from="MainSceneUI/ItemButtonContainer/ItemSlot3" to="MainSceneUI" method="OnItemSlot3ButtonHover"]
 [connection signal="pressed" from="MainSceneUI/ItemButtonContainer/ItemSlot3" to="MainSceneUI" method="OnItemSlot3ButtonPress"]
+[connection signal="mouse_entered" from="MainSceneUI/ItemButtonContainer/HowToItemUI/HowToItemBttn" to="MainSceneUI" method="OnHowToButtonHover"]
+[connection signal="pressed" from="MainSceneUI/ItemButtonContainer/HowToItemUI/HowToItemBttn" to="MainSceneUI" method="OnHowToButtonPressed"]
+[connection signal="mouse_entered" from="MainSceneUI/ItemButtonContainer/HowToItemUI/HowToOverlay/HowToPage/X_Btn" to="MainSceneUI" method="OnHowToExitButtonHover"]
+[connection signal="pressed" from="MainSceneUI/ItemButtonContainer/HowToItemUI/HowToOverlay/HowToPage/X_Btn" to="MainSceneUI" method="OnHowToExitButtonPressed"]
 [connection signal="mouse_entered" from="MainSceneUI/HowToUI/HowToBttn" to="MainSceneUI" method="OnHowToButtonHover"]
 [connection signal="pressed" from="MainSceneUI/HowToUI/HowToBttn" to="MainSceneUI" method="OnHowToButtonPressed"]
 [connection signal="mouse_entered" from="MainSceneUI/HowToUI/HowToOverlay/HowToPage/X_Btn" to="MainSceneUI" method="OnHowToExitButtonHover"]
