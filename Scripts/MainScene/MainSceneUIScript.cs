@@ -206,6 +206,10 @@ public partial class MainSceneUIScript : CanvasLayer
 		OnItemButtonPress(item);
 	}
 
+	private void OnItemSlot1ButtonHover(){
+		gameInstance.PlaySFX("MainSceneNode", gameInstance.sfxPaths["BUTTON_HOVER"]);
+	}
+
 	public void OnItemSlot2ButtonPress() {
 		GD.Print("Item 2 pressed");
 		gameInstance.PlaySFX("MainSceneNode", gameInstance.sfxPaths["BUTTON_CLICKED"]);
@@ -214,12 +218,20 @@ public partial class MainSceneUIScript : CanvasLayer
 		OnItemButtonPress(item);
 	}
 
+	private void OnItemSlot2ButtonHover(){
+		gameInstance.PlaySFX("MainSceneNode", gameInstance.sfxPaths["BUTTON_HOVER"]);
+	}
+
 	public void OnItemSlot3ButtonPress() {
 		GD.Print("Item 3 pressed");
 		gameInstance.PlaySFX("MainSceneNode", gameInstance.sfxPaths["BUTTON_CLICKED"]);
 		// grab button data which item it is
 		IItem item = ItemSlot3.AttachedItem;
 		OnItemButtonPress(item);
+	}
+
+	private void OnItemSlot3ButtonHover(){
+		gameInstance.PlaySFX("MainSceneNode", gameInstance.sfxPaths["BUTTON_HOVER"]);
 	}
 
 	private void OnItemButtonPress(IItem item) {

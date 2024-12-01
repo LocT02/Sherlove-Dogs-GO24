@@ -1296,8 +1296,11 @@ process_mode = 3
 volume_db = -10.0
 
 [connection signal="pressed" from="MainSceneUI/WordUI/SubmitGuessButton" to="MainSceneUI" method="OnSubmitGuessButtonPress"]
+[connection signal="mouse_entered" from="MainSceneUI/ItemButtonContainer/ItemSlot1" to="MainSceneUI" method="OnItemSlot1ButtonHover"]
 [connection signal="pressed" from="MainSceneUI/ItemButtonContainer/ItemSlot1" to="MainSceneUI" method="OnItemSlot1ButtonPress"]
+[connection signal="mouse_entered" from="MainSceneUI/ItemButtonContainer/ItemSlot2" to="MainSceneUI" method="OnItemSlot2ButtonHover"]
 [connection signal="pressed" from="MainSceneUI/ItemButtonContainer/ItemSlot2" to="MainSceneUI" method="OnItemSlot2ButtonPress"]
+[connection signal="mouse_entered" from="MainSceneUI/ItemButtonContainer/ItemSlot3" to="MainSceneUI" method="OnItemSlot3ButtonHover"]
 [connection signal="pressed" from="MainSceneUI/ItemButtonContainer/ItemSlot3" to="MainSceneUI" method="OnItemSlot3ButtonPress"]
 [connection signal="mouse_entered" from="MainSceneUI/HowToUI/HowToBttn" to="MainSceneUI" method="OnHowToButtonHover"]
 [connection signal="pressed" from="MainSceneUI/HowToUI/HowToBttn" to="MainSceneUI" method="OnHowToButtonPressed"]

@@ -11,13 +11,16 @@ namespace InventoryManager {
         public List<IItem> Items { get; private set; } = new();
 
         public Result<IItem> AddItem(IItem item) {
-            
-            if (item != null) {
-                Items.Add(item);
-                GD.Print("AN ITEM HAS BEEN ADDED");
-                return Result.Success(item);
+            if (item == null) {
+                return Result.Failure<IItem>("Failed to add Item");
             }
-            return Result.Failure<IItem>("Failed to add Item");
+            if (Items.Count < 3){    
+                Items.Add(item);
+                GD.Print(Items.Count);
+                GD.Print("AN ITEM HAS BEEN ADDED");
+            }
+            
+            return Result.Success(item);
         }
 
         private Result<IItem> RemoveItem(IItem item) {
