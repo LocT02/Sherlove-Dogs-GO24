@@ -267,10 +267,16 @@ public partial class MainSceneUIScript : CanvasLayer
 		HowToOverlay.Visible = true;
 		GetTree().Paused = true;
 	}
+	private void OnHowToButtonHover(){
+		gameInstance.PlaySFX("MainSceneNode", gameInstance.sfxPaths["BUTTON_HOVER"]);
+	}
 	private void OnHowToExitButtonPressed(){
 		gameInstance.PlaySFX("MainSceneNode", gameInstance.sfxPaths["BUTTON_CLICKED"]);
 		HowToOverlay.Visible = false;
 		GetTree().Paused = false;
+	}
+	private void OnHowToExitButtonHover(){
+		gameInstance.PlaySFX("MainSceneNode", gameInstance.sfxPaths["BUTTON_HOVER"]);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

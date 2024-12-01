@@ -19,6 +19,9 @@ public partial class HowToUi : Control
 		HowToOverlay.Visible = false;
 		gameManagerInstance.allowMinigameStart = true;
 	}
+	private void OnHowToExitButtonHover(){
+		gameManagerInstance.PlaySFX("MainSceneNode", gameManagerInstance.sfxPaths["BUTTON_HOVER"]);
+	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)

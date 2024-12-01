@@ -675,4 +675,5 @@ text = "X"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[connection signal="mouse_entered" from="HowToUI/HowToOverlay/HowToPage/X_Btn" to="HowToUI" method="OnHowToExitButtonHover"]
 [connection signal="pressed" from="HowToUI/HowToOverlay/HowToPage/X_Btn" to="HowToUI" method="OnHowToExitButtonPressed"]
