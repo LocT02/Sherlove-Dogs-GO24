@@ -25,6 +25,7 @@ public partial class MainSceneUIScript : CanvasLayer
 	private PlayerMovement player;
 	private DogBed dogBed;
 	private CanvasLayer HowToOverlay;
+	private CanvasLayer HowToItemOverlay;
 	public Label ExitBedText;
 	private Label ItemSlotText1;
 	private Label ItemSlotText2;
@@ -54,6 +55,7 @@ public partial class MainSceneUIScript : CanvasLayer
 		player = GetNode<PlayerMovement>("/root/MainSceneNode/Player");
 		dogBed = GetNode<DogBed>("/root/MainSceneNode/GamePlay/DogBed");
 		HowToOverlay = GetNode<CanvasLayer>("HowToUI/HowToOverlay");
+		HowToItemOverlay = GetNode<CanvasLayer>("ItemButtonContainer/HowToItemUI/HowToItemOverlay");
 		ExitBedText = GetNode<Label>("ExitBedUI/ExitBedText");
 		ItemSlotText1 = GetNode<Label>("ItemButtonContainer/ItemSlot1/ItemText1");
 		ItemSlotText2 = GetNode<Label>("ItemButtonContainer/ItemSlot2/ItemText2");
@@ -318,6 +320,16 @@ public partial class MainSceneUIScript : CanvasLayer
 	}
 	private void OnHowToExitButtonHover(){
 		gameInstance.PlaySFX("MainSceneNode", gameInstance.sfxPaths["BUTTON_HOVER"]);
+	}
+	private void OnHowToItemButtonPressed(){
+		gameInstance.PlaySFX("MainSceneNode", gameInstance.sfxPaths["BUTTON_CLICKED"]);
+		HowToItemOverlay.Visible = true;
+		GetTree().Paused = true;
+	}
+	private void OnHowToItemExitButtonPressed(){
+		gameInstance.PlaySFX("MainSceneNode", gameInstance.sfxPaths["BUTTON_CLICKED"]);
+		HowToItemOverlay.Visible = false;
+		GetTree().Paused = false;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

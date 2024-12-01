@@ -1,4 +1,4 @@
-[gd_scene load_steps=146 format=3 uid="uid://bfker6m1dx5m5"]
+[gd_scene load_steps=147 format=3 uid="uid://bfker6m1dx5m5"]
 
 [ext_resource type="Script" path="res://Scripts/MainScene/MainScene.cs" id="1_2enir"]
 [ext_resource type="Script" path="res://Scripts/MainScene/MainSceneUIScript.cs" id="1_hlaxv"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://dfdbatu6b781i" path="res://Assets/Art/UI/Health Bar/HealthIcon.PNG" id="8_gdoxr"]
 [ext_resource type="Texture2D" uid="uid://rqqaha7xgg74" path="res://Assets/Art/Backgrounds/LivingRoom/DoggyDoor Closed.png" id="8_jad4e"]
 [ext_resource type="Texture2D" uid="uid://b2lfepo5p2lmu" path="res://Assets/Art/Sprites/L_DogIdle_Spritesheet.png" id="8_vvoo6"]
+[ext_resource type="Texture2D" uid="uid://bbww0q1nqwmmo" path="res://Assets/Art/UI/HowToItems.png" id="9_1k5ma"]
 [ext_resource type="Texture2D" uid="uid://cw7ktqr0nk3mj" path="res://Assets/Art/UI/Health Bar/HealthProgressBarV2.png" id="9_gvmbr"]
 [ext_resource type="Script" path="res://Scripts/MainScene/DogBed.cs" id="9_vidff"]
 [ext_resource type="Texture2D" uid="uid://cyd24ffhps300" path="res://Assets/Art/Backgrounds/LivingRoom/DoggieBed Cropped.png" id="10_etjap"]
@@ -1061,11 +1062,11 @@ text = "?"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HowToOverlay" type="CanvasLayer" parent="MainSceneUI/ItemButtonContainer/HowToItemUI"]
-process_mode = 2
+[node name="HowToItemOverlay" type="CanvasLayer" parent="MainSceneUI/ItemButtonContainer/HowToItemUI"]
+process_mode = 3
 visible = false
 
-[node name="HowToPage" type="TextureRect" parent="MainSceneUI/ItemButtonContainer/HowToItemUI/HowToOverlay"]
+[node name="HowToItemPage" type="TextureRect" parent="MainSceneUI/ItemButtonContainer/HowToItemUI/HowToItemOverlay"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -1077,9 +1078,9 @@ offset_right = 450.0
 offset_bottom = 450.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("13_qu0bw")
+texture = ExtResource("9_1k5ma")
 
-[node name="X_Btn" type="TextureButton" parent="MainSceneUI/ItemButtonContainer/HowToItemUI/HowToOverlay/HowToPage"]
+[node name="X_Btn" type="TextureButton" parent="MainSceneUI/ItemButtonContainer/HowToItemUI/HowToItemOverlay/HowToItemPage"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -1093,7 +1094,7 @@ texture_normal = ExtResource("11_kujxi")
 texture_pressed = ExtResource("11_kujxi")
 texture_hover = ExtResource("12_k315p")
 
-[node name="X_Text" type="Label" parent="MainSceneUI/ItemButtonContainer/HowToItemUI/HowToOverlay/HowToPage/X_Btn"]
+[node name="X_Text" type="Label" parent="MainSceneUI/ItemButtonContainer/HowToItemUI/HowToItemOverlay/HowToItemPage/X_Btn"]
 layout_mode = 0
 offset_left = 30.37
 offset_top = 23.66
@@ -1182,7 +1183,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="HowToOverlay" type="CanvasLayer" parent="MainSceneUI/HowToUI"]
-process_mode = 2
+process_mode = 3
 visible = false
 
 [node name="HowToPage" type="TextureRect" parent="MainSceneUI/HowToUI/HowToOverlay"]
@@ -1431,9 +1432,9 @@ volume_db = -10.0
 [connection signal="mouse_exited" from="MainSceneUI/ItemButtonContainer/ItemSlot3" to="MainSceneUI" method="OnItemSlot3ButtonHoverExit"]
 [connection signal="pressed" from="MainSceneUI/ItemButtonContainer/ItemSlot3" to="MainSceneUI" method="OnItemSlot3ButtonPress"]
 [connection signal="mouse_entered" from="MainSceneUI/ItemButtonContainer/HowToItemUI/HowToItemBttn" to="MainSceneUI" method="OnHowToButtonHover"]
-[connection signal="pressed" from="MainSceneUI/ItemButtonContainer/HowToItemUI/HowToItemBttn" to="MainSceneUI" method="OnHowToButtonPressed"]
-[connection signal="mouse_entered" from="MainSceneUI/ItemButtonContainer/HowToItemUI/HowToOverlay/HowToPage/X_Btn" to="MainSceneUI" method="OnHowToExitButtonHover"]
-[connection signal="pressed" from="MainSceneUI/ItemButtonContainer/HowToItemUI/HowToOverlay/HowToPage/X_Btn" to="MainSceneUI" method="OnHowToExitButtonPressed"]
+[connection signal="pressed" from="MainSceneUI/ItemButtonContainer/HowToItemUI/HowToItemBttn" to="MainSceneUI" method="OnHowToItemButtonPressed"]
+[connection signal="mouse_entered" from="MainSceneUI/ItemButtonContainer/HowToItemUI/HowToItemOverlay/HowToItemPage/X_Btn" to="MainSceneUI" method="OnHowToExitButtonHover"]
+[connection signal="pressed" from="MainSceneUI/ItemButtonContainer/HowToItemUI/HowToItemOverlay/HowToItemPage/X_Btn" to="MainSceneUI" method="OnHowToItemExitButtonPressed"]
 [connection signal="mouse_entered" from="MainSceneUI/HowToUI/HowToBttn" to="MainSceneUI" method="OnHowToButtonHover"]
 [connection signal="pressed" from="MainSceneUI/HowToUI/HowToBttn" to="MainSceneUI" method="OnHowToButtonPressed"]
 [connection signal="mouse_entered" from="MainSceneUI/HowToUI/HowToOverlay/HowToPage/X_Btn" to="MainSceneUI" method="OnHowToExitButtonHover"]
