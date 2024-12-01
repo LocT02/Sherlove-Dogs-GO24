@@ -66,10 +66,10 @@ public partial class Memory : Control
 		//Load Arrow Textures
 		arrowMap = new Godot.Collections.Dictionary<ArrowKey,Texture2D>
 		{
-			{ArrowKey.Left, (Texture2D)GD.Load("res://Assets/Icons/left_arrow.svg")},
-			{ArrowKey.Right, (Texture2D)GD.Load("res://Assets/Icons/right_arrow.svg")},
-			{ArrowKey.Up, (Texture2D)GD.Load("res://Assets/Icons/up_arrow.svg")},
-			{ArrowKey.Down, (Texture2D)GD.Load("res://Assets/Icons/down_arrow.svg")}
+			{ArrowKey.Left, (Texture2D)GD.Load("res://Assets/Icons/Left.svg")},
+			{ArrowKey.Right, (Texture2D)GD.Load("res://Assets/Icons/Right.svg")},
+			{ArrowKey.Up, (Texture2D)GD.Load("res://Assets/Icons/Up.svg")},
+			{ArrowKey.Down, (Texture2D)GD.Load("res://Assets/Icons/Down.svg")}
 		};
 
 		//Get references
