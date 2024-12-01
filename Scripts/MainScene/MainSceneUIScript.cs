@@ -26,6 +26,9 @@ public partial class MainSceneUIScript : CanvasLayer
 	private DogBed dogBed;
 	private CanvasLayer HowToOverlay;
 	public Label ExitBedText;
+	private Label ItemSlotText1;
+	private Label ItemSlotText2;
+	private Label ItemSlotText3;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -52,6 +55,13 @@ public partial class MainSceneUIScript : CanvasLayer
 		dogBed = GetNode<DogBed>("/root/MainSceneNode/GamePlay/DogBed");
 		HowToOverlay = GetNode<CanvasLayer>("HowToUI/HowToOverlay");
 		ExitBedText = GetNode<Label>("ExitBedUI/ExitBedText");
+		ItemSlotText1 = GetNode<Label>("ItemButtonContainer/ItemSlot1/ItemText1");
+		ItemSlotText2 = GetNode<Label>("ItemButtonContainer/ItemSlot2/ItemText2");
+		ItemSlotText3 = GetNode<Label>("ItemButtonContainer/ItemSlot3/ItemText3");
+		
+		ItemSlotText1.Visible = false;
+		ItemSlotText2.Visible = false;
+		ItemSlotText3.Visible = false;
 		ExitBedText.Visible = false;
 
 		List<ItemButton> buttonList = new List<ItemButton>{ ItemSlot1, ItemSlot2, ItemSlot3 };
@@ -208,6 +218,12 @@ public partial class MainSceneUIScript : CanvasLayer
 
 	private void OnItemSlot1ButtonHover(){
 		gameInstance.PlaySFX("MainSceneNode", gameInstance.sfxPaths["BUTTON_HOVER"]);
+		ItemSlotText1.Text = ItemSlot1.AttachedItem.Name;
+		ItemSlotText1.Visible = true;
+	}
+
+	private void OnItemSlot1ButtonHoverExit(){
+		ItemSlotText1.Visible = false;
 	}
 
 	public void OnItemSlot2ButtonPress() {
@@ -220,6 +236,12 @@ public partial class MainSceneUIScript : CanvasLayer
 
 	private void OnItemSlot2ButtonHover(){
 		gameInstance.PlaySFX("MainSceneNode", gameInstance.sfxPaths["BUTTON_HOVER"]);
+		ItemSlotText2.Text = ItemSlot2.AttachedItem.Name;
+		ItemSlotText2.Visible = true;
+	}
+
+	private void OnItemSlot2ButtonHoverExit(){
+		ItemSlotText2.Visible = false;
 	}
 
 	public void OnItemSlot3ButtonPress() {
@@ -232,6 +254,12 @@ public partial class MainSceneUIScript : CanvasLayer
 
 	private void OnItemSlot3ButtonHover(){
 		gameInstance.PlaySFX("MainSceneNode", gameInstance.sfxPaths["BUTTON_HOVER"]);
+		ItemSlotText3.Text = ItemSlot3.AttachedItem.Name;
+		ItemSlotText3.Visible = true;
+	}
+
+	private void OnItemSlot3ButtonHoverExit(){
+		ItemSlotText3.Visible = false;
 	}
 
 	private void OnItemButtonPress(IItem item) {
@@ -281,6 +309,7 @@ public partial class MainSceneUIScript : CanvasLayer
 	}
 	private void OnHowToButtonHover(){
 		gameInstance.PlaySFX("MainSceneNode", gameInstance.sfxPaths["BUTTON_HOVER"]);
+
 	}
 	private void OnHowToExitButtonPressed(){
 		gameInstance.PlaySFX("MainSceneNode", gameInstance.sfxPaths["BUTTON_CLICKED"]);

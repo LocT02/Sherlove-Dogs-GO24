@@ -16,8 +16,6 @@ namespace InventoryManager {
             }
             if (Items.Count < 3){    
                 Items.Add(item);
-                GD.Print(Items.Count);
-                GD.Print("AN ITEM HAS BEEN ADDED");
             }
             
             return Result.Success(item);
