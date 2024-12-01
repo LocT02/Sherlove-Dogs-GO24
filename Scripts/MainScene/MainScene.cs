@@ -117,6 +117,7 @@ public partial class MainScene : Node2D
 		}
 
 		//Incorrect guess here
+		gameInstance.PlaySFX("MainSceneNode", gameInstance.sfxPaths["SAD_DOG"]); // Play SFX for wrong guess
 		//Play Animation for Girl and Dog
 		girlSprite.Play("Angry");
 		dogSprite.Play("SadDog");

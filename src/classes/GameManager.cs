@@ -32,6 +32,7 @@ namespace GameManager
 			{"BUTTON_HOVER", "res://Assets/Audio/SFX/Button_Hover.wav"},
 			{"DOGGY_DOOR", "res://Assets/Audio/SFX/Doggy Door.wav"},
 			{"HAPPY_DOG", "res://Assets/Audio/SFX/Happy Dog.wav"},
+			{"SAD_DOG", "res://Assets/Audio/SFX/Dog_Sad.wav"},
 			{"MEMORY_CORRECT", "res://Assets/Audio/SFX/Memory Correct.wav"},
 			{"MEMORY_INCORRECT", "res://Assets/Audio/SFX/Memory Incorrect.wav"},
 			{"MINIGAME_LOSS", "res://Assets/Audio/SFX/Minigame Loss.wav"},

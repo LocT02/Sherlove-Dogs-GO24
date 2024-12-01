@@ -984,6 +984,7 @@ offset_bottom = -0.124008
 script = ExtResource("3_m0r7y")
 
 [node name="ItemText2" type="Label" parent="MainSceneUI/ItemButtonContainer/ItemSlot2"]
+layout_mode = 0
 offset_left = -8.0
 offset_top = -22.0
 offset_right = 88.0
@@ -1011,6 +1012,7 @@ offset_bottom = -0.131012
 script = ExtResource("3_m0r7y")
 
 [node name="ItemText3" type="Label" parent="MainSceneUI/ItemButtonContainer/ItemSlot3"]
+layout_mode = 0
 offset_left = -5.0
 offset_top = -22.0
 offset_right = 86.0
