@@ -1307,6 +1307,9 @@ volume_db = -10.0
 [connection signal="body_exited" from="GamePlay/DogBed" to="GamePlay/DogBed" method="_on_body_exited"]
 [connection signal="input_event" from="Player" to="MainSceneUI" method="_on_player_input_event"]
 [connection signal="animation_finished" from="Player/AnimatedSprite2D" to="." method="OnDogAnimationFinished"]
+[connection signal="mouse_entered" from="CanvasLayer/PauseMenu/PanelContainer/VBoxContainer/Control/Resume" to="CanvasLayer/PauseMenu" method="_on_resume_mouse_entered"]
+[connection signal="mouse_entered" from="CanvasLayer/PauseMenu/PanelContainer/VBoxContainer/Control2/Save" to="CanvasLayer/PauseMenu" method="_on_save_mouse_entered"]
+[connection signal="mouse_entered" from="CanvasLayer/PauseMenu/PanelContainer/VBoxContainer/Control3/Back" to="CanvasLayer/PauseMenu" method="_on_back_mouse_entered"]
 [connection signal="animation_finished" from="GirlAnimation" to="." method="OnGirlAnimationFinished"]
 
 [editable path="CanvasLayer/PauseMenu"]

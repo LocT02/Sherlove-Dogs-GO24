@@ -29,6 +29,7 @@ namespace GameManager
 		};
 		public readonly Dictionary<string, string> sfxPaths = new Dictionary<string, string> {
 			{"BUTTON_CLICKED", "res://Assets/Audio/SFX/Button Clicked.wav"},
+			{"BUTTON_HOVER", "res://Assets/Audio/SFX/Button_Hover.wav"},
 			{"DOGGY_DOOR", "res://Assets/Audio/SFX/Doggy Door.wav"},
 			{"HAPPY_DOG", "res://Assets/Audio/SFX/Happy Dog.wav"},
 			{"MEMORY_CORRECT", "res://Assets/Audio/SFX/Memory Correct.wav"},

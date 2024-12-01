@@ -59,15 +59,24 @@ public partial class PauseMenu : Control
 		gameManagerInstance.PlaySFX("MainSceneNode", gameManagerInstance.sfxPaths["BUTTON_CLICKED"]);
 		resume();
 	}
+	public void _on_resume_mouse_entered(){
+		gameManagerInstance.PlaySFX("MainSceneNode", gameManagerInstance.sfxPaths["BUTTON_HOVER"]);
+	}
 	public void _on_savegame_pressed(){
 		gameManagerInstance.PlaySFX("MainSceneNode", gameManagerInstance.sfxPaths["BUTTON_CLICKED"]);
 		gameManagerInstance.gameData.SaveGame();
 		gameSaveLabel.Text = "Game Saved";
 	}
+	public void _on_save_mouse_entered(){
+		gameManagerInstance.PlaySFX("MainSceneNode", gameManagerInstance.sfxPaths["BUTTON_HOVER"]);
+	}
 	public async void _on_back_pressed(){
 		gameManagerInstance.PlaySFX("MainSceneNode", gameManagerInstance.sfxPaths["BUTTON_CLICKED"]);
 		resume();
 		await gameManagerInstance.SceneChanger(gameManagerInstance.scenePaths["MAIN_MENU"]);
+	}
+	public void _on_back_mouse_entered(){
+		gameManagerInstance.PlaySFX("MainSceneNode", gameManagerInstance.sfxPaths["BUTTON_HOVER"]);
 	}
 	private void setTextureButtonMouseFilter(MouseFilterEnum filter){
 		foreach (TextureButton button in textureButtons){

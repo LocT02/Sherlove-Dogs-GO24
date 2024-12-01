@@ -136,6 +136,9 @@ autoplay = true
 process_mode = 3
 volume_db = -10.0
 
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Play" to="." method="OnPlayHover"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Play" to="." method="OnPlayPressed"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Continue" to="." method="OnContinueHover"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Continue" to="." method="OnContinueSavePressed"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Quit" to="." method="OnQuitHover"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="OnQuitPressed"]

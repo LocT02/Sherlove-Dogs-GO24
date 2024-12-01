@@ -36,14 +36,26 @@ public partial class MainMenu : Control
 		gameInstance.PlaySFX("MainMenu", gameInstance.sfxPaths["BUTTON_CLICKED"]);
 		await gameInstance.SceneChanger("res://Scenes/MainScene/main_scene.tscn");
 	}
+	public void OnPlayHover()
+	{
+		gameInstance.PlaySFX("MainMenu", gameInstance.sfxPaths["BUTTON_HOVER"]);
+	}
 	public async void OnContinueSavePressed() {
 		gameInstance.GameState = "continue";
 		gameInstance.PlaySFX("MainMenu", gameInstance.sfxPaths["BUTTON_CLICKED"]);
 		await gameInstance.SceneChanger("res://Scenes/MainScene/main_scene.tscn");
 	}
+	public void OnContinueHover()
+	{
+		gameInstance.PlaySFX("MainMenu", gameInstance.sfxPaths["BUTTON_HOVER"]);
+	}
 	public void OnQuitPressed()
 	{
 		gameInstance.PlaySFX("MainMenu", gameInstance.sfxPaths["BUTTON_CLICKED"]);
 		GetTree().Quit();
+	}
+	public void OnQuitHover()
+	{
+		gameInstance.PlaySFX("MainMenu", gameInstance.sfxPaths["BUTTON_HOVER"]);
 	}
 }
